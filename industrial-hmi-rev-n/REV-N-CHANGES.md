@@ -2,6 +2,8 @@
 
 **DO NOT FABRICATE OR POWER THIS PCB.** Rev N corrects the U1 schematic and land assignments. The existing protected 24 V input track still reaches U1.1, now assigned to feedback. [Release blockers](README.md#release-blockers) · [Pin audit and copper evidence](REV-M-PIN-AUDIT.md)
 
+This report records the pre-consolidation sourcing checkpoint. The passive report and current CSVs supersede its prices and passive selections. [Passive consolidation](REV-N-PASSIVES.md) · [Current pricing](Industrial-HMI-RevN-BOM-Cost-INR.csv)
+
 ## Cost comparison
 
 | Basis | Amount |

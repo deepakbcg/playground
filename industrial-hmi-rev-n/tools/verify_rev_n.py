@@ -31,6 +31,12 @@ HOLD_SUFFIX = HOLD_MARK.replace(" ", "-")
 PCB_HOLD_LABEL = "gge900001"
 SCH_TITLE = "Industrial touchscreen HMI"
 LEGACY_U1_NETS = {"1": "VIN_PROT", "3": "GND", "4": "CAB_FB"}
+CHECKPOINT_PCB_SHA256 = "abff5f3eb8ef2f6e672cd597d545dd7fd53c788953bd98c647032aafd008a2a2"
+PASSIVE_0402_PACKAGES = {
+    "0402", "C0402", "R0402", "GENERIC_CAPC1005X50", "GENERIC_CAPC1005X50_WIDE",
+    "GENERIC_RESC1005X35", "SMT-100-nF", "SMT-100-k", "SMT-47-k",
+}
+PASSIVE_0603_PACKAGES = {"0603", "C0603", "R0603"}
 
 
 def rows(path):
@@ -64,7 +70,7 @@ def cents(value):
     return Decimal(value).quantize(MONEY, rounding=ROUND_HALF_UP)
 
 
-def geometry(doc, sch):
+def geometry(doc, sch, worklist=None):
     specific = {"Title", "Release status"}
     stable = {key: value for key, value in doc.items() if key not in {"head", "shape"}}
     stable["head"] = {**doc["head"], "c_para": {
@@ -73,6 +79,10 @@ def geometry(doc, sch):
     new_shapes = list(doc["shape"])
     for ref, (i, header, body) in components(doc, sch).items():
         attributes = attrs(header)
+        if sch and worklist and ref in worklist:
+            entry = worklist[ref]
+            assert attributes["package"] == entry["New footprint"], ref
+            attributes["package"] = entry["Old footprint"]
         if sch and ref in VALUE_LABELS:
             old, new = VALUE_LABELS[ref]
             if attributes["name"] == new:
@@ -172,12 +182,17 @@ def normalize_u1(before, after, schematic):
 
 def main():
     prefix = "Industrial-HMI-RevN"
+    worklist_rows = rows(HERE / "0603-WORKLIST.csv")
+    worklist = {row["Ref"]: row for row in worklist_rows}
+    assert len(worklist_rows) == len(worklist)
     cad = {}
     for kind in ("Schematic", "PCB"):
         before = json.loads((BASE / f"{kind}_Industrial-HMI-RevM-Draft.json").read_bytes())
-        after = json.loads((HERE / f"{kind}_{prefix}-{HOLD_SUFFIX}.json").read_bytes())
+        after_bytes = (HERE / f"{kind}_{prefix}-{HOLD_SUFFIX}.json").read_bytes()
+        after = json.loads(after_bytes)
         is_schematic = kind == "Schematic"
-        before_geometry, after_geometry = geometry(before, is_schematic), geometry(after, is_schematic)
+        before_geometry = geometry(before, is_schematic)
+        after_geometry = geometry(after, is_schematic, worklist)
         normalize_u1(before_geometry, after_geometry, is_schematic)
         assert before_geometry == after_geometry, kind
         params = after["head"]["c_para"]
@@ -187,6 +202,8 @@ def main():
             labels = [s for s in after["shape"] if s.startswith("T~L~")]
             assert sum(f"~{HOLD_MARK} - {SCH_TITLE}~" in s for s in labels) == 1
         else:
+            assert hashlib.sha256(after_bytes).hexdigest() == CHECKPOINT_PCB_SHA256
+            print(f"PCB is byte-identical to the Rev N checkpoint. SHA-256 {CHECKPOINT_PCB_SHA256}")
             hold_label, = (s.split("~") for s in after["shape"] if is_pcb_hold_label(s))
             assert hold_label[11].startswith("M ") and hold_label[12] != "none"
             verify_legacy_u1_copper(after)
@@ -225,20 +242,39 @@ def main():
     assert [line.split("~")[12] for line in r68_body if line.startswith("T~N~")] == ["91 kΩ"]
     for ref in ("C68", "C69"):
         assert bom[ref]["Description"] == before_bom[ref]["Description"] and "18 pF" in bom[ref]["Description"]
+    mismatched_footprints = set()
+    before_sizes, after_sizes = Counter(), Counter()
     for ref in cad["PCB"]:
         row = bom[ref]
         mpn = row["Manufacturer part number"]
+        schematic = attrs(cad["Schematic"][ref][1])
+        pcb = attrs(cad["PCB"][ref][1])
+        before_footprint, after_footprint = pcb["package"], schematic["package"]
         if ref.startswith("TP"):
             assert not mpn and row["Population"] == "DNP"
-        for group in cad.values():
-            attr = attrs(group[ref][1])
-            if ref in before_bom:
-                assert row["Footprint"] == before_bom[ref]["Footprint"], ref
-            assert attr["BOM_Manufacturer Part"] == mpn, (ref, attr["BOM_Manufacturer Part"], mpn)
-            if ref in LOCKED:
-                assert mpn == before_bom[ref]["Manufacturer part number"], ref
-            assert attr.get("BOM_Supplier Part", "") == row["LCSC part"] or row["Population"] == "DNP", ref
+        if ref in LOCKED:
+            assert mpn == before_bom[ref]["Manufacturer part number"], ref
+        assert schematic["BOM_Manufacturer Part"] == mpn, ref
+        assert schematic.get("BOM_Supplier Part", "") == row["LCSC part"] or row["Population"] == "DNP", ref
+        assert after_footprint == row["Footprint"], ref
+        if before_footprint != after_footprint:
+            mismatched_footprints.add(ref)
+            assert before_footprint == worklist[ref]["Old footprint"] and before_footprint in PASSIVE_0402_PACKAGES
+            assert after_footprint == worklist[ref]["New footprint"] == "0603"
+            assert row["Population"].startswith("Fit") and ref.startswith(("R", "C", "FB"))
+        if row["Population"].startswith("Fit") and ref.startswith(("R", "C", "FB")):
+            for footprint, count in ((before_footprint, before_sizes), (after_footprint, after_sizes)):
+                if footprint in PASSIVE_0402_PACKAGES:
+                    count["0402"] += 1
+                if footprint in PASSIVE_0603_PACKAGES:
+                    count["0603"] += 1
+        if not ref.startswith(("R", "C", "FB")):
+            assert pcb["BOM_Manufacturer Part"] == mpn, ref
+    assert mismatched_footprints == worklist.keys()
     print(f"Schematic, PCB and BOM agree on {len(cad['PCB'])} designators. TP1–TP4 are DNP.")
+    print(f"{len(worklist)} intentional footprint mismatches, all listed in 0603-WORKLIST.csv.")
+    print(f"Fitted passive packages 0402 {before_sizes['0402']} → {after_sizes['0402']}, "
+          f"0603 {before_sizes['0603']} → {after_sizes['0603']}.")
     print("Panel and battery are external to the CAD refdes sets.")
 
     needed = {ref for ref, row in bom.items() if row["Population"].startswith("Fit")} - {"LCD1"}
@@ -270,6 +306,8 @@ def main():
             extended = Decimal(row["Unit INR"]) * len(designators)
             assert extended == Decimal(row["Extended INR"])
             total += extended
+            if row["Stock listed"].isdigit() and int(row["Stock listed"]) < 100:
+                assert "LOW STOCK" in row["Notes"], designators
         else:
             assert not row["Extended INR"]
             missing.extend(designators)
@@ -283,7 +321,7 @@ def main():
     assert len(bypass) == 32 and bypass <= priced
     print(f"{len(priced)} fitted main-board and cell refs entered once. Itemized price coverage {len(priced)-len(missing)}.")
     print(f"Recomputed priced subtotal INR {total:.2f}. Unpriced refs {', '.join(missing) or 'none'}.")
-    print("32 0402 100 nF locations accounted for, including four Ethernet positions.")
+    print("32 original 0402 bypass locations accounted for, including four Ethernet positions.")
 
     changed = {ref for ref, old in before_bom.items()
                if bom[ref]["Manufacturer part number"] != old["Manufacturer part number"]}
@@ -318,6 +356,10 @@ def main():
         assert archive.comment.decode("ascii").startswith(HOLD_MARK)
         assert all(archive.read(name) == (HERE / name).read_bytes() for name in files)
         print("ZIP contains the byte-identical schematic and PCB JSONs.")
+    from fit_0603 import calculate
+    assert worklist_rows == [{key: str(value) for key, value in row.items()} for row in calculate()]
+    fit_counts = Counter(row["Fit status"] for row in worklist_rows)
+    print("0603 screen " + ", ".join(f"{status} {count}" for status, count in sorted(fit_counts.items())) + ".")
     original = (BASE / "PCB_Industrial-HMI-RevM-Draft.json").read_bytes()
     print(f"Baseline PCB SHA-256 {hashlib.sha256(original).hexdigest()}")
     print("Offline draft comparisons passed. FABRICATION BLOCKED. Native EasyEDA import, ERC, DRC, CAM and hardware checks remain open.")
