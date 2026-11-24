@@ -12,8 +12,8 @@ C6,1,100 nF 50 V,GRM21BR71H104KA01L,C0805,Fit,
 C7,1,1 uF 10 V,GRM21BR71A105KA01L,C0805,Fit,
 R5,1,10 k,ERJ-6ENF1002V,R0805,Fit,Cabinet buck output bleeder on CAB_5V.
 J3,1,Isolated RS-485,1715734,MKDS-1.5-3-P5.08,Fit,Phoenix Contact. Wire entry faces right edge.
-U5,1,Isolated RS-485,TD301D485H,MORNSUN-TDX01D485H-DIP10,Fit,Manual direction control. CON low = transmit. High = receive.
-"D4, D10",2,RS-485 TVS,SM712.TCT,SOT23-3,Fit,Clamps to isolated RS_COM.
+U5,1,Isolated RS-485,TD301D485H,TD301D485H-15.24MM-8LEAD,Fit,"YLPTEC, LCSC C2992421. 3.3 V logic and power. CON low transmits, high receives. Qualify up to 115.2 kbps. Confirm first-article lead fit and direction timing."
+"D4, D10",2,RS-485 TVS,CDSOT23-SM712,SOT23-3,Fit,"Bourns, LCSC C404012. Pin 3 returns to the respective isolated COM."
 C15,1,10 uF,GRM21BR61C106KE15L,GENERIC_CAPC2012X125,Fit,"Capacitor, MLCC, 10uF, 10%, M2012, 16V, X5R"
 C12,1,100 nF,GRM155R71E104KE14D,GENERIC_CAPC1005X50,Fit,"Capacitor, MLCC, 100nF, 10%, M1005, 25V, X7R"
 C11,1,10 uF,GRM21BR61C106KE15L,GENERIC_CAPC2012X125,Fit,Bypass on the shared SYS_5V input supply.
@@ -48,7 +48,7 @@ U11,1,RS-232 line transceiver,TRS3232EIPWR,TI-TSSOP-16-PW,Fit,
 C55,1,10 uF 16 V,GRM21BR61C106KE15L,SMT-10-uF-16-V,Fit,Local Ethernet bypass on shared 3.3 V.
 R33,1,47 k,RC0402FR-0747KL,SMT-47-k,Fit,
 R34,1,100 k,RC0402FR-07100KL,SMT-100-k,Fit,
-U14,1,Isolated RS-485 port 2,TD301D485H,MORNSUN-TDX01D485H-DIP10,Fit,Second isolated RS-485 port. Drive TXD and CON with RP2350A pads set to 8 mA.
+U14,1,Isolated RS-485 port 2,TD301D485H,TD301D485H-15.24MM-8LEAD,Fit,"YLPTEC, LCSC C2992421. 3.3 V logic and power. CON low transmits, high receives. Qualify up to 115.2 kbps. Confirm first-article lead fit and direction timing."
 C57,1,1 uF,GRM188R71C105KA12D,C0603,Fit,
 BZ1,1,5 V active buzzer,AI-1027-TWT-5V-R,PUI-AI-1027-P5.0,Fit,Active magnetic indicator. Max 30 mA. Positive pad is square.
 Q2,1,30 V N-MOSFET,AO3400A,SOT23-3,Fit,Low-side switch. GPIO high turns the load on.

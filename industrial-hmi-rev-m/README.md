@@ -6,6 +6,8 @@ Rev M is an EasyEDA Standard design draft for the 7-inch, 800 × 480 raw RGB HMI
 
 | File | Contents |
 | --- | --- |
+| [Hardware specification PDF](Industrial-HMI-RevM-Specification.pdf) | Power, display, interfaces, connector pinouts and mechanical integration. |
+| [Claude Code fabrication handoff](CLAUDE.md) | Workstation setup, known routing fixes, release checks and export instructions. |
 | [EasyEDA Standard ZIP](Industrial-HMI-RevM-EasyEDA.zip) | Editable Rev M schematic and four-layer PCB routing draft. |
 | [Schematic JSON](Schematic_Industrial-HMI-RevM-Draft.json) · [Schematic PDF](Industrial-HMI-RevM-Draft-Schematic.pdf) | Circuit source and drawing. |
 | [PCB JSON](PCB_Industrial-HMI-RevM-Draft.json) · [PCB PNG](Industrial-HMI-RevM-PCB.png) | Editable copper draft and the corresponding layer preview. |
@@ -57,9 +59,27 @@ The earlier placement preview shows the component bodies before routing adjustme
 
 These are engineering allocations. At 5 V they imply about 1.23 A for the HMI or 1.55 A with the relay board, before upstream path losses. Check actual full-load and startup draw at the connector and at low VBUS. Verify warm relay pickup and holding voltage over the selected USB supply, cable and harness combination before specifying external relay operation on USB. The J9 optocoupler inputs need field-side excitation to sense a switch, and any load connected to the relay contacts gets power from its field supply. The 5-inch and 10.1-inch panel options need their own panel and backlight current checks. [Rev L panel details](../industrial-hmi-rev-l/README.md#display-and-backlight) · [Backlight driver](https://www.ti.com/lit/ds/symlink/tps61165.pdf) · [Omron G5Q datasheet](https://components.omron.com/eu-en/sites/components.omron.com.eu/files/datasheet_pdf/J155-E1.pdf)
 
+## Isolated RS-485 ports
+
+Fit **YLPTEC TD301D485H** modules at U5 and U14 and **Bourns CDSOT23-SM712** arrays at D4 and D10. Each module integrates signal and power isolation. Both ports use 3.3 V logic, hardware UARTs and manual direction control. CON low transmits and CON high receives. J3 and J7 each carry D0, D1 and their own isolated COM. Fit the respective 120 Ω termination, R4 or R38, when the HMI is at the cable end and the cable calls for it. [YLPTEC datasheet](https://www.lcsc.com/datasheet/C2992421.pdf) · [TI RS-485 Design Guide](https://www.ti.com/lit/an/slla272d/slla272d.pdf)
+
+The YLPTEC pin assignments, 15.24 mm row spacing, 2.54 mm pin pitch and 1.00 mm recommended holes match the PCB. The Bourns array fits the SOT-23 pin assignment, with its common on pin 3. Both arrays return to their own port's isolated COM. The copper and land geometry are preserved. Confirm lead fit and solder joints on the first assembled board. [Bourns datasheet](https://www.bourns.com/docs/product-datasheets/cdsot23-sm712.pdf)
+
+Use **115.2 kbps** as the qualification ceiling from the module datasheet. Allow for its **25 µs maximum direction switching delay**. Verify receive mode at reset, allow the driver to settle before transmitting, and keep transmit enabled through the final stop bit. Check that the 3.3 V rail stays within 3.15–3.45 V at both modules during simultaneous terminated traffic on USB-C and cabinet power. [YLPTEC datasheet](https://www.lcsc.com/datasheet/C2992421.pdf)
+
+During EMC testing, check each connector's TVS discharge path, isolation keepout on all four copper layers, and residual voltage at the module pins under the expected ESD, EFT and surge conditions. TI's tested surge design used the Bourns array with additional protection stages. [PCBWay layout guide](https://www.pcbway.com/blog/PCB_Design_Layout/Industrial_Grade_RS_485_Communication_Interface_Design_and_PCB_Layout_11eb36b2.html) · [TI TIDA-00731](https://www.ti.com/tool/TIDA-00731)
+
 ## One-board component cost
 
-Rev L main-board component estimate was **₹12,024.14**. Rev M removes **₹3,297.69** from that estimate and adds **₹1,470.85–₹1,590.85**, for a total of **₹10,197.30–₹10,317.30**. This covers main-board components and the CR2032. The display, relay board, bare PCB, assembly, shipping and taxes are outside the estimate. Prices use the 24–25 November 2026 distributor snapshots and a support-parts allowance. USD amounts use the Rev L baseline exchange rate of ₹92.9189 per USD for comparability. [Rev M costed BOM](Industrial-HMI-RevM-BOM-Cost-INR.csv) · [Rev L costed BOM](../industrial-hmi-rev-l/Industrial-HMI-RevL-BOM-Cost-INR.csv)
+The Rev M main-board estimate is **₹9,073.32–₹9,193.32**, including the CR2032. The power and USB changes brought the Rev L estimate of ₹12,024.14 down to ₹10,197.30–₹10,317.30. The two RS-485 substitutions save a further **₹1,123.98**. The display, relay board, bare PCB, assembly, shipping and taxes are outside the estimate. Prices use the 24–25 November 2026 distributor snapshots and a support-parts allowance. USD amounts use the Rev L baseline exchange rate of ₹92.9189 per USD for comparability. [Rev M costed BOM](Industrial-HMI-RevM-BOM-Cost-INR.csv) · [Rev L costed BOM](../industrial-hmi-rev-l/Industrial-HMI-RevL-BOM-Cost-INR.csv)
+
+| RS-485 parts on one board | Previous INR | Updated INR |
+|---|---:|---:|
+| U5 and U14, YLPTEC TD301D485H at USD 4.0420 each | 1,458.00 | 751.16 |
+| D4 and D10, Bourns CDSOT23-SM712 at USD 0.4906 each | 508.32 | 91.18 |
+| **Total** | **1,966.32** | **842.34** |
+
+The module quote uses the listed promotional price for LCSC C2992421. D4 and D10 use LCSC C404012. [YLPTEC pricing](https://www.lcsc.com/brand/951-13306.html) · [Bourns pricing](https://www.lcsc.com/product-detail/C404012.html)
 
 | Rev L parts removed or replaced | INR |
 |---|---:|
@@ -89,10 +109,8 @@ Rev L main-board component estimate was **₹12,024.14**. Rev M removes **₹3,2
 
 | Opportunity | Recommendation |
 |---|---|
-| **RS-485 protection, roughly ₹427 potential saving** | Quote Bourns CDSOT23-SM712 for D4 and D10. LCSC listed USD 0.4385 each, against ₹254.16 each on Rev L. Compare the common pin and clamp polarity, surge waveform and clamp voltage at the Mornsun pins before changing the BOM. [Bourns datasheet](https://www.bourns.com/docs/Product-Datasheets/CDSOT23-SM712.pdf) · [LCSC price](https://www.lcsc.com/product-detail/C404012.html) |
 | **USB-only first build** | Leave out J1, F1, D1, D2, C1, U1, L3, C2, C82–C86, R5 and R67–R70. Fit the mux, its dividers and the USB-C and 3.3 V circuits. This omits about ₹269 of priced parts plus the cabinet connector, fuse, protection and the rest of the buck passives. Add the cabinet block when needed. |
 | **Populate only the interfaces needed** | Leave the Ethernet components out for a serial-only build, including the W5500 and magnetic jack, while retaining the shared power stages. The ₹775 Rev L Ethernet parts budget is a planning proxy for that saving. Omit the external relay board and buzzer on benches that only need the HMI. The buzzer alone was ₹310. Keep the unpopulated blocks disabled in firmware. [Rev L Ethernet and BOM](../industrial-hmi-rev-l/README.md#ethernet) |
-| **Isolated RS-485 modules** | The two TD301D485H modules totalled ₹1,458 at the Rev L list prices and were out of stock in that snapshot. Quote alternative sourcing and the complete fitted cost of an isolated transceiver plus its isolated supply per port. Keep each port’s independent common and hardware direction control. [Rev L costed BOM](../industrial-hmi-rev-l/Industrial-HMI-RevL-BOM-Cost-INR.csv) · [Mornsun TD301D485H](https://www.mornsun-power.com/index/sitesearch/partlink/keyword/TD301D485H.html) |
 | **Display controller** | BT818 remains in the full HMI. It supplies graphics acceleration, RGB timing and four-wire resistive sensing. A single 800 × 480 RGB565 frame takes 768,000 bytes against the RP2354B’s 520 kB SRAM, so removing it would change the rendering and touch design. [BT818 datasheet](https://brtchip.com/wp-content/uploads/2022/04/DS_BT817_8.pdf) · [RP2350 datasheet](https://datasheets.raspberrypi.com/rp2350/rp2350-datasheet.pdf) |
 
 ## Prototype verification
