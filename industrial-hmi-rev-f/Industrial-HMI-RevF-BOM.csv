@@ -1,0 +1,89 @@
+Reference,Quantity,Description,Manufacturer part number,Footprint,Population,Notes
+J1,1,24 V input,1715721,MKDS-1.5-2-P5.08,Fit,Phoenix Contact. Wire entry faces top edge.
+F1,1,1.5 A slow,045201.5MRL,FUSE-2410,Fit,
+D1,1,100 V Schottky,B2100A-13-F,DO-214AC-SMA,Fit,
+D2,1,33 V TVS,SMBJ33A,DO-214AA-SMB,Fit,
+C1,1,2.2 uF 100 V,C3216X7S2A225K160AB,C1206,Fit,
+U1,1,5 V / 3 A,THN 15-4811WI,THN-15WI-DIP6,Fit,Input and output returns tie to GND. TRIM and REMOTE open.
+C2,1,1 uF 16 V,GRM21BR71C105KA01L,C0805,Fit,
+C3,1,47 uF 25 V,EEU-FR1E470,CAP-RADIAL-D5-P2,Fit,Low-ESR aluminum electrolytic.
+D3,1,40 V Schottky,B140-13-F,DO-214AC-SMA,Fit,Cabinet supply OR diode. Cathode feeds CORE_5V.
+R3,1,4.7 k,ERJ-6ENF4701V,R0805,Fit,
+"R4, R38",2,120 ohm 1%,ERJ-P06F1200V,R0805,DNP,0.5 W. DNP by default. Fit only at the cable end if appropriate to the bus.
+C6,1,100 nF 50 V,GRM21BR71H104KA01L,C0805,Fit,
+C7,1,1 uF 10 V,GRM21BR71A105KA01L,C0805,Fit,
+R5,1,10 k,ERJ-6ENF1002V,R0805,Fit,
+J3,1,Isolated RS-485,1715734,MKDS-1.5-3-P5.08,Fit,Phoenix Contact. Wire entry faces right edge.
+U5,1,Isolated RS-485,TD301D485H,MORNSUN-TDX01D485H-DIP10,Fit,Manual direction control. CON low = transmit. High = receive.
+"D4, D10",2,RS-485 TVS,SM712.TCT,SOT23-3,Fit,Clamps to isolated RS_COM.
+D5,1,USB OR diode,B140-13-F,DO-214AC-SMA,Fit,USB supply OR diode. Cathode feeds CORE_5V.
+"C15, C11",2,10 uF,GRM21BR61C106KE15L,GENERIC_CAPC2012X125,Fit,"Capacitor, MLCC, 10uF, 10%, M2012, 16V, X5R"
+J4,1,Micro-USB service,10103594-0001LF,AMPHENOL_10103594-0001LF,Fit,"Micro-USB B, Socket, RA, PTH/SMT"
+"C25, C12, C22, C24, C26, C23, C27, C20, C18, C28, C21",11,100 nF,GRM155R71E104KE14D,GENERIC_CAPC1005X50,Fit,"Capacitor, MLCC, 100nF, 10%, M1005, 25V, X7R"
+R11,1,10 k DNP,RC0402FR-0710KL,GENERIC_RESC1005X35,DNP,"Resistor, Chip, 10kR, M1005, 63mW, 1%"
+U6,1,3.3 V LDO,TLV1117LV33DCYR,ONSEMI_NCP1117ST33T3G,Fit,Thermally derate at measured cabinet temperature.
+U7,1,4 MB QSPI NOR,W25Q32JVSSIQ,GENERIC_SOIC127P790X195-8,Fit,"3.3 V, 208 mil SOIC-8."
+"R17, R18",2,27 ohm,RC0402FR-0727RL,GENERIC_RESC1005X35,Fit,"Resistor, Chip, 27R, M1005, 63mW, 1%"
+"C17, C16",2,4.7 uF,GRM155R60J475ME47D,GENERIC_CAPC1005X50_WIDE,Fit,"Capacitor, MLCC, 4.7uF, 20%, M1005, 6.3V, X5R"
+L1,1,3.3 uH,AOTA-B201610S3R3-101-T,ABRACON_AOTA-B201610S3R3-101-T,Fit,"Inductor, SMT, 3.3uH, 20%, Irms=2.1A, Isat=2.4A, DCR=115mR typ 140mR max, Polarity Marked, M2016"
+C19,1,4.7 uF,GRM155R60J475ME47D,GENERIC_CAPC1005X50,Fit,"Capacitor, MLCC, 4.7uF, 20%, M1005, 6.3V, X5R"
+"R14, R12, R16",3,1 k,RC0402FR-071KL,GENERIC_RESC1005X35,Fit,"Resistor, Chip, 1kR, M1005, 63mW, 1%"
+SW1,1,BOOTSEL,434133025816,WURTHELEK_434133025816,Fit,"Tactile Pushbutton, SPST, N.O., 4.2x3.2x2.5mm"
+J5,1,SWD service,SM03B-SRSS-TB(LF)(SN),JST_SM03B-SRSS-TB-LF--SN-,Fit,"Header, JST-SH, 01x03W, Pitch=1mm, SMD, Right Angle"
+R13,1,33 ohm,RC0402FR-0733RL,GENERIC_RESC1005X35,Fit,"Resistor, Chip, 33R, M1005, 63mW, 1%"
+X1,1,12 MHz,ABM8-272-T3,GENERIC_XTALCC320X250X80-4,Fit,"XTAL, SMT, 12 MHz, Fundamental, Ftol=30ppm, Fstab=30ppm, 10pF, 3.2x2.5mm"
+"C13, C14",2,15 pF,GRM1555C1H150JA01D,GENERIC_CAPC1005X50,Fit,"Capacitor, MLCC, 15pF, 5%, M1005, 50V, C0G"
+U2,1,RP2350A,RP2350A,RPI_RP2350A_VIAS,Fit,RP2350A QFN-60. Prefer A4 stepping. Exposed pad 61 to GND.
+R20,1,0 ohm,RC0402JR-070RL,GENERIC_RESC1005X35,Fit,"Resistor, Chip, 0R, M1005, 63mW, +50mR"
+SW2,1,RESET,434133025816,WURTHELEK_434133025816,Fit,"Tactile Pushbutton, SPST, N.O., 4.2x3.2x2.5mm"
+J2,1,Raw 7-inch RGB and touch,FH12-40S-0.5SH(55),HIROSE-FH12-40-BOTTOM-0.5,Fit,Bottom-contact ZIF. Drawing uses the 0.30 mm cable stack. Pin 1 is LED cathode.
+U8,1,EVE display controller,BT818Q-T,BRT-VQFN64-EP2-9X9,Fit,"Use 3.3 V I/O. SPI single, resistive touch, external 12 MHz crystal. EVE flash interface is unused."
+"C30, C32, C33, C34, C35, C36, C37, C45, C56, C60, C62",11,100 nF,GRM155R71E104KE14D,C0402,Fit,
+C31,1,1 uF,GRM155R61A105KE15D,C0402,Fit,
+C38,1,10 uF,GRM21BR61C106KE15L,C0805,Fit,
+"C39, C40",2,15 pF,GRM1555C1H150JA01D,C0402,Fit,
+C41,1,4.7 uF,GRM188R61A475KE11D,C0603,Fit,
+X2,1,"12 MHz, load 10 pF",ABM8-272-T3,XTAL-3225-4,Fit,
+"R27, R28, R29",3,47 k,RC0402FR-0747KL,R0402,Fit,
+R30,1,22 ohm,RC0402FR-0722RL,R0402,Fit,
+U9,1,PWM backlight boost,TPS61165DBVR,SOT23-6-DBV,Fit,
+L2,1,10 uH shielded,SRP5030TA-100M,SRP5030TA,Fit,
+D6,1,60 V Schottky,B160-13-F,SMA,Fit,
+C42,1,1 uF 50 V,GRM21BR71H105KA12L,C0805,Fit,
+C43,1,10 uF 16 V,GRM21BR61C106KE15L,C0805,Fit,
+C44,1,220 nF,GRM188R71H224KA64D,C0603,Fit,
+R25,1,1.50 ohm 1%,RC0805FR-071R5L,R0805,Fit,
+"R26, R40, R42",3,100 k,RC0402FR-07100KL,R0402,Fit,
+U10,1,Battery-backed RTC,RV-3028-C7 32.768KHZ 1PPM-TA-QA,MICROCRYSTAL-C7-SON8-3.2X1.5,Fit,I2C 0x52. Configure battery switchover in EEPROM. Keep the charger disabled.
+BT1,1,CR2032 retainer,3034,KEYSTONE-3034-CR2032,Fit,Positive face up. Fit a primary CR2032 after reflow. Positive terminals share the clip.
+"R31, R32, R37",3,4.7 k,RC0402FR-074K7L,R0402,Fit,
+M1,1,RJ45 10/100 Ethernet,WIZ850io,WIZ850IO-2x6-20.32,Fit,Through-hole carrier. RJ45 faces the bottom edge. The PHY and Ethernet magnetics are on the module.
+J6,1,3-wire RS-232,1751251,PHOENIX-MKDS-1-3-P3.5,Fit,HMI pin directions. Wire entry on the bottom edge. Logic ground is the signal return.
+U11,1,RS-232 line transceiver,TRS3232EIPWR,TI-TSSOP-16-PW,Fit,
+U12,1,Ethernet power-off buffer,SN74LVC125APWR,TI-TSSOP-14-PW,Fit,
+U13,1,Ethernet 3.3 V buck,TPSM84203EAB,TI-SIPMOD-EAB-3,Fit,"Cabinet 5 V only. SIP front pinout VIN, GND, VOUT. Follow the indicated body orientation."
+"C46, C47, C48, C49, C50, C54",6,100 nF,GRM155R71E104KE14D,SMT-100-nF,Fit,
+C51,1,10 uF 50 V,C3225X5R1H106K250AB,SMT-10-uF-50-V,Fit,
+"C52, C53",2,47 uF 6.3 V,C3225X5R0J476K250AB,SMT-47-uF-6.3-V,Fit,
+C55,1,10 uF 16 V,GRM21BR61C106KE15L,SMT-10-uF-16-V,Fit,
+R33,1,47 k,RC0402FR-0747KL,SMT-47-k,Fit,
+"R34, R36",2,100 k,RC0402FR-07100KL,SMT-100-k,Fit,
+R35,1,10 k,RC0402FR-0710KL,SMT-10-k,Fit,
+U14,1,Isolated RS-485 port 2,TD301D485H,MORNSUN-TDX01D485H-DIP10,Fit,Manual direction control. CON low = transmit. High = receive.
+J7,1,Isolated RS-485 port 2,1715734,MKDS-1.5-3-P5.08,Fit,Phoenix Contact. Wire entry faces right edge.
+C57,1,1 uF,GRM188R71C105KA12D,C0603,Fit,
+K1,1,5 V coil SPDT relay,G5Q-1-EU DC5,OMRON-G5Q-1-SPDT,Fit,5 V coil. Dry contacts rated for the 24 VDC pilot-duty prototype application.
+J8,1,Isolated dry contact,1751251,PHOENIX-MKDS-1-3-P3.5,Fit,"COM, NO and NC. Wire entry faces bottom edge."
+"Q1, Q2",2,30 V N-MOSFET,AO3400A,SOT23-3,Fit,Low-side switch. GPIO high turns the load on.
+"D8, D9",2,40 V flyback,B5819W-7-F,SOD123,Fit,
+"R39, R41",2,100 ohm,RC0402FR-07100RL,R0402,Fit,
+BZ1,1,5 V active buzzer,AI-1027-TWT-5V-R,PUI-AI-1027-P5.0,Fit,Active magnetic indicator. Max 30 mA. Positive pad is square.
+D7,1,Green status LED,LTST-C170KGKT,LED0805,Fit,
+R43,1,680 ohm,RC0402FR-07680RL,R0402,Fit,
+U15,1,I2C UART and outputs,"SC16IS750IPW,128",NXP-TSSOP24-SOT355,Fit,I2C0 address 0x48. RESET_N on the MCU RUN net. Drive RTS_N manually with the specified direction lead time.
+X3,1,"14.7456 MHz, 18 pF",ABM8G-14.7456MHZ-18-D2Y-T3,XTAL-3225-4,Fit,Confirm oscillator startup and load capacitance on the prototype.
+"C58, C59",2,30 pF,GRM1555C1H300JA01D,C0402,Fit,
+C61,1,10 uF,GRM188R61A106ME69D,C0603,Fit,
+U16,1,Dual non-inverting buffer,SN74LVC2G34DBVR,TI-SOT23-6-DBV,Fit,Buffers UART TX and RTS to meet the isolated module input drive requirements.
+LCD1,1,7-inch 800x480 RGB888 resistive touchscreen,Adafruit 2354 / CH700WV03A-T,Panel mounted,Fit,Verify the factory label and FPC orientation.
+CELL1,1,3 V primary lithium battery,CR2032,BT1 retainer,Fit after reflow,Panasonic CR2032. Positive face up. Keep RTC charger disabled.

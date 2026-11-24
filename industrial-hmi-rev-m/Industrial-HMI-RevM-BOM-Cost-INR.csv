@@ -1,0 +1,80 @@
+﻿References,Manufacturer part number,Description,Quantity per board,Price tier from quantity,Unit INR,Extended INR,Price basis,Notes,Supplier source,Pricing checked,Low estimate INR,High estimate INR
+U1,LMR51635XDDCR,24 V to 5 V cabinet buck,1,1,160.41,160.41,"Listed, converted",LCSC USD 1.7263 at INR 92.9189 per USD.,https://www.lcsc.com/product-detail/C42432812.html,2026-11-25,160.41,160.41
+L3,SRP1038A-100M,10 µH shielded,1,1,108.93,108.93,Listed,DigiKey India.,https://www.digikey.in/en/products/detail/bourns-inc/SRP1038A-100M/4876659,2026-11-25,108.93,108.93
+U6,TPS62902RPJR,Shared 3.3 V / 2 A buck,1,1,201.63,201.63,Listed,DigiKey India.,https://www.digikey.in/en/products/detail/texas-instruments/TPS62902RPJR/14004371,2026-11-25,201.63,201.63
+L4,MWSA0402S-1R0MT,1 µH shielded,1,1,68.05,68.05,Listed,DigiKey India.,https://www.digikey.in/en/products/detail/shenzhen-sunlord-electronics-co-ltd/MWSA0402S-1R0MT/14120035,2026-11-25,68.05,68.05
+U22,TPS2121RUXR,5 V source selection,1,1,233.14,233.14,Listed,DigiKey India.,https://www.digikey.in/en/products/detail/texas-instruments/TPS2121RUXR/9859001,2026-11-25,233.14,233.14
+U21,STUSB4500LQTR,USB-C 5 V sink controller,1,1,223.51,223.51,Listed,DigiKey India.,https://www.digikey.in/en/products/detail/stmicroelectronics/STUSB4500LQTR/10709019,2026-11-25,223.51,223.51
+Q3,STL6P3LLH6,USB VBUS switch,1,1,131.79,131.79,"Listed, converted",LCSC USD 1.4183 at INR 92.9189 per USD.,https://www.lcsc.com/product-image/C457492.html?whichImg=sch,2026-11-25,131.79,131.79
+J4,USB4105-GF-A,USB-C 5 V and USB 2.0,1,1,76.44,76.44,Listed,DigiKey India.,https://www.digikey.in/en/products/detail/gct/USB4105-GF-A/11198441,2026-11-25,76.44,76.44
+U23,TS3USB221ARSER,USB data switch,1,1,86.95,86.95,Listed,DigiKey India list price. LCSC listing C128396 had a five-piece minimum.,https://www.digikey.in/en/products/detail/texas-instruments/TS3USB221ARSER/1985512,2026-11-25,86.95,86.95
+U20,W5500,Ethernet controller,1,1,331.56,331.56,Listed,"DigiKey India, cut tape",https://www.digikey.in/en/products/detail/wiznet/W5500/4425702,2026-11-24,331.56,331.56
+J11,LPJ4011ABNL,Magnetic RJ45,1,1,248.06,248.06,"Listed, converted","LCSC $2.6696 at ECB INR 92.9189 per USD, excludes delivery",https://www.lcsc.com/product-detail/C49274777.html?is_substitute=1&original_product_code=C49274792&original_unit_price=3.8684,2026-11-24,248.06,248.06
+X3,TSX-3225 25.0000MF20X-W,25 MHz crystal,1,1,44.90,44.90,Listed,"Mouser India, cut tape",https://www.mouser.in/en/c/passive-components/frequency-control-timing-devices/crystals/?frequency=25+MHz&pg=5,2026-11-24,44.90,44.90
+"FB1, C68–C81, R57–R66",,25 additional Ethernet passives,25,1,,150.00,Budget allowance,"Allowance for resistors, ceramic capacitors and ferrite. See BOM for part numbers.",,,150.00,150.00
+"U5, U14",TD301D485H,Isolated RS-485,2,1,729,1458.00,"Listed, out of stock",Exact module displayed out of stock,https://www.electronicscomp.com/td301d485h-mornsun-3v-logic-level-to-rs485-isolated-signal-converter-module-dip-package,2026-11-24,1458.00,1458.00
+U8,BT818Q-T,EVE display controller,1,1,977.26,977.26,Listed,Supplier list price,https://www.digikey.in/en/products/detail/bridgetek-pte-ltd/BT818Q-T/13242743,2026-11-24,977.26,977.26
+"D4, D10",SM712.TCT,RS-485 TVS,2,1,254.16,508.32,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/semtech-corporation/SM712-TCT/1000933,2026-11-24,508.32,508.32
+J2,FH12-40S-0.5SH(55),Raw 7-inch RGB and touch,1,1,337.64,337.64,Listed,Supplier list price,https://www.digikey.in/en/products/detail/hirose-electric-co-ltd/FH12-40S-0-5SH-55/1110328,2026-11-24,337.64,337.64
+"J6, J7",1751251,3-way terminal blocks for RS-232 and isolated RS-485 port 2,2,1,162.44,324.88,Listed,Supplier list price,https://www.digikey.in/en/products/detail/phoenix-contact/1751251/2511152,2026-11-24,324.88,324.88
+F1,045201.5MRL,1.5 A slow,1,1,310.06,310.06,Listed,Supplier list price,https://www.digikey.in/en/products/detail/littelfuse-inc/045201-5MRL/700843,2026-11-24,310.06,310.06
+BZ1,AI-1027-TWT-5V-R,5 V active buzzer,1,1,309.58,309.58,Listed,Supplier list price,https://www.digikey.in/en/products/detail/pui-audio-inc/AI-1027-TWT-5V-R/1745429,2026-11-24,309.58,309.58
+J9,1751277,24 V optocoupled inputs,1,1,270.41,270.41,Listed,Supplier list price,https://www.digikey.in/en/products/detail/phoenix-contact/1751277/2511023,2026-11-24,270.41,270.41
+U10,RV-3028-C7 32.768KHZ 1PPM-TA-QA,Battery-backed RTC,1,1,254.16,254.16,Listed,Supplier list price,https://www.digikey.in/en/products/detail/micro-crystal-ag/RV-3028-C7-32-768KHZ-1PPM-TA-QA/10499248,2026-11-24,254.16,254.16
+U9,TPS61165DBVR,PWM backlight boost,1,1,230.28,230.28,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/texas-instruments/TPS61165DBVR/2340764,2026-11-24,230.28,230.28
+J10,DM3D-SF,Push-pull microSD socket,1,1,221.68,221.68,Listed,Supplier list price,https://www.digikey.in/en/products/detail/hirose-electric-co-ltd/DM3D-SF/1786510,2026-11-24,221.68,221.68
+U2,RP2354B,RP2354B 2 MB QSPI flash,1,1,202.88,202.88,Listed,Single-unit price before GST,https://varnitronics.com/components/p/rp2354b-C39843328,2026-11-24,202.88,202.88
+U18,LTV-847S,Quad optical input isolation,1,1,164.35,164.35,Listed,Supplier list price,https://www.digikey.in/en/products/detail/liteon/LTV-847S/385841,2026-11-24,164.35,164.35
+J3,1715734,Isolated RS-485,1,1,163.39,163.39,Listed,Supplier list price,https://www.digikey.in/en/products/detail/phoenix-contact/1715734/260632,2026-11-24,163.39,163.39
+"X2, X1",ABM8-272-T3,"12 MHz, load 10 pF",2,1,65.93,131.86,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/abracon-llc/ABM8-272-T3/22472366,2026-11-24,131.86,131.86
+U11,TRS3232EIPWR,RS-232 line transceiver,1,1,117.53,117.53,"Listed, out of stock",Price displayed with backorder status,https://www.digikey.in/en/products/detail/texas-instruments/TRS3232EIPWR/1669037,2026-11-24,117.53,117.53
+J1,1715721,24 V input,1,1,110.84,110.84,Listed,Supplier list price,https://www.digikey.in/en/products/detail/phoenix-contact/1715721/260631,2026-11-24,110.84,110.84
+"SW1, SW2",434133025816,BOOTSEL and RESET pushbuttons,2,1,51.6,103.20,Listed,Supplier list price,https://www.digikey.in/en/products/detail/w%C3%BCrth-elektronik/434133025816/9950833,2026-11-24,103.20,103.20
+"D13, D16, D19, D22",SMF33CA,33 V bidirectional TVS,4,1,25.68,102.72,Listed,Diotec SOD-123FL version of the exact generic part number,https://www.digikey.in/en/products/detail/diotec-semiconductor/SMF33CA/22192366,2026-11-24,102.72,102.72
+D23,TPD4E1B06DCKR,Four-channel microSD ESD,1,1,101.28,101.28,Listed,Supplier list price,https://www.digikey.in/en/products/detail/texas-instruments/TPD4E1B06DCKR/3871271,2026-11-24,101.28,101.28
+L2,SRP5030TA-100M,10 uH shielded,1,1,99.37,99.37,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/bourns-inc/SRP5030TA-100M/5429753,2026-11-24,99.37,99.37
+"R48, R49, R50, R51",ERJ-P08F2001V,"2 k, 0.66 W",4,1,21.98,87.92,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/panasonic-industry/ERJ-P08F2001V/21281796,2026-11-24,87.92,87.92
+"R27, R28, R29, R52, R53, R54, R55, R56, R33",RC0402FR-0747KL,47 k,9,1,9.56,86.04,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/yageo/RC0402FR-0747KL/726616,2026-11-24,86.04,86.04
+"D11, D14, D17, D20",BZT52H-B8V2-QX,8.2 V Zener,4,1,19.02,76.08,Budget proxy,Price benchmark for a Nexperia 8.2 V SOD-123F Zener,https://www.digikey.in/en/products/detail/nexperia-usa-inc/BZT52H-B8V2-115/2779919,2026-11-24,76.08,76.08
+"D12, D15, D18, D21",1N4148WS-7-F,Reverse clamp,4,1,16.24,64.96,"Listed, out of stock",Exact Diodes Incorporated suffix. Mouser India showed zero stock.,https://www.digikey.in/en/products/detail/diodes-incorporated/1N4148WS-7-F/815127,2026-11-24,64.96,64.96
+C1,C3216X7S2A225K160AB,2.2 uF 100 V,1,1,64.02,64.02,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/tdk/C3216X7S2A225K160AB/2116342,2026-11-24,64.02,64.02
+D1,B2100A-13-F,100 V Schottky,1,1,61.15,61.15,"Listed, out of stock",Supplier page shows no stock,https://www.digikey.in/en/products/detail/diodes-incorporated/B2100A-13-F/5419253,2026-11-24,61.15,61.15
+"C15, C11, C38, C43, C55",GRM21BR61C106KE15L,10 uF,5,1,11.47,57.35,"Listed, out of stock",Supplier page shows no stock,https://www.digikey.in/en/products/detail/murata-electronics/GRM21BR61C106KE15L/965928,2026-11-24,57.35,57.35
+CELL1,CR2032,3 V primary lithium battery,1,1,57,57.00,Listed,Local single-cell retail sticker price,https://robu.in/product/panasonic-cr2032-3v-lithium-coin-battery-pack-of-1/,2026-11-24,57.00,57.00
+"C39, C40, C13, C14",GRM1555C1H150JA01D,15 pF,4,1,14,56.00,Budget proxy,Low-quantity capacitor allowance,https://www.digikey.in/en/products/detail/murata-electronics/GRM1555C1H150JA01D/3315234,2026-11-24,56.00,56.00
+BT1,3034,CR2032 retainer,1,1,49.69,49.69,Listed,Supplier list price,https://www.digikey.in/en/products/detail/keystone-electronics/3034/4499289,2026-11-24,49.69,49.69
+Q2,AO3400A,30 V N-MOSFET,1,1,49.69,49.69,Listed,Alpha & Omega Semiconductor. Supplier displayed stock.,https://www.digikey.in/en/products/detail/alpha-omega-semiconductor-inc/AO3400A/1855942,2026-11-24,49.69,49.69
+"R44, R45, R46, R47",RC0402FR-0710KL,10 k,4,1,9.56,38.24,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/yageo/RC0402FR-0710KL/726523,2026-11-24,38.24,38.24
+D2,SMBJ33A,33 V TVS,1,1,47.78,47.78,"Listed, out of stock",Supplier page shows no stock,https://www.digikey.in/en/products/detail/littelfuse-inc/SMBJ33A/286006,2026-11-24,47.78,47.78
+"C12, C30, C32, C33, C34, C35, C36, C37, C45, C56, C65, C46, C47, C48, C49, C50, C18, C22, C23, C24, C25, C26, C27, C28, C66, C67, C20, C21",GRM155R71E104KE14D,100 nF,28,10,1.49,41.72,Listed,Uses 10+ tier for 29 fitted units,https://www.mouser.in/en/ProductDetail/Murata-Electronics/GRM155R71E104KE14D,2026-11-24,41.72,41.72
+J5,SM03B-SRSS-TB(LF)(SN),SWD service,1,1,43,43.00,Listed,JST base orderable for the lead-free tin-plated header,https://www.digikey.in/en/products/detail/jst-sales-america-inc/SM03B-SRSS-TB/926709,2026-11-24,43.00,43.00
+"R26, R42, R34",RC0402FR-07100KL,100 k,3,1,9.51,28.53,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/yageo/RC0402FR-07100KL/726526,2026-11-24,28.53,28.53
+C3,EEU-FR1E470,47 uF 25 V,1,1,37.26,37.26,"Listed, out of stock",Supplier page shows no stock,https://www.digikey.in/en/products/detail/panasonic-industry/EEU-FR1E470/2433545,2026-11-24,37.26,37.26
+C42,GRM21BR71H105KA12L,1 uF 50 V,1,1,37.26,37.26,Budget proxy,DigiKey listed alternative as pricing proxy,https://www.digikey.in/en/products/detail/murata-electronics/GRM21BR71H105KA12L/1244326,2026-11-24,37.26,37.26
+C64,GRM21BZ71C106KE15L,"10 uF, 16 V",1,1,32.49,32.49,"Listed, out of stock",Supplier page shows no stock,https://www.digikey.in/en/products/detail/murata-electronics/GRM21BZ71C106KE15L/16602141,2026-11-24,32.49,32.49
+"R14, R16, R12",RC0402FR-071KL,1 k,3,1,9.56,28.68,Budget proxy,Same Yageo 0402 series retail-price proxy,https://www.digikey.in/en/products/detail/yageo/RC0402FR-0710KL/726523,2026-11-24,28.68,28.68
+"C16, C17, C19",GRM155R60J475ME47D,4.7 uF,3,1,9.56,28.68,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/murata-electronics/GRM155R60J475ME47D/3694656,2026-11-24,28.68,28.68
+D6,B160-13-F,60 V Schottky,1,1,28.35,28.35,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/diodes-incorporated/B160-13-F/806531,2026-11-24,28.35,28.35
+"R31, R32, R37",RC0402FR-074K7L,4.7 k,3,1,9.32,27.96,Listed,Supplier price tier for 3 required,https://www.mouser.in/en/ProductDetail/YAGEO/RC0402FR-074K7L,2026-11-24,27.96,27.96
+U19,SN74LVC1G125DBVR,MicroSD MISO buffer,1,1,26,26.00,Budget proxy,Single-piece allowance for the TI buffer. An exact retail tier could not be confirmed.,https://www.digikey.in/en/products/detail/texas-instruments/SN74LVC1G125DBVR/385720,2026-11-24,26.00,26.00
+C41,GRM188R61A475KE11D,4.7 uF,1,1,22.83,22.83,Budget proxy,Other Murata 4.7 µF 10 V 0603 as a pricing proxy,https://www.digikey.in/en/products/detail/murata-electronics/GRM188D71A475ME11D/10326315,2026-11-24,22.83,22.83
+J8,B6B-XH-A(LF)(SN),Relay board link,1,1,21.43,21.43,Listed,Supplier price tier for 1 required,https://www.mouser.in/en/ProductDetail/JST-Commercial/B6B-XH-ALFSN,2026-11-24,21.43,21.43
+C57,GRM188R71C105KA12D,1 uF,1,1,20.07,20.07,Budget proxy,DigiKey listed alternative as pricing proxy,https://www.digikey.in/en/products/detail/murata-electronics/GRM188R71C105KA12D/965914,2026-11-24,20.07,20.07
+L1,AOTA-B201610S3R3-101-T,3.3 uH,1,1,20.07,20.07,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/abracon-llc/AOTA-B201610S3R3-101-T/25621528,2026-11-24,20.07,20.07
+C44,GRM188R71H224KA64D,220 nF,1,1,20,20.00,Budget proxy,220 nF 50 V 0603 allowance,,2026-11-24,20.00,20.00
+"R17, R18",RC0402FR-0727RL,27 ohm,2,1,9.56,19.12,Budget proxy,Same Yageo 0402 series retail-price proxy,https://www.digikey.in/en/products/detail/yageo/RC0402FR-0710KL/726523,2026-11-24,19.12,19.12
+C7,GRM21BR71A105KA01L,1 uF 10 V,1,1,18.15,18.15,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/murata-electronics/GRM21BR71A105KA01L/586695,2026-11-24,18.15,18.15
+C31,GRM155R61A105KE15D,1 uF,1,1,18.15,18.15,Budget proxy,Budget derived from a distributor-listed alternative,https://www.digikey.in/en/products/detail/murata-electronics/GRM155R61A105KE15D/965904,2026-11-24,18.15,18.15
+D7,LTST-C170KGKT,Green status LED,1,1,18.15,18.15,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/lite-on-inc/LTST-C170KGKT/160-1414-1-ND/386776,2026-11-24,18.15,18.15
+R3,ERJ-6ENF4701V,4.7 k,1,1,18.07,18.07,Budget proxy,DigiKey's displayed upgrade price as a budget proxy,https://www.digikey.in/en/products/detail/panasonic-industry/ERJ-6ENF4701V/1746872,2026-11-24,18.07,18.07
+C6,GRM21BR71H104KA01L,100 nF 50 V,1,1,15.29,15.29,Budget proxy,Budget for a 100 nF 50 V ceramic capacitor,https://www.digikey.in/en/products/detail/murata-electronics/GRM188R71H104KA93D/587143,2026-11-24,15.29,15.29
+C2,GRM21BR71C105KA01L,1 uF 16 V,1,1,13.38,13.38,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/murata-electronics/GRM21BR71C105KA01L/586698,2026-11-24,13.38,13.38
+R25,RC0805FR-071R5L,1.50 ohm 1%,1,1,11.47,11.47,Listed,Supplier list price,https://www.digikey.in/en/products/detail/yageo/RC0805FR-071R5L/730442,2026-11-24,11.47,11.47
+R5,ERJ-6ENF1002V,10 k,1,1,11.46,11.46,Listed,Supplier price tier for 1 required,https://www.mouser.in/en/ProductDetail/Panasonic-Industry/ERJ-6ENF1002V,2026-11-24,11.46,11.46
+R30,RC0402FR-0722RL,22 ohm,1,1,10.51,10.51,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/yageo/RC0402FR-0722RL/729509,2026-11-24,10.51,10.51
+D9,B5819W-7-F,40 V flyback,1,1,9.56,9.56,Budget proxy,Other 40 V 1 A SOD-123 Schottky as pricing proxy,https://www.digikey.in/en/products/detail/shenzhen-slkormicro-semicon-co-ltd/B5819W/26112849,2026-11-24,9.56,9.56
+R41,RC0402FR-07100RL,100 ohm,1,1,9.56,9.56,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/yageo/RC0402FR-07100RL/729474,2026-11-24,9.56,9.56
+R43,RC0402FR-07680RL,680 ohm,1,1,9.56,9.56,Budget proxy,Same Yageo 0402 series retail-price proxy,https://www.digikey.in/en/products/detail/yageo/RC0402FR-0710KL/726523,2026-11-24,9.56,9.56
+R13,RC0402FR-0733RL,33 ohm,1,1,9.56,9.56,Listed,Supplier displayed stock,https://www.digikey.in/en/products/detail/yageo/RC0402FR-0733RL/726593,2026-11-24,9.56,9.56
+"C82–C96, R67–R83, Q4, D24–D25",,USB-C and dual-input power support parts,35,,,300.00,Budget allowance,INR 180–300 combined allowance for this group. See the BOM for individual part numbers.,,,180.00,300.00
+TOTAL,,"Rev M board components with covered costs, including CR2032",207,,,10317.30,Budget estimate,"Extended INR uses the high allowance. Excludes the LCD, external relay board, bare PCB, assembly, shipping, taxes and unpriced items.",,,10197.30,10317.30

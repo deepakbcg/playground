@@ -1,0 +1,29 @@
+Reference,Quantity,Value,Manufacturer part number,Footprint,Population,Notes
+J1,1,24 V input,1715721,MKDS-1.5-2-P5.08,Fit,Phoenix Contact. Wire entry faces top edge.
+F1,1,1.5 A slow,045201.5MRL,FUSE-2410,Fit,
+D1,1,100 V Schottky,B2100A-13-F,DO-214AC-SMA,Fit,
+D2,1,33 V TVS,SMBJ33A,DO-214AA-SMB,Fit,
+C1,1,2.2 uF 100 V,C3216X7S2A225K160AB,C1206,Fit,
+U1,1,5 V / 3 A,THN 15-4811WI,THN-15WI-DIP6,Fit,Input and output returns tie to GND. TRIM and REMOTE open.
+C2,1,1 uF 16 V,GRM21BR71C105KA01L,C0805,Fit,
+C3,1,47 uF 25 V,EEU-FR1E470,CAP-RADIAL-D5-P2,Fit,Low-ESR aluminum electrolytic.
+D3,1,40 V Schottky,B140-13-F,DO-214AC-SMA,Fit,
+"R1, R2",2,47 k,ERJ-6ENF4702V,R0805,Fit,
+R3,1,4.7 k,ERJ-6ENF4701V,R0805,Fit,
+R4,1,120 ohm 1%,ERJ-P06F1200V,R0805,DNP,0.5 W. DNP by default. Fit only at the cable end if appropriate to the bus.
+"C4, C5, C6",3,100 nF 50 V,GRM21BR71H104KA01L,C0805,Fit,
+C7,1,1 uF 10 V,GRM21BR71A105KA01L,C0805,Fit,
+R5,1,10 k,ERJ-6ENF1002V,R0805,Fit,
+R6,1,1 k,ERJ-6ENF1001V,R0805,Fit,
+J2,1,Touch display,B4B-XH-A(LF)(SN),JST-XH-1x04-P2.50,Fit,JST keyed header. Match signals and housing orientation on the exact panel.
+J3,1,Isolated RS-485,1715734,MKDS-1.5-3-P5.08,Fit,Phoenix Contact. Wire entry faces right edge.
+"U3, U4",2,UART level buffer,SN74LV1T34DBVR,DBV-SOT23-5,Fit,
+U5,1,Isolated RS-485,TD301D485H,MORNSUN-TDX01D485H-DIP10,Fit,Manual direction control. CON low = transmit. High = receive.
+D4,1,RS-485 TVS,SM712.TCT,SOT23-3,Fit,Clamps to isolated RS_COM.
+U2,1,Raspberry Pi Pico RP2040,SC0915,PICO-DIP40-P17.78,Fit,Populate Raspberry Pi Pico (non-W). USB accessible from the left.
+LCD1,1,7 inch resistive touchscreen,NX8048P070-011R,Panel mounted,Choose one,Default. 5 V / 1 A supply rating.
+LCD1,1,5 inch resistive touchscreen,NX8048P050-011R,Panel mounted,Alternative,5 V / 1 A supply rating.
+LCD1,1,10.1 inch resistive touchscreen,NX1060P101-011R-I,Panel mounted,Alternative,5 V / 2 A supply rating. Use load-tested harness.
+J2 mate,1,4-way cable housing,XHP-4,JST XH,Fit,Use contacts compatible with the selected wire.
+J2 mate contacts,4,"Crimp contact, 22–26 AWG",SXH-001T-P0.6N,JST XH,Fit,For the controller-side XHP-4. Use the panel-approved mate on the other end.
+U2 headers,2,20-position 2.54 mm post header,TSW-120-07-T-S,1x20 TH,Fit,Solder between the Pico and carrier.

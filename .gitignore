@@ -1,0 +1,16 @@
+# Local PCB reference downloads and search index
+/pcb-ebooks/
+/pcb-reference-library/
+
+# Generated skill packages
+/dist/
+
+# Python environments and caches
+/.pcb-rag-venv/
+/.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# macOS metadata
+.DS_Store

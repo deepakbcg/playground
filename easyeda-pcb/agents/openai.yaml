@@ -1,0 +1,4 @@
+interface:
+  display_name: "EasyEDA PCB Design"
+  short_description: "Plan, design, and review EasyEDA PCBs up to six layers"
+  default_prompt: "Use $easyeda-pcb to lead the requirements interview for my board and turn the answers into a project brief and verification plan."
