@@ -37,6 +37,7 @@ PASSIVE_0402_PACKAGES = {
     "GENERIC_RESC1005X35", "SMT-100-nF", "SMT-100-k", "SMT-47-k",
 }
 PASSIVE_0603_PACKAGES = {"0603", "C0603", "R0603"}
+RESTORED_0402 = set("C14 C39 C40 C68 C69 C70 C71 C72 C73 R12 R57 R58 R59 R60 R61 R63".split())
 
 
 def rows(path):
@@ -257,6 +258,8 @@ def main():
         assert schematic["BOM_Manufacturer Part"] == mpn, ref
         assert schematic.get("BOM_Supplier Part", "") == row["LCSC part"] or row["Population"] == "DNP", ref
         assert after_footprint == row["Footprint"], ref
+        if ref in RESTORED_0402:
+            assert after_footprint == before_footprint and after_footprint in PASSIVE_0402_PACKAGES, ref
         if before_footprint != after_footprint:
             mismatched_footprints.add(ref)
             assert before_footprint == worklist[ref]["Old footprint"] and before_footprint in PASSIVE_0402_PACKAGES
@@ -271,6 +274,7 @@ def main():
         if not ref.startswith(("R", "C", "FB")):
             assert pcb["BOM_Manufacturer Part"] == mpn, ref
     assert mismatched_footprints == worklist.keys()
+    assert not RESTORED_0402 & worklist.keys()
     print(f"Schematic, PCB and BOM agree on {len(cad['PCB'])} designators. TP1–TP4 are DNP.")
     print(f"{len(worklist)} intentional footprint mismatches, all listed in 0603-WORKLIST.csv.")
     print(f"Fitted passive packages 0402 {before_sizes['0402']} → {after_sizes['0402']}, "
@@ -281,11 +285,27 @@ def main():
     priced = set()
     total, missing = Decimal(0), []
     cost_rows = rows(HERE / f"{prefix}-BOM-Cost-INR.csv")
+    retail_status = Counter()
     pricing = {}
     external_panel = []
     for row in cost_rows[:-1]:
         designators = refs(row["References"])
         assert len(designators) == int(row["Quantity per board"])
+        for ref in designators:
+            assert row["LCSC part"] == bom[ref]["LCSC part"], ref
+            assert bom[ref]["Footprint"] in row["Footprint"].split(" / "), ref
+        assert len({bom[ref]["Footprint"] for ref in designators}) == len(row["Footprint"].split(" / "))
+        stock, code = row["LCSC retail stock"], row["LCSC part"]
+        if stock.isdecimal():
+            assert code and row["LCSC stock checked IST"]
+            expected = "Meets 1,000" if int(stock) >= 1000 else "Below 1,000"
+            if expected == "Below 1,000":
+                assert "LCSC below 1,000." in row["Notes"], designators
+        else:
+            assert not stock
+            expected = "Listing unavailable" if code else "No LCSC code"
+        assert row["LCSC stock status"] == expected, designators
+        retail_status[expected] += 1
         if designators == ["LCD1"]:
             assert row["Manufacturer part number"] == bom["LCD1"]["Manufacturer part number"]
             assert row["Supplier"] == "External panel" and not row["Extended INR"]
@@ -321,6 +341,7 @@ def main():
     assert len(bypass) == 32 and bypass <= priced
     print(f"{len(priced)} fitted main-board and cell refs entered once. Itemized price coverage {len(priced)-len(missing)}.")
     print(f"Recomputed priced subtotal INR {total:.2f}. Unpriced refs {', '.join(missing) or 'none'}.")
+    print("LCSC retail line counts " + ", ".join(f"{key} {value}" for key, value in sorted(retail_status.items())) + ".")
     print("32 original 0402 bypass locations accounted for, including four Ethernet positions.")
 
     changed = {ref for ref, old in before_bom.items()

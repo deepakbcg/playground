@@ -7,16 +7,16 @@ Top-level shape counts CIRCLE 10, HOLE 7, LIB 212, SOLIDREGION 543, TEXT 34, TRA
 Q3 pad nets match Rev M.
 U1 pin numbers, pad nets and DDC0006A lands checked. U1 copper rerouting is pending.
 Schematic, PCB and BOM agree on 212 designators. TP1–TP4 are DNP.
-71 intentional footprint mismatches, all listed in 0603-WORKLIST.csv.
-Fitted passive packages 0402 86 → 15, 0603 30 → 101.
+55 intentional footprint mismatches, all listed in 0603-WORKLIST.csv.
+Fitted passive packages 0402 86 → 31, 0603 30 → 85.
 Panel and battery are external to the CAD refdes sets.
 207 fitted main-board and cell refs entered once. Itemized price coverage 205.
-Recomputed priced subtotal INR 6073.24. Unpriced refs C85, C86.
+Recomputed priced subtotal INR 6040.56. Unpriced refs C85, C86.
+LCSC retail line counts Below 1,000 18, Listing unavailable 1, Meets 1,000 83, No LCSC code 5.
 32 original 0402 bypass locations accounted for, including four Ethernet positions.
-124 MPN changes have supplier and engineering evidence.
+114 MPN changes have supplier and engineering evidence.
 Configurator uses the same fitted MPNs, prices and subtotal as the CSVs.
 ZIP contains the byte-identical schematic and PCB JSONs.
-0603 screen fits-in-place 16, keep-0402-recommended 16, needs-nudge 39.
+0603 screen fits-in-place 16, needs-nudge 39.
 Baseline PCB SHA-256 8afd00695dc74bf8f5b1215cbbe43f0734204dc1179fff0e57a9fd2a53bfa4a7
 Offline draft comparisons passed. FABRICATION BLOCKED. Native EasyEDA import, ERC, DRC, CAM and hardware checks remain open.
-Passed both power options, feature dependencies, staged parts, pricing, PCB markers, and assembly CSV.

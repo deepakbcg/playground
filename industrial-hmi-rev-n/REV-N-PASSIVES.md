@@ -2,9 +2,9 @@
 
 **Draft — not fabrication-ready.** The live PCB in the ZIP is the byte-identical `dffb02b` checkpoint and still has the U1 fabrication hold. This BOM and schematic describe the intended editor revision. Use the [0603 worklist](0603-WORKLIST.csv) during the same native pass as the existing [PCB editor tasks](REV-M-PIN-AUDIT.md#pcb-editor-tasks). The PCB needs the footprint update and local re-routing before assembling from this BOM.
 
-## Before and after
+## Initial consolidation results
 
-| Measure | Checkpoint | Planned Rev N |
+| Measure | Checkpoint | Initial 0603 plan |
 | --- | --- | --- |
 | Unique fitted main-PCB MPNs | 107 | 102 |
 | JLC Basic | 22 | 23 |
@@ -20,9 +20,9 @@ Counts exclude DNP, panel and external cell for unique main-PCB MPNs. The materi
 
 The loading estimate uses **USD 3.07 per unique confirmed Extended SKU** on 25 November 2026. The all-SKU figure is a comparison of the complete catalog lists and includes parts that may be hand fitted. JLC exempts Basic and Preferred Extended for Economic PCBA. The intended hand-solder/hot-air build incurs no JLC feeder fees. [JLCPCB assembly pricing](https://jlcpcb.com/help/article/pcb-assembly-price) · [Preferred Extended policy](https://jlcpcb.com/help/article/pcb-assembly-faqs)
 
-## Changed orderables
+## Initial orderable changes
 
-The prices are extended across each ref group. Existing parts were kept where they met the same package and rating needs. Nominal values, schematic wires and pad nets retain the design intent. Bias comparisons below use manufacturer typical curves at the stated operating bias. Initial tolerance and temperature ratings are checked separately. Typical curves establish a design comparison. Qualification on a working board still requires startup, load-step and rail measurements.
+This table records the initial 0603 plan. The [follow-up below](#lcsc-retail-stock-and-0402-follow-up) records the current replacements and 0402 restorations. The prices are extended across each ref group. Existing parts were kept where they met the same package and rating needs. Nominal values, schematic wires and pad nets retain the design intent. Bias comparisons below use manufacturer typical curves at the stated operating bias. Initial tolerance and temperature ratings are checked separately. Typical curves establish a design comparison. Qualification on a working board still requires startup, load-step and rail measurements.
 
 | Refs | Checkpoint → planned MPN | LCSC | Package | JLC class | INR old → new | Stock and USD qty 1 / 10 | Ratings and DC bias | Evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -90,19 +90,65 @@ The distance is from the passive footprint center to the nearest point of the IC
 | Status | Count |
 | --- | --- |
 | fits-in-place | 16 |
-| keep-0402-recommended | 16 |
 | needs-nudge | 39 |
 
-Run `python3 tools/fit_0603.py --output 0603-WORKLIST.csv` to reproduce the region-ordered worklist. It projects the existing `0603` lands and Document body outline from R67 and C87 at each checkpoint center and numbered pad axis. The coordinates start at the board’s northwest outline corner with positive y down. The screen compares the combined pad and body envelope with the board edge, neighboring pads and current or proposed neighboring envelopes. It checks proposed lands against adjacent other-net lands, outer-layer tracks and vias using the draft 0.125 mm clearance. The controlling obstacle and shortfall are recorded in millimetres. Pad bounding boxes give a conservative first pass for nonrectangular pads. The `keep-0402-recommended` rows are editor review flags for overlapping sensitive USB, crystal or Ethernet escapes. They are still part of the planned 0603 conversion.
+Run `python3 tools/fit_0603.py --output 0603-WORKLIST.csv` to reproduce the region-ordered worklist. It projects the existing `0603` lands and Document body outline from R67 and C87 at each checkpoint center and numbered pad axis. The coordinates start at the board’s northwest outline corner with positive y down. The screen compares the combined pad and body envelope with the board edge, neighboring pads and current or proposed neighboring envelopes. It checks proposed lands against adjacent other-net lands, outer-layer tracks and vias using the draft 0.125 mm clearance. The controlling obstacle and shortfall are recorded in millimetres. Pad bounding boxes give a conservative first pass for nonrectangular pads. The 16 earlier `keep-0402-recommended` positions use their original 0402 land patterns and are omitted from the current worklist.
 
 The screen uses current copper and simulated placements. It leaves pours, mask and paste clearances, internal-layer integrity, connector overhangs and soldering access for native fit and DRC. Check same-net attachment after moving lands, preserve crystal return length and paired USB/Ethernet geometry, and verify hand-solder tip access before the layout is released.
 
-## Stock below 100
+## LCSC retail stock and 0402 follow-up
 
-| Refs | Stock | Source |
+On 25 November 2026 IST, 6 below-floor source lines covering 43 placements moved to LCSC codes with at least 1,000 units in the public product-detail feed. Retail quantities are shown separately from each price source’s stock. The retail MOQ is pro-rated to the fitted quantity in the material estimate, which excludes the LCD, freight and tax. [Costed BOM](Industrial-HMI-RevN-BOM-Cost-INR.csv)
+
+**Restore to 0402.** C14, C39, C40, C68, C69, C70, C71, C72, C73, R12, R57, R58, R59, R60, R61, R63. All 16 use the original land names and rated orderables. Existing values, symbols’ pin geometry and schematic wiring are preserved. The 15 U2/U8 decouplers listed above also remain 0402. [Current worklist](0603-WORKLIST.csv)
+
+| Measure | Initial 0603 plan | Current Rev N |
 | --- | --- | --- |
-| R48, R49, R50, R51 | 19 | [JLCPCB](https://jlcpcb.com/partdetail/C4244383) |
-| J9 | 86 | [LCSC](https://www.lcsc.com/product-detail/C6787265.html) |
-| D23 | 2 | [LCSC](https://www.lcsc.com/product-detail/C840093.html) |
-| J11 | 38 | [LCSC](https://www.lcsc.com/product-detail/C49274777.html) |
-| Q3 | 3 | [LCSC](https://www.lcsc.com/product-detail/C457492.html) |
+| Fitted main-board orderables | 102 | 105 |
+| JLC Basic | 23 | 18 |
+| JLC Preferred Extended | 2 | 3 |
+| JLC Extended | 70 | 77 |
+| JLC Unconfirmed | 7 | 7 |
+| Fitted 0402 positions | 15 | 31 |
+| Fitted 0603 positions | 101 | 85 |
+| Priced fitted main board and RTC cell | ₹6,073.24 | ₹6,040.56 |
+| Estimated Economic loading on confirmed Extended main-PCB orderables | $214.90 (₹19,914.78) | $236.39 (₹21,906.26) |
+
+### Stock replacements
+
+| Refs | Previous orderable | Selected orderable | LCSC units | JLC class | Fitted INR | Rating check |
+| --- | --- | --- | --- | --- | --- | --- |
+| J1 | `1715721` · [C480516](https://www.lcsc.com/product-detail/C480516.html) | `1715721` · [C5183929](https://www.lcsc.com/product-detail/C5183929.html) | 2,328 | Extended | ₹49.93 → ₹46.91 | Same Phoenix Contact ordering item 1715721, marketed under its MKDS 1,5/ 2-5,08 type name. |
+| R44, R45, R46, R47, R78, R80 | `0603WAF1002T5E` · [C25804](https://www.lcsc.com/product-detail/C25804.html) | `RC0603FR-0710KL` · [C98220](https://www.lcsc.com/product-detail/C98220.html) | 4,756,500 | Extended | ₹0.96 → ₹1.26 | 10 kΩ, ±1%, 100 mW, 75 V, ±100 ppm/°C and −55 to +155°C. |
+| R64, R65 | `0603WAF3300T5E` · [C23138](https://www.lcsc.com/product-detail/C23138.html) | `RC0603FR-07330RL` · [C105881](https://www.lcsc.com/product-detail/C105881.html) | 5,134,300 | Extended | ₹0.32 → ₹0.42 | 330 Ω, ±1%, 100 mW, 75 V, ±100 ppm/°C and −55 to +155°C. |
+| C12, C22, C23, C24, C34, C35, C45, C46, C47, C48, C49, C50, C56, C65, C75, C76, C77, C81 | `CC0603KRX7R9BB104` · [C14663](https://www.lcsc.com/product-detail/C14663.html) | `CC0603JRX7R9BB104` · [C91183](https://www.lcsc.com/product-detail/C91183.html) | 3,897,200 | Extended | ₹9.54 → ₹18.18 | Same Yageo 100 nF, 50 V X7R family and matched typical DC-bias curves. Initial tolerance tightens from ±10% to ±5%. Shares the existing C20/C37 orderable. |
+| C30, C32, C33, C36, C18, C25, C26, C27, C28, C66, C67, C21 | `CL05B104KB54PNC` · [C307331](https://www.lcsc.com/product-detail/C307331.html) | `GRT155R71H104KE01D` · [C711091](https://www.lcsc.com/product-detail/C711091.html) | 16,750 | Extended | ₹9.60 → ₹16.32 | 100 nF ±10%, 50 V X7R and AEC-Q200. At 3.3 V the Murata SimSurf curve retains about 99.9 nF nominal from the zero-bias value, versus about 97.5 nF for the Samsung part. |
+| D13, D16, D19, D22 | `SMF33CA` · [C1851347](https://www.lcsc.com/product-detail/C1851347.html) | `SMF33CA` · [C19077520](https://www.lcsc.com/product-detail/C19077520.html) | 265,140 | Preferred Extended | ₹53.64 → ₹11.08 | Bidirectional 33 V standoff, 36.7–40.6 V breakdown, 53.3 V clamp at 3.8 A, 200 W at 10/1000 µs, and −55 to +150°C junction operating range. |
+
+The Phoenix alternate listing uses the type name for the same manufacturer ordering number. Murata’s typical bias curve for the 0402 replacement is referenced at 25°C. The 0603 Yageo replacement uses the tighter initial tolerance already fitted at C20/C37. The SMF33CA line moves from Littelfuse to R+O and retains the bidirectional junction and surge ratings. [Phoenix drawing and order number](https://www.phoenixcontact.com/en-us/products/pcb-terminal-block-mkds-15-2-508-1715721) · [Murata bias data](https://ds.murata.com/simsurfing/mlcc.html?partnumbers=%5B%22GRT155R71H104KE01%22%5D) · [Yageo series and bias data](https://yageogroup.com/download/specsheet/CC0603JRX7R9BB104) · [Littelfuse SMF ratings](https://www.littelfuse.com/assetdocs/tvs-diodes-smf-datasheet?assetguid=7eb8a5b6-bdd0-4561-8f19-0c3cc6f9b2af) · [R+O SMF ratings](https://datasheet.lcsc.com/datasheet/pdf/fa41ee376507916bceb7512729759974.pdf?productCode=C19077520) · [Manufacturer evidence](tools/substitution-evidence.csv)
+
+### Open sourcing lines
+
+| Refs | Fitted orderable | LCSC units | Reason for retaining |
+| --- | --- | --- | --- |
+| C1, C82 | `C3216X7S2A225K160AB` · [C2168259](https://www.lcsc.com/product-detail/C2168259.html) | 0 | The stocked TDK candidate matches the nameplate ratings. Effective input capacitance at the cabinet rail still needs a matched DC-bias curve before adoption. [C338052 comparison](https://www.lcsc.com/product-detail/C338052.html) |
+| J3 | `1715734` · [C480520](https://www.lcsc.com/product-detail/C480520.html) | 380 | The Degson three-position terminal uses the correct pitch but has a different body height and a 300 V catalog rating. It also falls below the stock floor. [C7529460 comparison](https://www.lcsc.com/product-detail/C7529460.html) |
+| U8 | `BT818Q-T` · [C3228614](https://www.lcsc.com/product-detail/C3228614.html) | 0 | Keep the specified BT818 EVE controller. A corresponding in-stock orderable was not verified. |
+| L2 | `SRP5030TA-100M` · [C3223923](https://www.lcsc.com/product-detail/C3223923.html) | 0 | The stocked MetalLions candidate is rated to +125°C and lacks the original Bourns AEC-Q200 qualification and +150°C rating. [C49308499 comparison](https://www.lcsc.com/product-detail/C49308499.html) |
+| U10 | `RV-3028-C7 32.768KHZ 1PPM-TA-QA` · [C3304278](https://www.lcsc.com/product-detail/C3304278.html) | 0 | The exact RV-3028 1 ppm packing variant is also below the floor. The stocked RV-4162 is a different RTC with a 20 ppm rating. [C3019759 comparison](https://www.lcsc.com/product-detail/C3019759.html) |
+| J6, J7 | `1751251` · [C91152](https://www.lcsc.com/product-detail/C91152.html) | 261 | The stocked terminal candidates need the same 3.5 mm lead geometry, wire-entry orientation and Phoenix current and voltage ratings. |
+| BZ1 | `AI-1027-TWT-5V-R` · [C5550654](https://www.lcsc.com/product-detail/C5550654.html) | 0 | The stocked Fengming part has wider frequency tolerance, ±300 Hz versus ±200 Hz, and lower storage-temperature ceiling. [C409832 comparison](https://www.lcsc.com/product-detail/C409832.html) |
+| D11, D14, D17, D20 | `BZT52H-B8V2-QX` · [C7507957](https://www.lcsc.com/product-detail/C7507957.html) | 0 | The verified SOD-123F 8.2 V ±2% Nexperia options are below the floor. The stocked catalog suggestion changes the package. [C179378 comparison](https://www.lcsc.com/product-detail/C179378.html) |
+| R48, R49, R50, R51 | `ERJ-P08F2001V` · [C4244383](https://www.lcsc.com/product-detail/C4244383.html) | 0 | The stocked Vishay pulse resistor has 200 V maximum operating voltage versus the Panasonic 500 V rating. [C844428 comparison](https://www.lcsc.com/product-detail/C844428.html) |
+| J9 | `1751277` · [C6787265](https://www.lcsc.com/product-detail/C6787265.html) | 86 | The stocked Dorabo terminal is rated 10 A versus the Phoenix 13.5 A rating and accepts a smaller maximum wire cross section. [C3646874 comparison](https://www.lcsc.com/product-detail/C3646874.html) |
+| D23 | `TPD4E1B06DCKR` · [C840093](https://www.lcsc.com/product-detail/C840093.html) | 2 | The TECH PUBLIC part gives its 14.5 V clamp at 2.8 A on VCC–GND. TI specifies 14.5 V at 3 A on I/O–GND. [C2923390 comparison](https://www.lcsc.com/product-detail/C2923390.html) |
+| J11 | `LPJ4011ABNL` · [C49274777](https://www.lcsc.com/product-detail/C49274777.html) | 38 | The same-land alternatives reviewed did not establish the original magnetics, separate PHY center taps, LED pinout and shield/peg fit together. [C49274791 comparison](https://www.lcsc.com/product-detail/C49274791.html) |
+| C79 | `CL10A475KO8NNNC` · [C19666](https://www.lcsc.com/product-detail/C19666.html) | 0 | The Taiyo Yuden candidate loses more capacitance under DC bias. The Murata C77045 curve is suitable at room temperature, but the feed reported 895 units. Equivalent bias data for the stocked C86016 remains open. [C92758 comparison](https://www.lcsc.com/product-detail/C92758.html) · [C77045 comparison](https://www.lcsc.com/product-detail/C77045.html) · [C86016 comparison](https://www.lcsc.com/product-detail/C86016.html) |
+| U1 | `LMR51635XDDCR` · [C42432812](https://www.lcsc.com/product-detail/C42432812.html) | 0 | The stocked 1.1 MHz variant changes the 400 kHz cabinet buck design. The exact TI device is specified. [C45262770 comparison](https://www.lcsc.com/product-detail/C45262770.html) |
+| J4 | `USB4105-GF-A` · [C3020560](https://www.lcsc.com/product-detail/C3020560.html) | 0 | Keep the specified GCT 12-pin USB-C connector. The catalog alternatives use 16 signal contacts or a different mounting drawing. [C27636760 comparison](https://www.lcsc.com/product-detail/C27636760.html) |
+| U21 | `STUSB4500LQTR` · [C506650](https://www.lcsc.com/product-detail/C506650.html) | 0 | The specified 5 V/current-advertisement USB-C sink controller has no verified in-stock same-pin replacement. |
+| Q3 | `STL6P3LLH6` · [C457492](https://www.lcsc.com/product-detail/C457492.html) | 3 | Keep the specified ST PowerFLAT part under the earlier ₹50 savings rule. The checked STL9P3LLH6 is also below the stock floor. [C2969828 comparison](https://www.lcsc.com/product-detail/C2969828.html) |
+| L4 | `MWSA0402S-1R0MT` · [C408332](https://www.lcsc.com/product-detail/C408332.html) | Unavailable | The exact orderable has no public LCSC retail result. Existing JLCPCB stock and U6 magnetics selection are recorded separately. |
+| D25 | `TPD2EUSB30DRTR` · [C97502](https://www.lcsc.com/product-detail/C97502.html) | 0 | The stocked TI A variant has a 3.6 V standoff versus 5.5 V. The similarly named TECH PUBLIC part is rated 4 A at 8/20 µs versus TI’s 5 A. Native DRT land correction remains open. [TI A variant](https://www.lcsc.com/product-detail/C94934.html) · [TECH PUBLIC comparison](https://www.lcsc.com/product-detail/C5182099.html) |
+
+The LCSC feed returned no usable listing for L4. Five lines lack LCSC codes, covering SW1/SW2, BT1, C85/C86, CELL1 and LCD1. C85/C86 are unpriced in the fitted draft and have a separate qualification task. Other supplier quotes and JLC stock remain in the costed BOM. The PCB is on fabrication hold for the U1 copper correction and native layout checks. [Cabinet output sourcing](REV-N-CHANGES.md) · [PCB editor tasks](REV-M-PIN-AUDIT.md#pcb-editor-tasks)

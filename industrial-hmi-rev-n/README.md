@@ -24,17 +24,21 @@ The native PCB silkscreen includes Rev M vector outlines from the frozen baselin
 
 ## Cost and population
 
-The priced fitted-parts subtotal is **₹6,073.24 for 205 of 207 fitted main-board and cell positions**. This includes a ₹10 provisional independent-seller quote for the four field-input zeners. C85 and C86 have a stocked 47 µF candidate pending validation and remain unpriced in the fitted draft. Rev M’s published ₹9,073.32–₹9,193.32 used allowances and a different distributor mix. [Current pricing](Industrial-HMI-RevN-BOM-Cost-INR.csv)
+The priced fitted-parts subtotal is **₹6,040.56 for 205 of 207 fitted main-board and cell positions**. This includes a ₹10 provisional independent-seller quote for the four field-input zeners. C85 and C86 have a stocked 47 µF candidate pending validation and remain unpriced in the fitted draft. Rev M’s published ₹9,073.32–₹9,193.32 used allowances and a different distributor mix. [Current pricing](Industrial-HMI-RevN-BOM-Cost-INR.csv)
 
 **Q3 sourcing.** Rev N fits ST’s original STL6P3LLH6 at ₹131.43 in the checked one-unit tier. The verified STL9P3LLH6 alternative saves about ₹3.56, below the ₹50 threshold. [ST Q3 datasheet](https://www.st.com/resource/en/datasheet/stl6p3llh6.pdf) · [Price comparison](REV-N-CHANGES.md#q3-decision)
 
-**USB-only first build.** Leaving out J1, F1, D1, D2, C1, U1, L3, C2, C82–C86, R5 and R67–R70 removes **₹543.49 in priced parts**. Unpriced positions in this group are **C85, C86**. The configuration still uses the USB-C qualification path, mux and 3.3 V buck and requires a source advertising 3 A. The starter is a fit preset for the draft and needs the USB and 3.3 V routing issues closed before use. [Build configurator](Industrial-HMI-RevN-Build-Configurator.html)
+**USB-only first build.** Leaving out J1, F1, D1, D2, C1, U1, L3, C2, C82–C86, R5 and R67–R70 removes **₹540.79 in priced parts**. Unpriced positions in this group are **C85, C86**. The configuration still uses the USB-C qualification path, mux and 3.3 V buck and requires a source advertising 3 A. The starter is a fit preset for the draft and needs the USB and 3.3 V routing issues closed before use. [Build configurator](Industrial-HMI-RevN-Build-Configurator.html)
 
 Design references include [Raspberry Pi RP2350 hardware resources](https://pip.raspberrypi.com/categories/1214-rp2350), [BT818](https://brtchip.com/wp-content/uploads/2022/04/DS_BT817_8.pdf), [STUSB4500L](https://www.st.com/resource/en/datasheet/stusb4500l.pdf), [TPS2121](https://www.ti.com/lit/ds/symlink/tps2121.pdf) and [TPS62902](https://www.ti.com/lit/ds/symlink/tps62902.pdf). The panel, nominal 5 V and 3.3 V loads, and independent field-side RS-485 returns are documented in the Rev M baseline. [Power budget and interfaces](../industrial-hmi-rev-m/README.md)
 
 ## Passive consolidation and 0603
 
-The planned schematic and BOM move 71 fitted 0402 passives to the project’s existing `0603` footprint and retain 15 nearby U2/U8 decouplers at 0402. The PCB and placement artwork still describe the checkpoint layout. In a native EasyEDA working copy, use **Design → Update PCB**, review the footprint changes and resolve the worklist before assembly. C41 retains the existing part because the cheaper candidates examined lost capacitance on its 3.3 V rail. [Sourcing decisions and exceptions](REV-N-PASSIVES.md) · [Region-ordered placement checks](0603-WORKLIST.csv)
+The schematic and BOM retain 31 fitted 0402 positions, including the 16 sensitive placements restored to their checkpoint footprints. The remaining 55 footprint changes are listed in the editor worklist. The PCB and placement artwork still describe the checkpoint layout. In a native EasyEDA working copy, use **Design → Update PCB**, review the footprint changes and resolve the worklist before assembly. C41 retains the existing part because the cheaper candidates examined lost capacitance on its 3.3 V rail. [Sourcing decisions and exceptions](REV-N-PASSIVES.md) · [Region-ordered placement checks](0603-WORKLIST.csv)
+
+## LCSC retail stock
+
+The costed BOM records the retail stock check from 25 November 2026 IST. 6 below-floor lines were re-picked or moved to an exact-part catalog code with at least 1,000 units. 18 lines are still below the floor and one has an unavailable retail listing. [Replacement checks and open lines](REV-N-PASSIVES.md#lcsc-retail-stock-and-0402-follow-up) · [Costed BOM](Industrial-HMI-RevN-BOM-Cost-INR.csv)
 
 ## Release blockers
 

@@ -1,5 +1,7 @@
 # Rev N sourcing changes
 
+This report records the sourcing checkpoint. The current stock selections and costed BOM are linked from the [Rev N follow-up](REV-N-PASSIVES.md#lcsc-retail-stock-and-0402-follow-up).
+
 **DO NOT FABRICATE OR POWER THIS PCB.** Rev N corrects the U1 schematic and land assignments. The existing protected 24 V input track still reaches U1.1, now assigned to feedback. [Release blockers](README.md#release-blockers) · [Pin audit and copper evidence](REV-M-PIN-AUDIT.md)
 
 This report records the pre-consolidation sourcing checkpoint. The passive report and current CSVs supersede its prices and passive selections. [Passive consolidation](REV-N-PASSIVES.md) · [Current pricing](Industrial-HMI-RevN-BOM-Cost-INR.csv)
