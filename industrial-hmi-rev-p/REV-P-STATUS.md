@@ -61,25 +61,30 @@ The verifier accepts positive area overlap or a continuous shared edge of at lea
 - **D25.** The DRT0003A CAD lands are 0.45 × 0.30 mm in the installed orientation. D+ and D− use symmetric ±0.35 mm offsets. Existing D+, D− and GND tracks positively overlap the new lands, so the routed data pair was retained. [TI MPDS340 p.1](https://www.ti.com/lit/ml/mpds340/mpds340.pdf) · [DRT0003A copper land data](https://static.ultralibrarian.com/part-previews/footprints/5163958/detailed-DRT0003A.svg)
 - **Copper and marking.** The new land shapes and widened 3V3 tracks passed the stored-geometry clearance check with a minimum **0.132428 mm**. No fixed regions needed further trimming for this package. Silkscreen reads **Rev P DRAFT**. The separate warning remains on Document layer 12. [Pad tables and checks](tools/verification-output.txt)
 
+## J4 geometry and reroute locations
+
+The approved USB4105-GF-A footprint is bound in the live schematic, PCB and BOM. The mating face remains at **x = 1015.825 mm** and the centreline at **y = 816.000 mm**, giving **0.175 mm** nominal overhang at the x = 1016.000 mm board edge. The untrimmed SMT row is now at x = 1023.180 mm. Each approved end trim removes 0.051 mm, leaves 1.099 mm of land length and gives **0.226091 mm** between its locator and J4 GND land. [J4 source footprint](Footprint_GCT-USB4105-GF-A-REV-P.json) · [Drawing comparison and fit checks](tools/verification-output.txt)
+
+| Face-fixed feature | Centres (x / y in mm) | Routed repair |
+| --- | --- | --- |
+| SH1 and SH2 rear slots | 1022.605 / 811.680 and 820.320 | Moved VBUS via `gge5596` to (1022.150, 813.940) and rerouted the 0.48 mm Inner2 trunk. Bottom CC2 `gge4850` uses x = 1020.800 through the slot row. |
+| SH3 and SH4 front slots | 1018.425 / 811.680 and 820.320 | Preserved the Top CC1 escape around the front shell and detoured around the VBUS via. Inner1 links both front lands to the rear shell ground stitches. |
+| Ø0.65 locators | 1022.105 / 813.110 and 818.890 | Moved the lower VBUS branch `gge4901` to the right of the lands. Moved GND via `gge5667` to (1021.780, 819.690) and reconnected its SH2 bridges on all four layers. Cleared Bottom fixed regions `gge5848`, `gge5859`, `gge961106` and `gge961304` locally. |
+
+The existing D− crossover vias were reused, adjacent Inner1 GND covers the signal path outside their antipads, and both U21 dead-battery connections pass. J4-to-U23 planar skew is **1.214 mm** in orientation A and **2.512 mm** in B, within the **5 mm** Full Speed limit. The live source has **4 plated slots, 56 round plated component holes, 9 NPTH and 664 vias**. Native drill export and CAM review are pending. [Recorded verification](tools/verification-output.txt)
+
+### D24 placement and return
+
+The SMF6.0A centre moved **0.120 mm inward**, from **(1024.500, 812.000)** to **(1024.620, 812.000) mm**. This gives 0.015 mm design margin over the 0.150 mm assembly spacing. D24 retains its orientation and land geometry. J4's housing datum and C87 are fixed. The D24 cathode land is **2.106 mm** from the nearest J4 VBUS land edge. The maximum D24 body envelope has **0.445 mm** plan-view clearance to the nominal J4 housing. Check hand-solder access on the first article. [Littelfuse SMF drawing, p.5](https://www.littelfuse.com/assetdocs/tvs-diode-smf-datasheet?assetguid=7eb8a5b6-bdd0-4561-8f19-0c3cc6f9b2af#page=5)
+
+D24.2 has **0.165 mm** spacing to J4's A1/B12 GND land, its co-nearest A4/B9 VBUS land, and the unconnected B8 land. The GND land pair shares a net and meets the assembly spacing rule. VBUS and B8 are separate copper and meet both the 0.125 mm electrical and 0.150 mm assembly spacing rules. The VBUS link is **1.006 mm × 0.480 mm**, down from 1.373 mm at the same width. The D24 ground link is **0.420 mm × 0.250 mm**, down from 0.509 mm and up from 0.150 mm wide. Via `gge5646` at **(1025.620, 813.450)** ties it directly to the Inner1 reference through a **1.410 mm × 0.600 mm** strap. All contacts have positive copper overlap.
+
+Updated copper passed the **0.125 mm** rule with a minimum **0.130429 mm** on Top from CC1 `gge4853` to USB_RAW_SENSE via `gge961301`. Minimum locator-to-copper was **0.203985 mm** against Bottom GND. Minimum shell-slot-to-foreign-copper was **0.391341 mm** on both inner and outer layers. Zero shorts and zero split named nets were found. [Clearance and connectivity report](tools/verification-output.txt)
+
 ## Editor and release tasks
 
-1. **J4, USB4105-GF-A is blocked by the adjacent D24 land.** The approved library end trim gives **0.226091 mm** from each Ø0.65 mm locator to the corresponding J4 GND land. With the mating face held at x = 1015.825 mm, the nominal J4 VBUS land A4/B9 and unused SBU2 land B8 sit **0.045000 mm** from fixed D24.2 GND. The copper clearance rule is **0.125 mm**, and the chosen process uses **0.150 mm** for different-net SMT pads. The proposed 0.12 mm inboard D24 move would create **0.165 mm** pad clearance without moving J4 or C87. The live J4 placement, its schematic association, the PCB and the BOM keep the prior geometry while the D24 placement decision is pending. [Approved-trim J4 library](Footprint_GCT-USB4105-GF-A-REV-P.json) · [Verification](tools/verification-output.txt)
-2. **U1 FB and BZ1.** The optional R69/R70 relocation is deferred. A ≤3 mm FB divider placement and a quiet route around the U1 switch and L3 copper were not verified offline. Review the existing 20.6 mm Bottom CAB_FB route over Inner1 GND, and test noise and transient response. Measure BZ1 lead pitch, diameter and polarity against the nominal 7.6 mm footprint and check enclosure fit. [U1 routing history](../industrial-hmi-rev-n/U1-REROUTE.md)
-3. **Native release.** Import the corrected libraries and the live schematic/PCB pair, compare schematic and PCB, inspect the copper and isolation boundaries, then run native DRC. Inspect the generated Gerbers and plated/nonplated drills in an independent CAM viewer. [Editor runbook](EDITOR-RUNBOOK.md) · [Fabrication notes](FAB-NOTES.md)
-
-### J4 geometry and reroute locations
-
-Use the mating-face line at **x = 1015.825 mm**, y centreline **816.000 mm**, from the live footprint outline. This preserves the modeled **0.175 mm overhang** at the x = 1016.000 mm board edge. Aligning to the recommended flush edge instead would move the face 0.175 mm inboard. The face-fixed B3 SMT row projects to **x = 1023.180 mm**, 0.575 mm inboard of today's lands. Verify the modeled face against the enclosure at first article. [Recorded J4 measurements](tools/verification-output.txt)
-
-| Face-fixed feature | Projected centres (x / y in mm) | Existing copper to address |
-| --- | --- | --- |
-| SH1 and SH2 rear slots | 1022.605 / 811.680 and 820.320 | SH1 intersects VBUS via `gge5596` and tracks on L1/L3 including `gge4902`, and CC2 `gge4850` on L4. |
-| SH3 and SH4 front slots | 1018.425 / 811.680 and 820.320 | Check the new annuli and drill edges near L1 USB_CC1. The existing J4.SH3-to-CC1 copper gap is 0.128 mm with the old lands. |
-| Ø0.65 locators | 1022.105 / 813.110 and 818.890 | Both hit Bottom GND `gge5848`. The first hits Inner2 VBUS `gge4902`. The second hits Top VBUS `gge4901` and is too close to the `gge5667` ground copper and its SH2 bridges on all four layers. The approved trim moves the closest GND pad corners to (1022.656, 813.100) and (1022.656, 818.900). |
-
-A local routing trial used the approved trim and resolved the VBUS/CC route and drill conflicts while holding D24 and C87 fixed. It recorded zero shorts and zero split named nets. The trial rerouted Bottom CC2 west of SH1, moved the VBUS trunk to the corridor between the shell rows on Inner2, detoured Top CC1, added Inner1 GND under the USB routes, and stitched shell ground through `gge5664` and `gge5667`. It locally cleared four Bottom fixed regions, `gge5848`, `gge961106`, `gge961304`, and `gge5859`. D24.2 remained the only copper clearance failure in that trial, so these edits stay outside the live CAD.
-
-The revised USB Full Speed target is **≤5 mm** of skew in either orientation. The live traces to U23 measure **1.208 mm** (A) and **2.296 mm** (B) of skew, counting planar copper only. The trial measures **1.214 mm** (A) and **2.512 mm** (B), reuses both existing D− vias around the crossover, and maintains an Inner1 ground reference outside their antipads. The trial retains the **0.48 mm** VBUS trunk and both U21 dead-battery connections. [Full trial and live results](tools/verification-output.txt)
+1. **U1 FB and BZ1.** The optional R69/R70 relocation is deferred. A ≤3 mm FB divider placement and a quiet route around the U1 switch and L3 copper were not verified offline. Review the existing 20.6 mm Bottom CAB_FB route over Inner1 GND, and test noise and transient response. Measure BZ1 lead pitch, diameter and polarity against the nominal 7.6 mm footprint and check enclosure fit. [U1 routing history](../industrial-hmi-rev-n/U1-REROUTE.md)
+2. **Native release.** Import the live source pair and supplied libraries together, compare schematic and PCB, then run native DRC. Inspect copper, solder mask, slots, locator drills and assembly clearances in an independent CAM viewer. [Editor runbook](EDITOR-RUNBOOK.md) · [Fabrication notes](FAB-NOTES.md)
 
 ### Bring-up after release checks
 

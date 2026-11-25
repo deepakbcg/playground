@@ -104,7 +104,7 @@ C82,1,2.2 µF 100 V,C3216X7S2A225K160AB,1206,Fit,,TDK,C2168259
 "C83, C84",2,100 nF 100 V,CC0603KRX7R0BB104,0603,Fit,,YAGEO,C113803
 "C85, C86",2,47 µF 16 V,CL32A476KOJNNNE,1210,Fit,"Prototype choice for the 7-inch load. Run cabinet startup, load-step and loop-stability checks after U1 rework. See README.",Samsung Electro-Mechanics,C2932477
 L3,1,10 µH shielded,SRP1038A-100M,BOURNS-SRP1038A,Fit,,BOURNS,C780184
-J4,1,USB-C 5 V and USB 2.0,USB4105-GF-A,GCT-USB4105-GF-A,Fit,USB-C right-angle receptacle. Confirm shell slot dimensions and enclosure access.,Global Connector Technology,C3020560
+J4,1,USB-C 5 V and USB 2.0,USB4105-GF-A,GCT-USB4105-GF-A-REV-P,Fit,USB-C right-angle receptacle. Confirm shell slot dimensions and enclosure access.,Global Connector Technology,C3020560
 U21,1,USB-C 5 V sink controller,STUSB4500LQTR,ST-QFN24-4X4,Fit,Hardware 5 V Type-C sink and 3 A detection.,ST,C506650
 Q3,1,USB VBUS switch,STL6P3LLH6,ST-POWERFLAT-3X3,Fit,,ST,C457492
 R72,1,1 kΩ,0603WAF1001T5E,0603,Fit,,UNI-ROYAL,C21190

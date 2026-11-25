@@ -129,13 +129,13 @@ Final Rev P: 51 weak contacts or near-gaps, 0 between separate copper groups.
   L1/1 CAB_PRI R78.1 ↔ gge4868, (1044.349999, 799.225000) mm, shared 0.000000 mm, gap 0.000001 mm — bridged by gge962332.
   L1/1 DI4_N R47.2 ↔ gge4241, (1101.399999, 832.739097) mm, shared 0.000000 mm, gap 0.000007 mm — alternate copper path.
   L1/1 DI4_N R47.2 ↔ gge4273, (1101.399999, 832.739097) mm, shared 0.000000 mm, gap 0.000007 mm — alternate copper path.
-  L1/1 GND J4.SH2 ↔ gge5667, (1022.244999, 819.815000) mm, shared 0.000000 mm, gap 0.010003 mm — bridged by gge962106.
+  L1/1 GND J4.SH2 ↔ gge5666, (1022.965000, 819.814999) mm, shared 0.000000 mm, gap 0.010001 mm — alternate copper path.
   L1/1 GND U23.5 ↔ gge5660, (1028.100110, 815.550001) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
   L1/1 RTC_SDA R31.2 ↔ gge4110, (1067.925000, 811.200001) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
   L2/21 3V3 gge5208 ↔ gge5198, (1063.350811, 794.598933) mm, shared 0.000000 mm, gap 0.000026 mm — alternate copper path.
   L2/21 DI_COM gge6209 ↔ gge5293, (1099.600000, 856.349999) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962331.
   L2/21 GND gge5952 ↔ gge5326, (1018.434991, 786.000000) mm, shared 0.000000 mm, gap 0.009982 mm — bridged by gge962310.
-  L2/21 GND J4.SH2 ↔ gge5667, (1022.244999, 819.815000) mm, shared 0.000000 mm, gap 0.010003 mm — bridged by gge962107.
+  L2/21 GND J4.SH2 ↔ gge5666, (1022.965000, 819.814999) mm, shared 0.000000 mm, gap 0.010001 mm — alternate copper path.
   L2/21 GND gge6188 ↔ gge5530, (1026.150000, 829.749999) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962330.
   L2/21 GND gge6166 ↔ gge5542, (1040.399999, 833.950001) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962329.
   L2/21 GND gge6160 ↔ gge5537, (1042.944999, 836.950000) mm, shared 0.000000 mm, gap 0.010000 mm — bridged by gge962328.
@@ -157,11 +157,11 @@ Final Rev P: 51 weak contacts or near-gaps, 0 between separate copper groups.
   L2/21 GND gge6011 ↔ gge5985, (1074.250000, 789.250000) mm, shared 0.135842 mm, gap 0.000000 mm — bridged by gge962311.
   L2/21 GND gge6024 ↔ gge5150, (1076.550000, 766.349999) mm, shared 0.000000 mm, gap 0.000003 mm — bridged by gge962316.
   L3/22 3V3 gge5208 ↔ gge5198, (1063.350811, 794.598933) mm, shared 0.000000 mm, gap 0.000026 mm — alternate copper path.
-  L3/22 GND J4.SH2 ↔ gge5667, (1022.244999, 819.815000) mm, shared 0.000000 mm, gap 0.010003 mm — bridged by gge962108.
-  L3/22 USB_VBUS gge5670 ↔ gge4899, (1022.004999, 810.490000) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L3/22 GND J4.SH2 ↔ gge5666, (1022.965000, 819.814999) mm, shared 0.000000 mm, gap 0.010001 mm — alternate copper path.
+  L3/22 USB_VBUS gge5670 ↔ gge4899, (1022.005039, 810.490000) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
   L4/2 3V3 gge5208 ↔ gge5198, (1063.350811, 794.598933) mm, shared 0.000000 mm, gap 0.000026 mm — alternate copper path.
   L4/2 DI_COM gge5934 ↔ gge5293, (1099.600000, 856.349999) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962309.
-  L4/2 GND J4.SH2 ↔ gge5667, (1022.244999, 819.815000) mm, shared 0.000000 mm, gap 0.010003 mm — bridged by gge962109.
+  L4/2 GND J4.SH2 ↔ gge5666, (1022.965000, 819.814999) mm, shared 0.000000 mm, gap 0.010001 mm — bridged by gge5848.
   L4/2 GND gge5853 ↔ gge5658, (1029.624999, 807.780000) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962308.
   L4/2 GND gge5720 ↔ gge5716, (1039.349999, 831.150000) mm, shared 0.141999 mm, gap 0.000000 mm — bridged by gge962301.
   L4/2 GND gge5737 ↔ gge5239, (1061.150000, 840.450001) mm, shared 0.000000 mm, gap 0.000003 mm — bridged by gge962302.
@@ -183,12 +183,12 @@ Final Rev P: 51 weak contacts or near-gaps, 0 between separate copper groups.
   Removed gge5925, layer 2, DI_COM, 0.007505 mm², no lands or vias.
   Removed gge6096, layer 21, GND, 0.007953 mm², no lands or vias.
   Removed gge6167, layer 21, GND, 0.002781 mm², no lands or vias.
-Rev P vs pre-repair Rev P: 111 added or changed layer objects
+Rev P vs pre-repair Rev P: 220 added or changed layer objects
   Minimum 0.129078 mm on layer 21, gge962315 (GND) to gge5167 (LCD_B3).
-Rev P vs tagged FOOTPRINTS: 171 added or changed layer objects
-  Minimum 0.128000 mm on layer 1, gge4853 (USB_CC1) to J4.SH3 (GND).
-Rev P vs tagged frozen PCB: 371 added or changed layer objects
-  Minimum 0.128000 mm on layer 1, gge4853 (USB_CC1) to J4.SH3 (GND).
+Rev P vs tagged FOOTPRINTS: 277 added or changed layer objects
+  Minimum 0.129078 mm on layer 21, gge962315 (GND) to gge5167 (LCD_B3).
+Rev P vs tagged frozen PCB: 477 added or changed layer objects
+  Minimum 0.129078 mm on layer 21, gge962315 (GND) to gge5167 (LCD_B3).
 Changed foreign-net tracks and vias avoid the U21 exposed-pad projection.
   U1.1 CAB_FB connects to R69.2, R70.1.
   U1.2 CAB_EN connects to R67.2, R68.1.
@@ -210,10 +210,10 @@ Requested local positive-overlap repairs
   1 U2.62 ↔ gge962103 ↔ gge5705. Overlap 0.09571 / 0.26792 mm².
   1 X1.2 ↔ gge962104 ↔ gge5362. Overlap 0.13416 / 0.04784 mm².
   1 X1.4 ↔ gge962105 ↔ gge5363. Overlap 0.13416 / 0.04784 mm².
-  1 J4.SH2 ↔ gge962106 ↔ gge5667. Overlap 0.10741 / 0.06526 mm².
-  21 J4.SH2 ↔ gge962107 ↔ gge5667. Overlap 0.10741 / 0.06526 mm².
-  22 J4.SH2 ↔ gge962108 ↔ gge5667. Overlap 0.10741 / 0.06526 mm².
-  2 J4.SH2 ↔ gge962109 ↔ gge5667. Overlap 0.10741 / 0.06526 mm².
+  1 J4.SH2 ↔ gge962106 ↔ gge5667. Overlap 0.10997 / 0.06526 mm².
+  21 J4.SH2 ↔ gge962107 ↔ gge5667. Overlap 0.10997 / 0.06526 mm².
+  22 J4.SH2 ↔ gge962108 ↔ gge5667. Overlap 0.10997 / 0.06526 mm².
+  2 J4.SH2 ↔ gge962109 ↔ gge5667. Overlap 0.10997 / 0.06526 mm².
 
 U6 — TI TPS62902 Rev A, p.45, RPJ0009A Example Board Layout. Values in mm, Top view relative to package origin.
 | Pad | Drawing x / y / width / height | PCB x / y / width / height | Drill | Result |
@@ -250,8 +250,8 @@ D25 — TI MPDS340 p.1 and linked Ultra Librarian DRT0003A Top copper CAD. Value
 | 3 | 0.575 / 0.000 / 0.450 / 0.300 | 0.575 / 0.000 / 0.450 / 0.300 | SMT | PASS |
 
 J4 — GCT USB4105 B3 sheet 1, Recommended PCB Layout and pin/signal table.
-The tables describe the approved-trim library. Live installation remains on hold.
-| SMT land | Drawing x / y / axial length / width (mm) | Library (mm) | Live net | Result |
+Values are measured on the live PCB relative to the mating face and centreline.
+| SMT land | Drawing x / y / axial length / width (mm) | PCB (mm) | Live net | Result |
 | --- | --- | --- | --- | --- |
 | A1/B12 | 7.355 / -3.200 / 1.150 / 0.600 | 7.380 / -3.200 / 1.099 / 0.600 | GND | APPROVED DEVIATION: 0.051 mm removed at insertion end |
 | A4/B9 | 7.355 / -2.400 / 1.150 / 0.600 | 7.355 / -2.400 / 1.150 / 0.600 | USB_VBUS | PASS |
@@ -265,7 +265,7 @@ The tables describe the approved-trim library. Live installation remains on hold
 | B5 | 7.355 / 1.750 / 1.150 / 0.300 | 7.355 / 1.750 / 1.150 / 0.300 | USB_CC2 | PASS |
 | B4/A9 | 7.355 / 2.400 / 1.150 / 0.600 | 7.355 / 2.400 / 1.150 / 0.600 | USB_VBUS | PASS |
 | B1/A12 | 7.355 / 3.200 / 1.150 / 0.600 | 7.380 / 3.200 / 1.099 / 0.600 | GND | APPROVED DEVIATION: 0.051 mm removed at insertion end |
-| Drill | Drawing x / y (mm) | Library x / y (mm) | Drawing / library drill and copper (mm) | Result |
+| Drill | Drawing x / y (mm) | PCB x / y (mm) | Drawing / PCB drill and copper (mm) | Result |
 | --- | --- | --- | --- | --- |
 | SH1 | 6.78 / -4.32 | 6.78 / -4.32 | 1.70 × 0.60 slot, x axis, plated, 2.10 × 1.00 copper all four layers | PASS |
 | SH2 | 6.78 / +4.32 | 6.78 / +4.32 | 1.70 × 0.60 slot, x axis, plated, 2.10 × 1.00 copper all four layers | PASS |
@@ -274,52 +274,36 @@ The tables describe the approved-trim library. Live installation remains on hold
 | locator 1 | 6.28 / -2.89 | 6.28 / -2.89 | Ø0.65 NPTH, 5.78 spacing | PASS |
 | locator 2 | 6.28 / +2.89 | 6.28 / +2.89 | Ø0.65 NPTH, 5.78 spacing | PASS |
   Mating face from live footprint outline x=1015.825 mm, board edge x=1016.000 mm, centreline y=816.000 mm. Keeping the face gives 0.175 mm overhang.
-  The face-fixed nominal SMT row would be x=1023.180 mm (live x=1022.605 mm).
-  Approved trim clearance, locator drill to the two trimmed library GND lands:
+  Live untrimmed SMT row x=1023.180 mm.
+  Approved trim clearance, locator drill to the two trimmed PCB GND lands:
     PASS L1: locator 1 ↔ J4.A1/B12, 0.226091 mm vs 0.225 mm.
     PASS L1: locator 2 ↔ J4.B1/A12, 0.226091 mm vs 0.225 mm.
-  Projected lands against fixed D24.2:
-    FAIL L1: J4.A4 ↔ D24.2, 0.045001 mm vs 0.125 mm.
-    FAIL L1: J4.B9 ↔ D24.2, 0.045001 mm vs 0.125 mm.
-    FAIL L1: J4.B8 ↔ D24.2, 0.045001 mm vs 0.125 mm.
-  Projected holes against retained copper (exclude J4 pads being replaced):
-    SH1, layer 1 (0.28 mm minimum): gge4900 (USB_VBUS) 0.000000 mm, gge4905 (USB_VBUS) 0.000000 mm, gge5596 (USB_VBUS) 0.000000 mm.
-    SH1, layer 21 (0.30 mm minimum): gge5596 (USB_VBUS) 0.000000 mm.
-    SH1, layer 22 (0.30 mm minimum): gge4899 (USB_VBUS) 0.000000 mm, gge4902 (USB_VBUS) 0.000000 mm, gge5596 (USB_VBUS) 0.000000 mm.
-    SH1, layer 2 (0.28 mm minimum): gge4850 (USB_CC2) 0.000000 mm, gge5596 (USB_VBUS) 0.000000 mm.
-    locator 1, layer 1 (0.20 mm minimum): gge5014 (GND) 0.186007 mm, gge5015 (GND) 0.188331 mm.
-    locator 1, layer 22 (0.20 mm minimum): gge4902 (USB_VBUS) 0.000000 mm.
-    locator 1, layer 2 (0.20 mm minimum): gge5848 (GND) 0.000000 mm, gge961106 (GND) 0.180000 mm.
-    locator 2, layer 1 (0.20 mm minimum): gge4901 (USB_VBUS) 0.000000 mm, gge5667 (GND) 0.109510 mm, gge5017 (GND) 0.172756 mm, gge5016 (GND) 0.188331 mm, gge962106 (GND) 0.199504 mm.
-    locator 2, layer 21 (0.20 mm minimum): gge5667 (GND) 0.109510 mm, gge962107 (GND) 0.199504 mm.
-    locator 2, layer 22 (0.20 mm minimum): gge5667 (GND) 0.109510 mm, gge962108 (GND) 0.199504 mm.
-    locator 2, layer 2 (0.20 mm minimum): gge5848 (GND) 0.000000 mm, gge5667 (GND) 0.109510 mm, gge961106 (GND) 0.180000 mm, gge962109 (GND) 0.199504 mm.
-  Live drill source: 0 plated slots, 60 round plated component holes, 7 NPTH, 665 vias.
-  Approved-trim substitution would encode 4 plated slots, 56 round plated component holes, 9 NPTH and 665 vias before rerouting. Native drill export pending.
-  Live J4 installation remains BLOCKED by the fixed D24.2 land clearance.
-
-  Scratch J4 routing trial, D24 retained: zero shorts and zero split named nets.
-  All USB paths including both U21 dead-battery pins and all shell ground paths are connected.
-  Trial source encodes 4 plated slots, 56 round plated pads, 9 NPTH and 664 vias.
-  Native drill export remains pending.
-  Changed copper minimum FAIL 0.045000 mm on L1 to D24.2.
-  Remaining changed copper minimum 0.130429 mm on layer 1, gge4853 ↔ gge961301.
-  NPTH-to-copper minimum 0.203985 mm, locator 2 ↔ gge5848 on layer 2.
+  USB paths, both U21 dead-battery pins and all shell ground paths are connected.
+  Live drill source: 4 plated slots, 56 round plated pads, 9 NPTH and 664 vias.
+  Native drill export pending.
+  J4/D24 changes, minimum copper 0.130429 mm on layer 1: gge4853 (1019.921, 810.950) ↔ gge961301 (1020.044, 810.992).
+  Existing fixed regions locally cleared: gge5848 (layer 2), gge5859 (layer 2), gge961106 (layer 2), gge961304 (layer 2).
+  NPTH-to-copper minimum 0.203985 mm, locator 1 ↔ gge5848 on layer 2.
   Plated slot-to-foreign copper, outer minimum 0.391341 mm, SH1 ↔ gge5670 on layer 1.
   Plated slot-to-foreign copper, inner minimum 0.391341 mm, SH1 ↔ gge5670 on layer 21.
+  Changed copper clears existing round drills. J4 slots and locators clear via drill edges by ≥0.20 mm.
   Data tracks have Inner1 GND below the routes outside the two existing D− via antipads.
   Inner1 stitches verified at gge5664 and gge5667. VBUS trunk is 0.48 mm.
-  Trial orientation A, J4 → U23: D+ 5.185, D− 6.399, skew 1.214 mm, planar copper lengths.
-  Trial orientation B, J4 → U23: D+ 7.658, D− 5.146, skew 2.512 mm, planar copper lengths.
-  Scratch routing withheld from the live design pending the D24 decision.
+  D24 centre (1024.500, 812.000) → (1024.620, 812.000) mm. Shift 0.120 mm inward, original orientation.
+  Nearest J4 SMT lands to D24.2 are 0.165000 mm away: A1/B12 GND (same net), A4/B9 USB_VBUS and B8 unconnected (separate copper).
+  D24.1 edge to nearest J4 VBUS land edge: 2.106 mm.
+  Nominal J4 housing to maximum D24 body envelope: 0.445 mm, plan view.
+  D24.1 USB_VBUS Top link: 1.373 → 1.006 mm long, 0.480 → 0.480 mm wide, positive pad overlap.
+  D24.2 GND Top link: 0.509 → 0.420 mm long, 0.150 → 0.250 mm wide, positive pad overlap.
+  D24 return via gge5646 to Inner1 GND: 1.410 mm × 0.600 mm, positive overlap at the via and plane.
   USB trace centreline lengths in mm (planar copper only, excludes via barrels and pad traversal).
   | Segment | Before D+ / D− / skew | Live D+ / D− / skew |
   | --- | --- | --- |
-  | J4 A contacts → U23 | 5.185 / 6.392 / 1.208 | 5.185 / 6.392 / 1.208 |
-  | J4 B contacts → U23 | 7.658 / 5.361 / 2.296 | 7.658 / 5.361 / 2.296 |
+  | J4 A contacts → U23 | 5.185 / 6.392 / 1.208 | 5.185 / 6.399 / 1.214 |
+  | J4 B contacts → U23 | 7.658 / 5.361 / 2.296 | 7.658 / 5.146 / 2.512 |
   | R17/R18 → U2 | 3.973 / 3.725 / 0.249 | 3.973 / 3.725 / 0.249 |
-  Existing centreline skew is within the 5 mm Full Speed target in both orientations. These are the unchanged live traces.
-Editor-task package vs 3287d57: 20 added or changed layer objects
-  Minimum 0.132428 mm on layer 1, U6.9 (unassigned) to gge5566 (SYS_3V3_SS).
-Live PCB SHA-256 f74eb5af8b624199e9ae7ed3aca0a9672b529ae5afda4f4654e87fa3662d35e8
+  Both orientations meet the 5 mm Full Speed skew rule.
+Rev P cumulative vs 3287d57: 133 added or changed layer objects
+  Minimum 0.130429 mm on layer 1, gge4853 (USB_CC1) to gge961301 (USB_RAW_SENSE).
+Live PCB SHA-256 d2caa2920e6069acac30a419147f11ebd67f50b8db71c11295b26a66bdbb7601
 DRAFT — DO NOT FABRICATE. Native EasyEDA import, ERC/DRC, CAM and hardware checks pending.

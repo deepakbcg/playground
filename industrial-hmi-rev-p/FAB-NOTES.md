@@ -1,6 +1,6 @@
 # Rev P fabrication notes
 
-**DRAFT — DO NOT FABRICATE.** Resolve J4, complete native EasyEDA DRC and review the Gerber and drill files before release. [Rev P status](REV-P-STATUS.md)
+**DRAFT — DO NOT FABRICATE.** Complete native EasyEDA DRC and review the Gerber and drill files before release. [Rev P status](REV-P-STATUS.md)
 
 ## Board and process
 
@@ -12,7 +12,7 @@
 | Copper | Nominal 1 oz outer. Nominal 0.5 oz inner with **at least 15.2 µm finished L3 copper** and **at least 2.067 mm finished width** on each specified 2.20 mm buck leg. A thicker inner option can be qualified against the same thermal limit if the standard process cannot meet these widths. |
 | Finish and mask | ENIG recommended for the RP2354B 0.40 mm-pitch QFN-80 and USB/power QFNs. Green LPI mask. Check actual mask/paste openings and dams using the exports. |
 | Track / copper clearance | 0.150 mm minimum nominal track used. 0.125 mm design clearance for different-net routing. Check JLC PCB-specific SMD pad-to-pad clearance of 0.150 mm separately. The manufacturer's multilayer trace/space capability floor is 0.09/0.09 mm at 1 oz. |
-| Vias | 665 in the current source, all 0.50 mm land / Ø0.25 mm mechanical through drill. Check via-hole to foreign copper ≥0.20 mm, including on inner layers. |
+| Vias | 664 in the current source, all 0.50 mm land / Ø0.25 mm mechanical through drill. Check via-hole to foreign copper ≥0.20 mm, including on inner layers. |
 | Component PTH | Inner hole-to-foreign-copper ≥0.30 mm. Use ≥0.28 mm elsewhere. Inspect finished hole dimensions, plating and annuli as separate checks. |
 | NPTH and board edge | NPTH-to-copper ≥0.20 mm and copper-to-routed-edge ≥0.20 mm. Check hole-to-hole spacing ≥0.20 mm edge to edge, including connector hardware. |
 | Impedance | The current artwork has no controlled-impedance verification. Review USB FS differential routing against a 90 Ω ±15% planning target and the 10/100 PHY-to-MagJack pairs against 100 Ω ±10%. Require a selected stackup and re-evaluation of widths, spacings, return and skew before claiming impedance control. |
@@ -25,9 +25,9 @@ Both dedicated L3 legs, `gge962014` and `gge962015`, are **2.20 mm nominal**. Th
 
 ## Drill and connector requirements
 
-The live source has **zero plated slots**, **60 round plated component pads**, including the four temporary Ø0.60 mm J4 shell holes, and **665 plated vias**. The seven existing **Ø3.20 mm NPTH** centres are below. Coordinates are absolute EasyEDA millimetres.
+The live source encodes **56 round plated component holes, four plated slots, nine NPTH and 664 plated vias**. Coordinates below are absolute EasyEDA millimetres.
 
-| Feature | x | y |
+| Ø3.20 mm NPTH feature | x | y |
 | --- | ---: | ---: |
 | Main-board mounting | 1020.50 | 766.50 |
 | Main-board mounting | 1105.50 | 766.50 |
@@ -37,16 +37,16 @@ The live source has **zero plated slots**, **60 round plated component pads**, i
 | J11 locator | 1028.285 | 848.15 |
 | J11 locator | 1039.715 | 848.15 |
 
-The approved-trim J4 library uses GCT B3 sheet 1 and stays separate from the live board until D24 clearance is resolved. [J4 nominal reference footprint](Footprint_GCT-USB4105-GF-A-REV-P.json) · [GCT B3, sheet 1](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf)
+The installed J4 footprint follows GCT B3 sheet 1 with the approved land trim below. [J4 footprint](Footprint_GCT-USB4105-GF-A-REV-P.json) · [GCT B3, sheet 1](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf)
 
-| Nominal J4 feature | Drill geometry | Outer solder area |
-| --- | --- | --- |
-| SH1 and SH2 | 2 × plated slots 1.70 × 0.60 mm, along the insertion axis | 2.10 × 1.00 mm |
-| SH3 and SH4 | 2 × plated slots 1.40 × 0.60 mm, along the insertion axis | 1.80 × 1.00 mm |
-| Locator pair | 2 × Ø0.65 mm NPTH at 5.78 mm centre spacing | None |
+| J4 feature | Drill geometry | Centres (x / y in mm) | Outer solder area |
+| --- | --- | --- | --- |
+| SH1 and SH2 | 2 × plated slots 1.70 × 0.60 mm, along the insertion axis | 1022.605 / 811.680 and 820.320 | 2.10 × 1.00 mm |
+| SH3 and SH4 | 2 × plated slots 1.40 × 0.60 mm, along the insertion axis | 1018.425 / 811.680 and 820.320 | 1.80 × 1.00 mm |
+| Locator pair | 2 × Ø0.65 mm NPTH, 5.78 mm apart | 1022.105 / 813.110 and 818.890 | None |
 
 The approved deviation removes **0.051 mm** from the locator-facing end of J4 lands **A1/B12 and B1/A12**. Each remains **1.099 × 0.600 mm** with its far end and width preserved. The geometry gives **0.226091 mm** from each locator edge to its trimmed GND land. The nominal mating face stays at x = 1015.825 mm, with **0.175 mm overhang** at the board edge. Confirm drill registration and first-article seating against the purchased connector and enclosure. [GCT B3 sheet 1](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf)
 
-The trial source encodes **56 round plated component holes, four plated slots, nine NPTH** (five mounting, two J11 and two J4) and **664 vias**. The live source still has the counts listed above. Keep J4 on hold because the corrected VBUS and SBU2 lands remain only **0.045000 mm** from fixed D24.2 on Top. Check component holes/slots independently of via drills in the final native export. BZ1 uses two nominal Ø1.00 mm finished PTH. Measure the purchased buzzer before release. [JLCPCB hole and routing capabilities](https://jlcpcb.com/capabilities/pcb-capabilities/)
+Check the 60 plated component holes/slots independently of the via drills in the native export. The nine NPTH comprise five mounting holes, two J11 locators and two J4 locators. D24.2 has **0.165 mm** copper edge spacing to the nearest J4 SMT lands, including same-net GND, VBUS and SBU2. Check the 0.150 mm assembly spacing and solder-mask openings after export, and confirm hand-solder clearance against the installed connector. BZ1 uses two nominal Ø1.00 mm finished PTH. Measure the purchased buzzer before release. [JLCPCB hole and routing capabilities](https://jlcpcb.com/capabilities/pcb-capabilities/)
 
 The top silkscreen carries **Rev P DRAFT**. The separate **DO NOT FABRICATE** warning is on the EasyEDA Document layer.
