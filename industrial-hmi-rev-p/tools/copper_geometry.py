@@ -3,7 +3,9 @@
 from collections import defaultdict
 from dataclasses import dataclass
 
-from shapely.geometry import LineString, Point, Polygon, box
+from shapely import line_merge
+from shapely.geometry import LineString, MultiLineString, Point, Polygon, box
+from shapely.ops import nearest_points
 from shapely.strtree import STRtree
 
 MM_PER_UNIT = 0.254
@@ -12,6 +14,9 @@ LAYERS = ("1", "21", "22", "2")
 # decimal point. Ignore boundary slivers within that coordinate precision.
 LINEAR_TOLERANCE = 0.000002
 CIRCLE_STEPS = 64
+MIN_SHARED_EDGE = 0.15
+# Separately list small finite gaps, including the approximately 0.010 mm shell gap.
+NEAR_GAP = 0.0101
 
 
 def mm_point(x, y):
@@ -106,6 +111,31 @@ def positive_overlap(a, b):
     return not overlap.buffer(-LINEAR_TOLERANCE / 2).is_empty
 
 
+@dataclass(frozen=True)
+class WeakContact:
+    first: Piece
+    second: Piece
+    length: float
+    gap: float
+    position: tuple[float, float]
+
+
+def continuous_lines(geometry):
+    if geometry.geom_type in {"LineString", "LinearRing"}:
+        if not geometry.is_empty:
+            yield geometry
+    elif geometry.geom_type in {"MultiLineString", "GeometryCollection"}:
+        for part in geometry.geoms:
+            yield from continuous_lines(part)
+
+
+def shared_boundary(a, b):
+    edges = list(continuous_lines(a.boundary.intersection(b.boundary)))
+    if not edges:
+        return None
+    return max(continuous_lines(line_merge(MultiLineString(edges))), key=lambda edge: edge.length)
+
+
 class Board:
     def __init__(self, all_pieces):
         self.pieces = all_pieces
@@ -115,12 +145,31 @@ class Board:
                       for layer, ids in self.by_layer.items()}
         self.parent = list(range(len(all_pieces)))
         barrels = {}
+        weak_pairs = []
         for i, piece in enumerate(all_pieces):
             if piece.plated:
                 self.join(i, barrels.setdefault(piece.oid, i))
-            for j in self.query(piece.layer, piece.geometry):
-                if j < i and positive_overlap(piece.geometry, all_pieces[j].geometry):
+            for j in self.query(piece.layer, piece.geometry, NEAR_GAP):
+                if j >= i:
+                    continue
+                other = all_pieces[j]
+                a, b = piece.geometry, other.geometry
+                if positive_overlap(a, b):
                     self.join(i, j)
+                elif piece.net and piece.net == other.net:
+                    gap = a.distance(b)
+                    edge = shared_boundary(a, b) if gap == 0 else None
+                    length = 0.0 if edge is None else edge.length
+                    if length >= MIN_SHARED_EDGE - 1e-9:
+                        self.join(i, j)
+                        continue
+                    if edge is not None:
+                        location = edge.interpolate(.5, normalized=True)
+                    else:
+                        pa, pb = nearest_points(a, b)
+                        location = Point((pa.x + pb.x) / 2, (pa.y + pb.y) / 2)
+                    weak_pairs.append((i, j, WeakContact(piece, other, length, gap, (location.x, location.y))))
+        self.weak_contacts = [(contact, self.root(i) == self.root(j)) for i, j, contact in weak_pairs]
         self.groups = defaultdict(list)
         self.pad_groups = defaultdict(set)
         for i, piece in enumerate(all_pieces):

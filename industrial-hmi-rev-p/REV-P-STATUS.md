@@ -36,17 +36,23 @@ Phase 1 preserved the tagged FOOTPRINTS copper exactly. Phase 2 closes all ten r
 
 The through vias use the existing 0.50 mm land and 0.25 mm drill. Fixed copper clearances were opened in Top 3V3 region `gge5673`, Inner1 GND regions `gge5955`, `gge5956`, `gge5958`, `gge5962`, and Bottom GND regions `gge5850`, `gge5852`, `gge5853`. The minimum clearance involving added or changed copper was **0.128 mm** from Top `USB_CC1` to J4.SH3. Both tagged comparisons meet the **0.125 mm** draft rule. The offline check found zero mixed-net groups and preserved every previously connected pad group. [Recorded verification](tools/verification-output.txt) · [TI TPS62902 layout guidance](https://www.ti.com/lit/ds/symlink/tps62902.pdf) · [ST STUSB4500L data sheet](https://www.st.com/resource/en/datasheet/stusb4500l.pdf)
 
-## Copper still open outside the ten listed items
+## 3.3 V distribution and copper contacts
 
-Under the positive-overlap check, **GND, 3V3 and DI_COM** still have inherited split groups. Verify whether adjacent fixed regions join in the native copper output, and add deliberate copper overlap or routing for any true gaps.
+The incoming review recorded “3.3 V buck output was not connected in Rev M–N (point contact)”. The stored Rev M and Rev N sources show **1.236 mm²** of overlap from L4.2 into Top region `gge5675`, and further positive overlap through `gge5610` to the Bottom rail. The stored sources do confirm the **0.23 mm** link to C94.1 and the single-via tie to the rail at that location. Those geometries were insufficient to verify the requested 1.5 A path.
 
-| Net | Where to inspect | Expected result |
-| --- | --- | --- |
-| GND | Smaller groups include R78.2 and C85.2/C86.2 near the cabinet divider and output, plus the display, RTC and optocoupler returns in the report. | Each intended return joins J1.2 without crossing isolated field returns. The `CAB_PRI` pad repair alone verifies only the top of the R78 divider network. |
-| 3V3 | The 13-pad group includes U2.15/.24/.29/.41/.50, C23/C26–C28, U11.16 and R33.1. | All these pads join U6.3 and the main output rail. |
-| DI_COM | Smaller groups include J9.1 with U18.8, U18.4/.6 and their Zener branches. | All `DI_COM` groups join J9.1 on the isolated field side. |
+- The new path runs from L4.2 through three plated vias to a **1.40 mm Inner2 trace**, through the C94 copper and a second **1.40 mm Inner2 trace**, then through three plated vias into a widened Bottom distribution region. C94.1 also has three plated connections to the Inner2 copper. The 1.5 A sizing assumes **at least 35 µm finished Inner2 copper**. Confirm the fabricated stackup and via plating, then verify voltage drop and temperature at 1.5 A.
+- U6.3 now senses directly at C94.1 through a dedicated **0.15 mm Top trace**. The old sense branch and the narrow L4.2–C94.1 trace were removed. Clearing the old Top region around VOS required a separate **0.38 mm Inner2 connection** for the microSD branch between existing vias `gge5613` and `gge5611`.
+- Clearances were opened locally in Top 3V3 region `gge5673`, Bottom ground regions `gge5853`, `gge5878`, `gge5880`, and Inner1 ground regions `gge5964`, `gge5967`. [TI TPS62902 layout guidance](https://www.ti.com/lit/ds/symlink/tps62902.pdf) · [TI via and power copper guidance](https://www.ti.com/lit/an/slva959b/slva959b.pdf)
 
-[Complete list of smaller copper groups](tools/verification-output.txt)
+| Pad | Positive-overlap reinforcement |
+| --- | --- |
+| C17.1, 1V1 | 0.30 mm Top connection to `gge5387`. |
+| C15.1, 3V3 | 0.42 mm Top connection to `gge4946`. |
+| U2.62, GND | 0.20 mm Top connection into `gge5705`. |
+| X1.2 and X1.4, GND | 0.28 mm Top ground links to `gge5362` and `gge5363`, respectively. |
+| J4.SH2, GND | 0.32 mm copper overlaps the shell land and `gge5667` on all four layers, bridging the 0.010 mm gap. Recheck it when fitting the required plated slots. |
+
+The verifier accepts positive area overlap or a continuous shared edge of at least **0.15 mm**. Point contacts and shorter edges are open; nearby finite gaps are reported separately. The updated rule joins the larger existing pour seams that previously made GND, 3V3 and DI_COM appear split. Additional direct bridges reinforce 32 locations. Thirteen isolated pour fragments with no lands, vias or tracks were removed, totaling **0.034 mm²**. The 50 remaining weak pairs have an alternate copper path, including pairs with a new direct bridge. The report lists each pair with its layer, coordinates, shared length, gap and disposition. The final design has **zero split named pad nets and zero mixed-net copper groups**. The minimum clearance on this pass was **0.129 mm**, and the cumulative Rev N comparison was **0.128 mm**, both above the 0.125 mm rule. [Recorded verification](tools/verification-output.txt)
 
 ## Editor and release tasks
 
@@ -54,13 +60,13 @@ Under the positive-overlap check, **GND, 3V3 and DI_COM** still have inherited s
 2. **D25, TPD2EUSB30DRTR.** Replace the 1.06 mm pitch pads 1 and 2 with the TI DRT lands at 0.70 mm pitch. Check mask, solderable overlap and the ground return. [TI DRT package drawing](https://www.ti.com/lit/ml/mpds340/mpds340.pdf)
 3. **U6 and U23.** At U6, compare pads 4/6 (0.65 × 0.20 mm, 0.625 mm offset) with TI's 1.00 × 0.20 mm, 0.45 mm offset. Compare pads 7–9 (0.25 × 0.40 mm) with the 0.25 × 0.55 mm example. At U23, compare pads 2/3/7/8 (0.55 × 0.25 mm) with TI's 0.55 × 0.20 mm and pads 5/10 (0.25 × 0.60 mm on 1.90 mm centers) with TI's 0.30 × 0.60 mm on 1.80 mm centers. Recheck local escape clearances after correcting the lands. [TI TPS62902, RPJ0009A](https://www.ti.com/lit/ds/symlink/tps62902.pdf) · [TI TS3USB221A, RSE0010A](https://www.ti.com/lit/ds/symlink/ts3usb221a.pdf)
 4. **U1 FB and BZ1.** Inspect the 20.6 mm bottom CAB_FB route to R69/R70. Review its proximity to the switch node, Inner1 ground reference and feedback response. Measure the purchased buzzer's pin pitch, lead diameter and polarity against the 7.6 mm footprint and check enclosure fit. [U1 routing history](../industrial-hmi-rev-n/U1-REROUTE.md)
-5. **Native release.** Import the live EasyEDA Standard schematic and PCB into the same local project. Check library assignments, silk revision, package fit, fixed region outlines and thermal links. Run **Rebuild All Copper**, inspect stored regions and their joins, and run native ERC and DRC. Resolve every electrically split pad group from the offline report and clear all native violations. Review the generated Gerbers and plated/nonplated drills in an independent CAM viewer. Re-export the marked Rev M/N PDFs and PNGs only after approving the live layout.
+5. **Native release.** Import the live EasyEDA Standard schematic and PCB into the same local project. Check library assignments, silk revision, package fit, fixed region outlines and thermal links. Run **Rebuild All Copper**, inspect stored regions and their joins, and run native ERC and DRC. Confirm continuity across the reported copper seams and clear all native violations. Review the generated Gerbers and plated/nonplated drills in an independent CAM viewer. Re-export the marked Rev M/N PDFs and PNGs only after approving the live layout.
 
 ### Bring-up after release checks
 
 1. Start the cabinet buck alone with a current-limited supply. Confirm CAB_5V, cold start at 20.4 V and loaded output ripple and transient response.
 2. Bring up USB-C and the power mux. Check current advertisement, source gating and handoff, and test both input sources independently.
-3. Verify 3.3 V startup, load regulation and temperature. Check the battery-backed RTC supply before fitting the cell.
+3. **Before fitting U2, U8 or U20**, power the board from a current-limited supply. Measure 3.3 V across C94 and at a far load such as C34. **Abort if either reading exceeds 3.45 V.** Verify startup, load regulation and temperature, including the 1.5 A rail test. Check the battery-backed RTC supply before fitting the cell.
 4. Fit and test RP2354B, BOOTSEL, RESET and SWD.
 5. Fit BT818, then the display and backlight, and then verify each field interface, serial port, storage and Ethernet.
 

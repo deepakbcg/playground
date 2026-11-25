@@ -13,7 +13,8 @@ import subprocess
 import sys
 from zipfile import ZipFile
 
-from copper_geometry import Board, changed_copper, pieces
+from copper_geometry import (Board, LAYERS, MIN_SHARED_EDGE, NEAR_GAP, changed_copper,
+                             pieces, positive_overlap)
 
 HERE = Path(__file__).resolve().parents[1]
 REPO = HERE.parent
@@ -28,6 +29,21 @@ DNP = {"TP1", "TP2", "TP3", "TP4", "R4", "R38"}
 LOCKED = "U1 U2 U5 U6 U8 U14 U21 U22 U23 J4 D4 D10 Q3".split()
 PRICE_RATE = Decimal("92.67")
 RULE = .125
+BEFORE_CONTACTS = "5c50b9ed31a15b2b3ecd2a13da255f656f167cfe"
+BUCK_LOADS = ("L4.2", "C94.1", "U6.3", "C15.1", "U2.15", "C34.1", "TP3.1")
+REMOVED_FRAGMENTS = {
+    "gge5700", "gge5725", "gge5753", "gge5776", "gge5777", "gge5778", "gge5779",
+    "gge5808", "gge5833", "gge5849", "gge5925", "gge6096", "gge6167",
+}
+REINFORCEMENTS = (
+    ("C17.1", "gge5387", "1", "gge962101"),
+    ("C15.1", "gge4946", "1", "gge962102"),
+    ("U2.62", "gge5705", "1", "gge962103"),
+    ("X1.2", "gge5362", "1", "gge962104"),
+    ("X1.4", "gge5363", "1", "gge962105"),
+    *(("J4.SH2", "gge5667", layer, f"gge96210{index}")
+      for index, layer in enumerate(LAYERS, 6)),
+)
 ROUTES = (
     ("R76.2 → mux ground", "GND", ("R76.2", "U22.3")),
     ("U6.4 → input capacitor ground", "GND", ("U6.4", "C93.2", "J1.2")),
@@ -270,13 +286,80 @@ def audit_clearance(label, board, baseline):
     assert not bad, label
 
 
+def print_weak_contacts(board, before, label):
+    contacts = board.weak_contacts
+    edits = list(changed_copper(board, before)) if before else []
+    separate = sum(not joined for _, joined in contacts)
+    print(f"{label}: {len(contacts)} weak contacts or near-gaps, {separate} between separate copper groups.")
+    for contact, joined in sorted(contacts, key=lambda item: (
+            LAYERS.index(item[0].first.layer), item[0].first.net,
+            item[0].position, item[0].first.name, item[0].second.name)):
+        a, b = contact.first, contact.second
+        bridge = next((p.name for p in edits if p.layer == a.layer and p.net == a.net
+                       and p.oid not in {a.oid, b.oid}
+                       and positive_overlap(p.geometry, a.geometry)
+                       and positive_overlap(p.geometry, b.geometry)), None)
+        status = (f"bridged by {bridge}" if bridge else
+                  "alternate copper path" if joined else "OPEN between fragments")
+        x, y = contact.position
+        print(f"  L{LAYERS.index(a.layer) + 1}/{a.layer} {a.net} {a.name} ↔ {b.name}, "
+              f"({x:.6f}, {y:.6f}) mm, shared {contact.length:.6f} mm, gap {contact.gap:.6f} mm — {status}.")
+
+
+def verify_buck_and_local_contacts(board, pcb):
+    by_location = {(p.layer, p.name): p for p in board.pieces}
+
+    def area(layer, name, neighbor):
+        a, b = (by_location[layer, label] for label in (name, neighbor))
+        assert a.net == b.net
+        assert positive_overlap(a.geometry, b.geometry), (layer, name, neighbor)
+        return a.geometry.intersection(b.geometry).area
+
+    def verify_triplet(layer, bridge, first, second):
+        first_area, second_area = (area(layer, bridge, name) for name in (first, second))
+        print(f"  {layer} {first} ↔ {bridge} ↔ {second}. Overlap "
+              f"{first_area:.5f} / {second_area:.5f} mm².")
+
+    assert board.connected("3V3", *BUCK_LOADS)
+    print("Buck output and distribution geometry")
+    verify_triplet("1", "gge962017", "U6.3", "C94.1")
+    sense = by_location["1", "gge962017"]
+    for a in board.pieces:
+        if a.layer == "1" and a.net == sense.net and a.name not in {"U6.3", "C94.1", sense.name}:
+            assert not a.geometry.intersects(sense.geometry), (a.name, "unintended VOS tap")
+    verify_triplet("22", "gge962014", "gge962012", "gge962011")
+    verify_triplet("22", "gge962015", "gge962011", "gge962013")
+    area("1", "L4.2", "gge962010")
+    area("1", "C94.1", "gge962009")
+    area("2", "gge962016", "gge3869")
+    for via_group, surfaces in (
+        (("gge962001", "gge962002", "gge962003"), (("1", "gge962009"), ("22", "gge962011"))),
+        (("gge962004", "gge962005", "gge962006"), (("1", "gge962010"), ("22", "gge962012"))),
+        (("gge5610", "gge962007", "gge962008"), (("2", "gge962016"), ("22", "gge962013"))),
+    ):
+        for via in via_group:
+            for layer, endpoint in surfaces:
+                area(layer, via, endpoint)
+    records = {v[5]: v for s in pcb["shape"] if s.startswith("TRACK~") for v in [s.split("~")]}
+    assert not {"gge4947", "gge4940"} & records.keys()
+    for trace in ("gge962014", "gge962015"):
+        assert abs(float(records[trace][1]) * .254 - 1.40) < .00001
+    print("  Two 1.40 mm Inner2 power legs, three plated vias at each transition, "
+          "positive overlap into Bottom distribution and VOS tapped at C94.1.")
+    print("  Trace sizing assumes ≥35 µm finished Inner2 copper. Thermal qualification at 1.5 A pending.")
+    print("Requested local positive-overlap repairs")
+    for pin, neighbor, layer, bridge in REINFORCEMENTS:
+        verify_triplet(layer, bridge, pin, neighbor)
+
+
 def mode_gap(board):
     pad, = [p for p in board.pieces if p.name == "U6.7" and p.layer == "1"]
     return min((gap, p.name) for gap, p in board.clearances(pad, .5) if p.net == "SYS_5V")
 
 
-def verify_copper(current, base, frozen, phase1):
-    print("Copper check uses positive area overlap above source coordinate precision.")
+def verify_copper(current, base, frozen, phase1, before=None):
+    print(f"Same-net contact requires positive area overlap or a continuous shared edge ≥ {MIN_SHARED_EDGE:.2f} mm.")
+    print(f"Point and shorter edge contacts stay open. Also report finite gaps ≤ {NEAR_GAP:.4f} mm.")
     print("Layers 1, 21, 22, 2. Via and PTH annuli are connected across the stack.")
     print_opens("Rev N FOOTPRINTS", base)
     print_opens("Rev P", current)
@@ -296,10 +379,12 @@ def verify_copper(current, base, frozen, phase1):
     print("Phase 2 before / after")
     unresolved = []
     for i, (label, net, named) in enumerate(ROUTES, 1):
-        before, after = (board.connected(net, *named) for board in (base, current))
-        if not after:
+        was_connected, now_connected = (board.connected(net, *named) for board in (base, current))
+        if not now_connected:
             unresolved.append(i)
-        print(f"  {i}. {net} {label} — {'connected' if before else 'OPEN'} → {'connected' if after else 'OPEN'}")
+        old_state = "connected" if was_connected else "OPEN"
+        new_state = "connected" if now_connected else "OPEN"
+        print(f"  {i}. {net} {label} — {old_state} → {new_state}")
     gap_before, old_object = mode_gap(base)
     gap_after, new_object = mode_gap(current)
     print(f"  10. U6.7 vs SYS_5V — {gap_before:.6f} mm ({old_object}) → {gap_after:.6f} mm ({new_object}); limit {RULE:.3f} mm.")
@@ -310,6 +395,20 @@ def verify_copper(current, base, frozen, phase1):
     else:
         print(f"Phase 2 requested findings closed: {10 - len(unresolved)}/10.")
         assert not unresolved, f"Requested copper findings still open: {unresolved}"
+    if before:
+        print_opens("Pre-repair Rev P with current rule", before)
+        print_weak_contacts(before, None, "Pre-repair Rev P")
+        print_weak_contacts(current, before, "Final Rev P")
+        assert all(joined for _, joined in current.weak_contacts), "unresolved weak contact between copper groups"
+        assert REMOVED_FRAGMENTS.isdisjoint(p.oid for p in current.pieces)
+        fragments = [p for p in before.pieces if p.oid in REMOVED_FRAGMENTS]
+        assert {p.oid for p in fragments} == REMOVED_FRAGMENTS
+        for p in sorted(fragments, key=lambda item: item.name):
+            assert p.kind == "SOLIDREGION" and p.geometry.area < .01
+            i, = (i for i, candidate in enumerate(before.pieces) if candidate is p)
+            assert before.groups[before.root(i)] == [p], p.name
+            print(f"  Removed {p.name}, layer {p.layer}, {p.net}, {p.geometry.area:.6f} mm², no lands or vias.")
+        audit_clearance("Rev P vs pre-repair Rev P", current, before)
     audit_clearance("Rev P vs tagged FOOTPRINTS", current, base)
     audit_clearance("Rev P vs tagged frozen PCB", current, frozen)
     exposed, = [p for p in current.pieces if p.name == "U21.25" and p.layer == "1"]
@@ -340,8 +439,18 @@ def main():
     base_parts = components(base, False)
     current_parts = verify_sources(schematic, pcb, old_schematic, base_parts, bom)
     verify_pricing(bom)
-    verify_copper(Board(pieces(pcb, current_parts)), Board(pieces(base, base_parts)),
-                  Board(pieces(frozen, components(frozen, False))), args.phase1)
+    board = Board(pieces(pcb, current_parts))
+    previous = None
+    if not args.phase1:
+        path = pcb_path.relative_to(REPO)
+        data = subprocess.check_output(["git", "show", f"{BEFORE_CONTACTS}:{path}"], cwd=REPO)
+        prior = json.loads(data)
+        previous = Board(pieces(prior, components(prior, False)))
+    verify_copper(board, Board(pieces(base, base_parts)),
+                  Board(pieces(frozen, components(frozen, False))), args.phase1, previous)
+    if not args.phase1:
+        assert not board.opens(), "split named pad net"
+        verify_buck_and_local_contacts(board, pcb)
     print(f"Live PCB SHA-256 {sha256(pcb_path.read_bytes()).hexdigest()}")
     print("DRAFT — DO NOT FABRICATE. Native EasyEDA import, copper rebuild, ERC/DRC, CAM and hardware pending.")
 

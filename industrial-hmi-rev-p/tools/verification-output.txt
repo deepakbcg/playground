@@ -11,36 +11,16 @@ One live schematic, one live PCB and one ZIP containing the byte-identical sourc
   Electro Global INR 138.00
   Overall INR 39518.39. Excluding LCDs INR 26160.51.
 120 sourced MPN changes have evidence. Configurator matches BOM and prices.
-Copper check uses positive area overlap above source coordinate precision.
+Same-net contact requires positive area overlap or a continuous shared edge ≥ 0.15 mm.
+Point and shorter edge contacts stay open. Also report finite gaps ≤ 0.0101 mm.
 Layers 1, 21, 22, 2. Via and PTH annuli are connected across the stack.
-Rev N FOOTPRINTS: 9 split named nets
-  3V3 — largest group has 69 pads
-    C23.1, C26.1, C27.1, C28.1, C50.1, C67.1, R33.1, U11.16, U2.15, U2.24, U2.29, U2.41, U2.50
+Rev N FOOTPRINTS: 8 split named nets
+  3V3 — largest group has 82 pads
     R83.1
   CAB_PRI — largest group has 2 pads
     R78.1
-  DI_COM — largest group has 3 pads
-    D15.2, D16.2, U18.4
-    D21.2, J9.1, U18.8
-    D18.2, U18.6
-    D19.2, D22.2
-  GND — largest group has 125 pads
-    BT1.2, C34.2, C35.2, C37.2, C38.2, C39.2, C40.2, C6.2, C7.2, J2.3, J2.36, J8.1, R27.2, U10.5, U5.2, U8.18, U8.23, U8.65, X2.2, X2.4
-    C2.2, C28.2, C85.2, C86.2, C92.2, R26.2, R78.2, R81.2
-    C56.2, C57.2, U14.2, U18.15
-    C45.2, U10.8
-    C74.2, R34.2
-    U18.11, U18.13
-    U8.33, U8.48
-    C27.2
-    C36.2
-    C41.2
-    J2.29
-    J2.42
-    Q2.2
-    R42.2
+  GND — largest group has 173 pads
     R76.2
-    U18.9
     U6.4
   SYS_5V — largest group has 13 pads
     U6.5, U6.6
@@ -53,30 +33,7 @@ Rev N FOOTPRINTS: 9 split named nets
   USB_VBUS — largest group has 10 pads
     C87.1
     U21.24
-Rev P: 3 split named nets
-  3V3 — largest group has 70 pads
-    C23.1, C26.1, C27.1, C28.1, C50.1, C67.1, R33.1, U11.16, U2.15, U2.24, U2.29, U2.41, U2.50
-  DI_COM — largest group has 3 pads
-    D15.2, D16.2, U18.4
-    D21.2, J9.1, U18.8
-    D18.2, U18.6
-    D19.2, D22.2
-  GND — largest group has 127 pads
-    BT1.2, C34.2, C35.2, C37.2, C38.2, C39.2, C40.2, C6.2, C7.2, J2.3, J2.36, J8.1, R27.2, U10.5, U5.2, U8.18, U8.23, U8.65, X2.2, X2.4
-    C2.2, C28.2, C85.2, C86.2, C92.2, R26.2, R78.2, R81.2
-    C56.2, C57.2, U14.2, U18.15
-    C45.2, U10.8
-    C74.2, R34.2
-    U18.11, U18.13
-    U8.33, U8.48
-    C27.2
-    C36.2
-    C41.2
-    J2.29
-    J2.42
-    Q2.2
-    R42.2
-    U18.9
+Rev P: 0 split named nets
 Frozen Rev N: 3 mixed-net copper groups
   GND (J1.2), VIN_PROT (U1.3)
   CAB_FB (U1.1), VIN_PROT (D1.1)
@@ -96,9 +53,140 @@ Phase 2 before / after
   9. 3V3 R83.1 → shared 3.3 V rail — OPEN → connected
   10. U6.7 vs SYS_5V — 0.116002 mm (gge4935) → 0.125999 mm (U6.6); limit 0.125 mm.
 Phase 2 requested findings closed: 10/10.
-Rev P vs tagged FOOTPRINTS: 62 added or changed layer objects
+Pre-repair Rev P with current rule: 0 split named nets
+Pre-repair Rev P: 63 weak contacts or near-gaps, 13 between separate copper groups.
+  L1/1 1V1 gge4557 ↔ gge4547, (1038.637426, 814.974447) mm, shared 0.000000 mm, gap 0.009515 mm — alternate copper path.
+  L1/1 1V1 C20.1 ↔ gge4548, (1051.497500, 816.300001) mm, shared 0.000000 mm, gap 0.005000 mm — alternate copper path.
+  L1/1 3V3 C65.1 ↔ gge4329, (1018.600000, 806.449922) mm, shared 0.000000 mm, gap 0.000002 mm — alternate copper path.
+  L1/1 3V3 R53.1 ↔ gge5340, (1018.750621, 804.324931) mm, shared 0.000000 mm, gap 0.001251 mm — alternate copper path.
+  L1/1 3V3 gge5340 ↔ gge4342, (1018.781864, 804.425277) mm, shared 0.000000 mm, gap 0.003128 mm — alternate copper path.
+  L1/1 3V3 gge5704 ↔ gge5700, (1038.675000, 814.599999) mm, shared 0.050000 mm, gap 0.000000 mm — OPEN between fragments.
+  L1/1 3V3 gge5696 ↔ gge4386, (1050.929490, 821.191200) mm, shared 0.000000 mm, gap 0.004131 mm — alternate copper path.
+  L1/1 3V3 gge5208 ↔ gge5198, (1063.350811, 794.598933) mm, shared 0.000000 mm, gap 0.000026 mm — alternate copper path.
+  L1/1 CAB_PRI R78.1 ↔ gge4868, (1044.349999, 799.225000) mm, shared 0.000000 mm, gap 0.000001 mm — alternate copper path.
+  L1/1 DI4_N R47.2 ↔ gge4241, (1101.399999, 832.739097) mm, shared 0.000000 mm, gap 0.000007 mm — alternate copper path.
+  L1/1 DI4_N R47.2 ↔ gge4273, (1101.399999, 832.739097) mm, shared 0.000000 mm, gap 0.000007 mm — alternate copper path.
+  L1/1 GND J4.SH2 ↔ gge5667, (1022.244999, 819.815000) mm, shared 0.000000 mm, gap 0.010003 mm — alternate copper path.
+  L1/1 RTC_SDA R31.2 ↔ gge4110, (1067.925000, 811.200001) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 3V3 gge5208 ↔ gge5198, (1063.350811, 794.598933) mm, shared 0.000000 mm, gap 0.000026 mm — alternate copper path.
+  L2/21 DI_COM gge6209 ↔ gge5293, (1099.600000, 856.349999) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge5952 ↔ gge5326, (1018.434991, 786.000000) mm, shared 0.000000 mm, gap 0.009982 mm — alternate copper path.
+  L2/21 GND J4.SH2 ↔ gge5667, (1022.244999, 819.815000) mm, shared 0.000000 mm, gap 0.010003 mm — alternate copper path.
+  L2/21 GND gge6188 ↔ gge5530, (1026.150000, 829.749999) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6166 ↔ gge5542, (1040.399999, 833.950001) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6168 ↔ gge6167, (1040.399999, 837.302876) mm, shared 0.094247 mm, gap 0.000000 mm — OPEN between fragments.
+  L2/21 GND gge6160 ↔ gge5537, (1042.944999, 836.950000) mm, shared 0.000000 mm, gap 0.010000 mm — alternate copper path.
+  L2/21 GND gge6142 ↔ gge5654, (1045.794999, 797.560000) mm, shared 0.000000 mm, gap 0.010000 mm — alternate copper path.
+  L2/21 GND gge6114 ↔ gge5365, (1058.950000, 809.000000) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6110 ↔ gge5025, (1060.450000, 808.400001) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6106 ↔ gge5239, (1061.150000, 840.450001) mm, shared 0.000000 mm, gap 0.000003 mm — alternate copper path.
+  L2/21 GND gge6104 ↔ gge5149, (1063.000000, 766.349999) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6097 ↔ gge6096, (1064.250000, 810.705571) mm, shared 0.141110 mm, gap 0.000000 mm — OPEN between fragments.
+  L2/21 GND gge6093 ↔ gge5145, (1065.250001, 764.200001) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6085 ↔ gge5145, (1065.750001, 764.200001) mm, shared 0.000000 mm, gap 0.000003 mm — alternate copper path.
+  L2/21 GND gge6090 ↔ gge5212, (1066.250001, 806.450000) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6087 ↔ gge5144, (1066.750000, 799.800001) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6080 ↔ gge5212, (1066.750000, 806.450000) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6081 ↔ gge5144, (1067.249999, 799.800001) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6017 ↔ gge5985, (1074.250000, 782.101268) mm, shared 0.132497 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6015 ↔ gge5985, (1074.250000, 784.250000) mm, shared 0.135842 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6014 ↔ gge5985, (1074.250000, 785.250000) mm, shared 0.135842 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6013 ↔ gge5985, (1074.250000, 786.250000) mm, shared 0.135839 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6011 ↔ gge5985, (1074.250000, 789.250000) mm, shared 0.135842 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 GND gge6024 ↔ gge5150, (1076.550000, 766.349999) mm, shared 0.000000 mm, gap 0.000003 mm — alternate copper path.
+  L3/22 3V3 gge5208 ↔ gge5198, (1063.350811, 794.598933) mm, shared 0.000000 mm, gap 0.000026 mm — alternate copper path.
+  L3/22 GND J4.SH2 ↔ gge5667, (1022.244999, 819.815000) mm, shared 0.000000 mm, gap 0.010003 mm — alternate copper path.
+  L3/22 USB_VBUS gge5670 ↔ gge4899, (1022.004999, 810.490000) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L4/2 3V3 gge5208 ↔ gge5198, (1063.350811, 794.598933) mm, shared 0.000000 mm, gap 0.000026 mm — alternate copper path.
+  L4/2 DI_COM gge5934 ↔ gge5293, (1099.600000, 856.349999) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L4/2 DI_COM gge5936 ↔ gge5925, (1102.272200, 847.765035) mm, shared 0.041346 mm, gap 0.000000 mm — OPEN between fragments.
+  L4/2 GND gge961105 ↔ gge5849, (1021.599999, 802.990799) mm, shared 0.043597 mm, gap 0.000000 mm — OPEN between fragments.
+  L4/2 GND J4.SH2 ↔ gge5667, (1022.244999, 819.815000) mm, shared 0.000000 mm, gap 0.010003 mm — alternate copper path.
+  L4/2 GND gge5853 ↔ gge5658, (1029.624999, 807.780000) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L4/2 GND gge5720 ↔ gge5716, (1039.349999, 831.150000) mm, shared 0.141999 mm, gap 0.000000 mm — alternate copper path.
+  L4/2 GND gge5726 ↔ gge5725, (1050.799999, 828.961390) mm, shared 0.064780 mm, gap 0.000000 mm — OPEN between fragments.
+  L4/2 GND gge5737 ↔ gge5239, (1061.150000, 840.450001) mm, shared 0.000000 mm, gap 0.000003 mm — alternate copper path.
+  L4/2 GND gge5742 ↔ gge5149, (1063.000000, 766.349999) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L4/2 GND gge5746 ↔ gge5251, (1066.900000, 845.650000) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L4/2 GND gge5756 ↔ gge5131, (1067.500001, 790.600001) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L4/2 GND gge5769 ↔ gge5753, (1071.250001, 798.731683) mm, shared 0.057366 mm, gap 0.000000 mm — OPEN between fragments.
+  L4/2 GND gge5783 ↔ gge5777, (1074.275002, 784.250000) mm, shared 0.012657 mm, gap 0.000000 mm — OPEN between fragments.
+  L4/2 GND gge5783 ↔ gge5778, (1074.275002, 785.250000) mm, shared 0.012657 mm, gap 0.000000 mm — OPEN between fragments.
+  L4/2 GND gge5783 ↔ gge5779, (1074.275002, 786.250000) mm, shared 0.012654 mm, gap 0.000000 mm — OPEN between fragments.
+  L4/2 GND gge5783 ↔ gge5776, (1074.275002, 789.250000) mm, shared 0.012657 mm, gap 0.000000 mm — OPEN between fragments.
+  L4/2 GND gge5810 ↔ gge5150, (1076.550000, 766.349999) mm, shared 0.000000 mm, gap 0.000003 mm — alternate copper path.
+  L4/2 GND gge5809 ↔ gge5808, (1076.550001, 794.594870) mm, shared 0.088260 mm, gap 0.000000 mm — OPEN between fragments.
+  L4/2 GND gge5816 ↔ gge5151, (1079.500039, 768.543778) mm, shared 0.000000 mm, gap 0.000078 mm — alternate copper path.
+  L4/2 GND gge5839 ↔ gge5833, (1085.099999, 821.875001) mm, shared 0.075194 mm, gap 0.000000 mm — OPEN between fragments.
+Final Rev P: 50 weak contacts or near-gaps, 0 between separate copper groups.
+  L1/1 1V1 gge4557 ↔ gge4547, (1038.637426, 814.974447) mm, shared 0.000000 mm, gap 0.009515 mm — alternate copper path.
+  L1/1 1V1 C20.1 ↔ gge4548, (1051.497500, 816.300001) mm, shared 0.000000 mm, gap 0.005000 mm — alternate copper path.
+  L1/1 3V3 C65.1 ↔ gge4329, (1018.600000, 806.449922) mm, shared 0.000000 mm, gap 0.000002 mm — alternate copper path.
+  L1/1 3V3 R53.1 ↔ gge5340, (1018.750621, 804.324931) mm, shared 0.000000 mm, gap 0.001251 mm — alternate copper path.
+  L1/1 3V3 gge5340 ↔ gge4342, (1018.781864, 804.425277) mm, shared 0.000000 mm, gap 0.003128 mm — alternate copper path.
+  L1/1 3V3 gge5696 ↔ gge4386, (1050.929490, 821.191200) mm, shared 0.000000 mm, gap 0.004131 mm — alternate copper path.
+  L1/1 3V3 gge5208 ↔ gge5198, (1063.350811, 794.598933) mm, shared 0.000000 mm, gap 0.000026 mm — alternate copper path.
+  L1/1 CAB_PRI R78.1 ↔ gge4868, (1044.349999, 799.225000) mm, shared 0.000000 mm, gap 0.000001 mm — bridged by gge962332.
+  L1/1 DI4_N R47.2 ↔ gge4241, (1101.399999, 832.739097) mm, shared 0.000000 mm, gap 0.000007 mm — alternate copper path.
+  L1/1 DI4_N R47.2 ↔ gge4273, (1101.399999, 832.739097) mm, shared 0.000000 mm, gap 0.000007 mm — alternate copper path.
+  L1/1 GND J4.SH2 ↔ gge5667, (1022.244999, 819.815000) mm, shared 0.000000 mm, gap 0.010003 mm — bridged by gge962106.
+  L1/1 RTC_SDA R31.2 ↔ gge4110, (1067.925000, 811.200001) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L2/21 3V3 gge5208 ↔ gge5198, (1063.350811, 794.598933) mm, shared 0.000000 mm, gap 0.000026 mm — alternate copper path.
+  L2/21 DI_COM gge6209 ↔ gge5293, (1099.600000, 856.349999) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962331.
+  L2/21 GND gge5952 ↔ gge5326, (1018.434991, 786.000000) mm, shared 0.000000 mm, gap 0.009982 mm — bridged by gge962310.
+  L2/21 GND J4.SH2 ↔ gge5667, (1022.244999, 819.815000) mm, shared 0.000000 mm, gap 0.010003 mm — bridged by gge962107.
+  L2/21 GND gge6188 ↔ gge5530, (1026.150000, 829.749999) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962330.
+  L2/21 GND gge6166 ↔ gge5542, (1040.399999, 833.950001) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962329.
+  L2/21 GND gge6160 ↔ gge5537, (1042.944999, 836.950000) mm, shared 0.000000 mm, gap 0.010000 mm — bridged by gge962328.
+  L2/21 GND gge6142 ↔ gge5654, (1045.794999, 797.560000) mm, shared 0.000000 mm, gap 0.010000 mm — bridged by gge962327.
+  L2/21 GND gge6114 ↔ gge5365, (1058.950000, 809.000000) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962326.
+  L2/21 GND gge6110 ↔ gge5025, (1060.450000, 808.400001) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962325.
+  L2/21 GND gge6106 ↔ gge5239, (1061.150000, 840.450001) mm, shared 0.000000 mm, gap 0.000003 mm — bridged by gge962324.
+  L2/21 GND gge6104 ↔ gge5149, (1063.000000, 766.349999) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962323.
+  L2/21 GND gge6093 ↔ gge5145, (1065.250001, 764.200001) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962322.
+  L2/21 GND gge6085 ↔ gge5145, (1065.750001, 764.200001) mm, shared 0.000000 mm, gap 0.000003 mm — bridged by gge962319.
+  L2/21 GND gge6090 ↔ gge5212, (1066.250001, 806.450000) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962321.
+  L2/21 GND gge6087 ↔ gge5144, (1066.750000, 799.800001) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962320.
+  L2/21 GND gge6080 ↔ gge5212, (1066.750000, 806.450000) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962317.
+  L2/21 GND gge6081 ↔ gge5144, (1067.249999, 799.800001) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962318.
+  L2/21 GND gge6017 ↔ gge5985, (1074.250000, 782.101268) mm, shared 0.132497 mm, gap 0.000000 mm — bridged by gge962315.
+  L2/21 GND gge6015 ↔ gge5985, (1074.250000, 784.250000) mm, shared 0.135842 mm, gap 0.000000 mm — bridged by gge962314.
+  L2/21 GND gge6014 ↔ gge5985, (1074.250000, 785.250000) mm, shared 0.135842 mm, gap 0.000000 mm — bridged by gge962313.
+  L2/21 GND gge6013 ↔ gge5985, (1074.250000, 786.250000) mm, shared 0.135839 mm, gap 0.000000 mm — bridged by gge962312.
+  L2/21 GND gge6011 ↔ gge5985, (1074.250000, 789.250000) mm, shared 0.135842 mm, gap 0.000000 mm — bridged by gge962311.
+  L2/21 GND gge6024 ↔ gge5150, (1076.550000, 766.349999) mm, shared 0.000000 mm, gap 0.000003 mm — bridged by gge962316.
+  L3/22 3V3 gge5208 ↔ gge5198, (1063.350811, 794.598933) mm, shared 0.000000 mm, gap 0.000026 mm — alternate copper path.
+  L3/22 GND J4.SH2 ↔ gge5667, (1022.244999, 819.815000) mm, shared 0.000000 mm, gap 0.010003 mm — bridged by gge962108.
+  L3/22 USB_VBUS gge5670 ↔ gge4899, (1022.004999, 810.490000) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
+  L4/2 3V3 gge5208 ↔ gge5198, (1063.350811, 794.598933) mm, shared 0.000000 mm, gap 0.000026 mm — alternate copper path.
+  L4/2 DI_COM gge5934 ↔ gge5293, (1099.600000, 856.349999) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962309.
+  L4/2 GND J4.SH2 ↔ gge5667, (1022.244999, 819.815000) mm, shared 0.000000 mm, gap 0.010003 mm — bridged by gge962109.
+  L4/2 GND gge5853 ↔ gge5658, (1029.624999, 807.780000) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962308.
+  L4/2 GND gge5720 ↔ gge5716, (1039.349999, 831.150000) mm, shared 0.141999 mm, gap 0.000000 mm — bridged by gge962301.
+  L4/2 GND gge5737 ↔ gge5239, (1061.150000, 840.450001) mm, shared 0.000000 mm, gap 0.000003 mm — bridged by gge962302.
+  L4/2 GND gge5742 ↔ gge5149, (1063.000000, 766.349999) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962303.
+  L4/2 GND gge5746 ↔ gge5251, (1066.900000, 845.650000) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962304.
+  L4/2 GND gge5756 ↔ gge5131, (1067.500001, 790.600001) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962305.
+  L4/2 GND gge5810 ↔ gge5150, (1076.550000, 766.349999) mm, shared 0.000000 mm, gap 0.000003 mm — bridged by gge962306.
+  L4/2 GND gge5816 ↔ gge5151, (1079.500039, 768.543778) mm, shared 0.000000 mm, gap 0.000078 mm — bridged by gge962307.
+  Removed gge5700, layer 1, 3V3, 0.003130 mm², no lands or vias.
+  Removed gge5725, layer 2, GND, 0.001807 mm², no lands or vias.
+  Removed gge5753, layer 2, GND, 0.001532 mm², no lands or vias.
+  Removed gge5776, layer 2, GND, 0.000223 mm², no lands or vias.
+  Removed gge5777, layer 2, GND, 0.000223 mm², no lands or vias.
+  Removed gge5778, layer 2, GND, 0.000223 mm², no lands or vias.
+  Removed gge5779, layer 2, GND, 0.000223 mm², no lands or vias.
+  Removed gge5808, layer 2, GND, 0.003270 mm², no lands or vias.
+  Removed gge5833, layer 2, GND, 0.002853 mm², no lands or vias.
+  Removed gge5849, layer 2, GND, 0.001973 mm², no lands or vias.
+  Removed gge5925, layer 2, DI_COM, 0.007505 mm², no lands or vias.
+  Removed gge6096, layer 21, GND, 0.007953 mm², no lands or vias.
+  Removed gge6167, layer 21, GND, 0.002781 mm², no lands or vias.
+Rev P vs pre-repair Rev P: 93 added or changed layer objects
+  Minimum 0.129078 mm on layer 21, gge962315 (GND) to gge5167 (LCD_B3).
+Rev P vs tagged FOOTPRINTS: 153 added or changed layer objects
   Minimum 0.128000 mm on layer 1, gge4853 (USB_CC1) to J4.SH3 (GND).
-Rev P vs tagged frozen PCB: 262 added or changed layer objects
+Rev P vs tagged frozen PCB: 353 added or changed layer objects
   Minimum 0.128000 mm on layer 1, gge4853 (USB_CC1) to J4.SH3 (GND).
 Changed foreign-net tracks and vias avoid the U21 exposed-pad projection.
   U1.1 CAB_FB connects to R69.2, R70.1.
@@ -108,5 +196,21 @@ Changed foreign-net tracks and vias avoid the U21 exposed-pad projection.
   U1.5 CAB_SW connects to L3.1, C84.2.
   U1.6 CAB_CB connects to C84.1.
 U1 six pads and cabinet 5 V output path checked.
-Live PCB SHA-256 7facd1a0a328ac778979ee19208df8808d025f29765a518c5697c9cc67c335fc
+Buck output and distribution geometry
+  1 U6.3 ↔ gge962017 ↔ C94.1. Overlap 0.03005 / 0.14189 mm².
+  22 gge962012 ↔ gge962014 ↔ gge962011. Overlap 1.78800 / 1.39356 mm².
+  22 gge962011 ↔ gge962015 ↔ gge962013. Overlap 1.46081 / 2.09508 mm².
+  Two 1.40 mm Inner2 power legs, three plated vias at each transition, positive overlap into Bottom distribution and VOS tapped at C94.1.
+  Trace sizing assumes ≥35 µm finished Inner2 copper. Thermal qualification at 1.5 A pending.
+Requested local positive-overlap repairs
+  1 C17.1 ↔ gge962101 ↔ gge5387. Overlap 0.09534 / 0.05647 mm².
+  1 C15.1 ↔ gge962102 ↔ gge4946. Overlap 0.28928 / 0.06653 mm².
+  1 U2.62 ↔ gge962103 ↔ gge5705. Overlap 0.09571 / 0.26792 mm².
+  1 X1.2 ↔ gge962104 ↔ gge5362. Overlap 0.13416 / 0.04784 mm².
+  1 X1.4 ↔ gge962105 ↔ gge5363. Overlap 0.13416 / 0.04784 mm².
+  1 J4.SH2 ↔ gge962106 ↔ gge5667. Overlap 0.10741 / 0.06526 mm².
+  21 J4.SH2 ↔ gge962107 ↔ gge5667. Overlap 0.10741 / 0.06526 mm².
+  22 J4.SH2 ↔ gge962108 ↔ gge5667. Overlap 0.10741 / 0.06526 mm².
+  2 J4.SH2 ↔ gge962109 ↔ gge5667. Overlap 0.10741 / 0.06526 mm².
+Live PCB SHA-256 5380d3baf6ce116a84dca47c33d0a85d60cb508ac64ae08eb30c6500b7eab3df
 DRAFT — DO NOT FABRICATE. Native EasyEDA import, copper rebuild, ERC/DRC, CAM and hardware pending.
