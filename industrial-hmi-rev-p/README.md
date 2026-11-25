@@ -11,7 +11,7 @@
 | [Specification PDF](Industrial-HMI-RevP-Specification.pdf) | Rev P specifications with marked historical reference pages. |
 | [Schematic PDF](Industrial-HMI-RevP-Draft-Schematic.pdf) · [PCB preview](Industrial-HMI-RevP-PCB.png) · [Placement preview](Industrial-HMI-RevP-Placement.png) | Rev M/N artwork — re-export pending in EasyEDA. |
 | [Editor runbook](EDITOR-RUNBOOK.md) · [Fabrication notes](FAB-NOTES.md) · [Bring-up](BRING-UP.md) | Native EasyEDA review, evidence and staged bench tests. |
-| [J4 nominal footprint reference](Footprint_GCT-USB4105-GF-A-REV-P.json) | GCT B3 nominal geometry for review. See the locator clearance blocker before applying it. |
+| [J4 approved-trim footprint](Footprint_GCT-USB4105-GF-A-REV-P.json) | GCT B3 geometry with the approved locator clearance trim. See the D24 clearance blocker before applying it. |
 | [Verifier](tools/verify_rev_p.py) · [Recorded verification](tools/verification-output.txt) · [Reference license](Raspberry-Pi-Reference-LICENSE.txt) | Stored-geometry checks and reference license. |
 
 Run the verifier from this checkout with Python and Shapely 2.1 or newer. Keep the local annotated `rev-n` tag available for the copper comparisons.

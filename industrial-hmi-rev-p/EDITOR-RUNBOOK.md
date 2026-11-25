@@ -1,6 +1,6 @@
 # Rev P EasyEDA Standard editor and release checks
 
-**DRAFT — DO NOT FABRICATE.** Use the desktop edition of EasyEDA Standard, KiCad GerbView and Python 3. Save the evidence named below in `industrial-hmi-rev-p/evidence/`. Resolve the J4 footprint clearance in step 6, then repeat steps 3–5 before any fabrication export. Keep the CAD work, exports and screenshots local.
+**DRAFT — DO NOT FABRICATE.** Use the desktop edition of EasyEDA Standard, KiCad GerbView and Python 3. Save the evidence named below in `industrial-hmi-rev-p/evidence/`. Resolve the D24.2 clearance by J4 in step 6, then repeat steps 3–5 before any fabrication export. Keep the CAD work, exports and screenshots local.
 
 ## 1. Import the live project
 
@@ -52,7 +52,7 @@ Open **Design → Check DRC** and refresh **left navigation → Design → DRC E
 
 Save `05-drc.png` with the entire result panel and `05-drc.txt` with the editor version, rule set, final count and disposition of any findings. Use the editor's report if provided, or transcribe these fields. [EasyEDA DRC](https://docs.easyeda.com/en/PCB/Design-Rule-Check/)
 
-## 6. Inspect the critical areas and review the J4 blocker
+## 6. Inspect the critical areas and review J4 and D24 clearance
 
 In the PCB use **left navigation → Design → Component** to jump to each designator. Use **Design → Net** in the same panel or select a pad and press **H** to highlight a route. Dimensions below use absolute EasyEDA millimetres. Save the appropriate copper layer name and dimensions in each screenshot.
 
@@ -69,9 +69,9 @@ In the PCB use **left navigation → Design → Component** to jump to each desi
 
 **J4 footprint clearance and visual check**
 
-1. The [B3 reference library](Footprint_GCT-USB4105-GF-A-REV-P.json) uses the nominal manufacturer geometry and stays outside the live archive. Open it separately through **File → Open → EasyEDA** for visual review. Before applying any replacement to the board, resolve the **0.175100 mm** clearance from each locator edge to a GND land against the **0.200 mm** requirement. Use an approved geometry or fabrication rule supported by the tolerance and process review. [Rev P status and coordinates](REV-P-STATUS.md#j4-geometry-and-reroute-locations)
+1. Open the [approved-trim J4 library](Footprint_GCT-USB4105-GF-A-REV-P.json) separately through **File → Open → EasyEDA**. Confirm the 0.051 mm end trim on A1/B12 and B1/A12, 1.099 mm remaining land length and **at least 0.225 mm** between each locator and its adjacent GND land. On the live board, D24.2 prevents placement of the updated footprint because the projected gap to A4/B9 and B8 is **0.045 mm**. Resolve that fixed pad clearance before applying the new footprint. [Rev P status and coordinates](REV-P-STATUS.md#j4-geometry-and-reroute-locations)
 2. Anchor the replacement mating face to x = 1015.825, y = 816.000 mm, maintaining the enclosure position. In the footprint, select each shell pad and verify **Shape → Oval**, **Layer → Multi-Layer**, **Hole Shape → Slot**, and **Plated → Yes**. The slots run along the x axis. The rear pair is 1.70 × 0.60 mm with 2.10 × 1.00 mm pads, and the front pair is 1.40 × 0.60 mm with 1.80 × 1.00 mm pads. Verify the two Ø0.65 mm locator features in **PCB Tools → Hole** / Properties. Inspect copper, mask and paste and confirm the four coincident contact pairs and 12 actual SMT lands. Verify pad and hole positions against the approved geometry.
-3. Apply the approved footprint to a working copy, update the schematic association and route around the shell and locator keepouts. Investigate the VBUS, CC2 and fixed-region collisions listed in the [verification report](tools/verification-output.txt). Check CC1 against both left slots, both dead-battery connections, and VBUS to D24, C87 and Q3. Retain both data polarities and compare skew in both orientations. Confirm shell GND positively overlaps its plane connections and verify two nearby stitching vias on Inner1. In GerbView, show the plated drill/route file with Top copper to verify four slotted shapes, then show NPTH with Top copper to measure both locator clearances. Repeat steps 3–5 and save the J4 screenshots listed above.
+3. Apply the approved footprint to a working copy, update the schematic association and route around the shell and locator keepouts. Investigate the VBUS, CC2 and fixed-region collisions listed in the [verification report](tools/verification-output.txt). Check CC1 against both left slots, both dead-battery connections, and VBUS to D24, C87 and Q3. Retain both data polarities over Inner1 GND and verify **≤5 mm skew** in both plug orientations. Confirm shell GND positively overlaps its plane connections and verify two nearby stitching vias on Inner1. In GerbView, show the plated drill/route file with Top copper to verify four slotted shapes, then show NPTH with Top copper to measure both locator clearances. Repeat steps 3–5 and save the J4 screenshots listed above.
 4. Confirm the purchased BZ1's actual pin pitch, lead diameter and positive lead. Check its two plated holes and square positive SYS_5V pad against the part and its enclosure clearance.
 
 [GCT USB4105 B3, sheet 1](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf) · [EasyEDA pads and holes](https://docs.easyeda.com/en/PCB/PCB-Tools/)

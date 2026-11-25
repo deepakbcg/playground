@@ -250,10 +250,10 @@ D25 — TI MPDS340 p.1 and linked Ultra Librarian DRT0003A Top copper CAD. Value
 | 3 | 0.575 / 0.000 / 0.450 / 0.300 | 0.575 / 0.000 / 0.450 / 0.300 | SMT | PASS |
 
 J4 — GCT USB4105 B3 sheet 1, Recommended PCB Layout and pin/signal table.
-PASS in the tables means the standalone library matches the drawing. It is not placed.
+The tables describe the approved-trim library. Live installation remains on hold.
 | SMT land | Drawing x / y / axial length / width (mm) | Library (mm) | Live net | Result |
 | --- | --- | --- | --- | --- |
-| A1/B12 | 7.355 / -3.200 / 1.150 / 0.600 | 7.355 / -3.200 / 1.150 / 0.600 | GND | PASS |
+| A1/B12 | 7.355 / -3.200 / 1.150 / 0.600 | 7.380 / -3.200 / 1.099 / 0.600 | GND | APPROVED DEVIATION: 0.051 mm removed at insertion end |
 | A4/B9 | 7.355 / -2.400 / 1.150 / 0.600 | 7.355 / -2.400 / 1.150 / 0.600 | USB_VBUS | PASS |
 | B8 | 7.355 / -1.750 / 1.150 / 0.300 | 7.355 / -1.750 / 1.150 / 0.300 | SBU unconnected | PASS |
 | A5 | 7.355 / -1.250 / 1.150 / 0.300 | 7.355 / -1.250 / 1.150 / 0.300 | USB_CC1 | PASS |
@@ -264,7 +264,7 @@ PASS in the tables means the standalone library matches the drawing. It is not p
 | A8 | 7.355 / 1.250 / 1.150 / 0.300 | 7.355 / 1.250 / 1.150 / 0.300 | SBU unconnected | PASS |
 | B5 | 7.355 / 1.750 / 1.150 / 0.300 | 7.355 / 1.750 / 1.150 / 0.300 | USB_CC2 | PASS |
 | B4/A9 | 7.355 / 2.400 / 1.150 / 0.600 | 7.355 / 2.400 / 1.150 / 0.600 | USB_VBUS | PASS |
-| B1/A12 | 7.355 / 3.200 / 1.150 / 0.600 | 7.355 / 3.200 / 1.150 / 0.600 | GND | PASS |
+| B1/A12 | 7.355 / 3.200 / 1.150 / 0.600 | 7.380 / 3.200 / 1.099 / 0.600 | GND | APPROVED DEVIATION: 0.051 mm removed at insertion end |
 | Drill | Drawing x / y (mm) | Library x / y (mm) | Drawing / library drill and copper (mm) | Result |
 | --- | --- | --- | --- | --- |
 | SH1 | 6.78 / -4.32 | 6.78 / -4.32 | 1.70 × 0.60 slot, x axis, plated, 2.10 × 1.00 copper all four layers | PASS |
@@ -275,11 +275,13 @@ PASS in the tables means the standalone library matches the drawing. It is not p
 | locator 2 | 6.28 / +2.89 | 6.28 / +2.89 | Ø0.65 NPTH, 5.78 spacing | PASS |
   Mating face from live footprint outline x=1015.825 mm, board edge x=1016.000 mm, centreline y=816.000 mm. Keeping the face gives 0.175 mm overhang.
   The face-fixed nominal SMT row would be x=1023.180 mm (live x=1022.605 mm).
-  Intrinsic locator clearance, candidate drill to candidate SMT land (no routed copper):
-    FAIL L1: locator 1 ↔ J4.A1/B12, 0.175100 mm vs 0.200 mm, pad edge at (1022.605, 813.100) mm.
-      Axial shift toward the face needed to reach the limit: 0.024905 mm, before tolerance.
-    FAIL L1: locator 2 ↔ J4.B1/A12, 0.175100 mm vs 0.200 mm, pad edge at (1022.605, 818.900) mm.
-      Axial shift toward the face needed to reach the limit: 0.024905 mm, before tolerance.
+  Approved trim clearance, locator drill to the two trimmed library GND lands:
+    PASS L1: locator 1 ↔ J4.A1/B12, 0.226091 mm vs 0.225 mm.
+    PASS L1: locator 2 ↔ J4.B1/A12, 0.226091 mm vs 0.225 mm.
+  Projected lands against fixed D24.2:
+    FAIL L1: J4.A4 ↔ D24.2, 0.045001 mm vs 0.125 mm.
+    FAIL L1: J4.B9 ↔ D24.2, 0.045001 mm vs 0.125 mm.
+    FAIL L1: J4.B8 ↔ D24.2, 0.045001 mm vs 0.125 mm.
   Projected holes against retained copper (exclude J4 pads being replaced):
     SH1, layer 1 (0.28 mm minimum): gge4900 (USB_VBUS) 0.000000 mm, gge4905 (USB_VBUS) 0.000000 mm, gge5596 (USB_VBUS) 0.000000 mm.
     SH1, layer 21 (0.30 mm minimum): gge5596 (USB_VBUS) 0.000000 mm.
@@ -293,15 +295,30 @@ PASS in the tables means the standalone library matches the drawing. It is not p
     locator 2, layer 22 (0.20 mm minimum): gge5667 (GND) 0.109510 mm, gge962108 (GND) 0.199504 mm.
     locator 2, layer 2 (0.20 mm minimum): gge5848 (GND) 0.000000 mm, gge5667 (GND) 0.109510 mm, gge961106 (GND) 0.180000 mm, gge962109 (GND) 0.199504 mm.
   Live drill source: 0 plated slots, 60 round plated component holes, 7 NPTH, 665 vias.
-  Nominal substitution would encode 4 plated slots, 56 round plated component holes, 9 NPTH and 665 vias before rerouting. Native drill export pending.
-  Live copper unchanged vs 2cde613. J4 reroute and clearance qualification BLOCKED.
+  Approved-trim substitution would encode 4 plated slots, 56 round plated component holes, 9 NPTH and 665 vias before rerouting. Native drill export pending.
+  Live J4 installation remains BLOCKED by the fixed D24.2 land clearance.
+
+  Scratch J4 routing trial, D24 retained: zero shorts and zero split named nets.
+  All USB paths including both U21 dead-battery pins and all shell ground paths are connected.
+  Trial source encodes 4 plated slots, 56 round plated pads, 9 NPTH and 664 vias.
+  Native drill export remains pending.
+  Changed copper minimum FAIL 0.045000 mm on L1 to D24.2.
+  Remaining changed copper minimum 0.130429 mm on layer 1, gge4853 ↔ gge961301.
+  NPTH-to-copper minimum 0.203985 mm, locator 2 ↔ gge5848 on layer 2.
+  Plated slot-to-foreign copper, outer minimum 0.391341 mm, SH1 ↔ gge5670 on layer 1.
+  Plated slot-to-foreign copper, inner minimum 0.391341 mm, SH1 ↔ gge5670 on layer 21.
+  Data tracks have Inner1 GND below the routes outside the two existing D− via antipads.
+  Inner1 stitches verified at gge5664 and gge5667. VBUS trunk is 0.48 mm.
+  Trial orientation A, J4 → U23: D+ 5.185, D− 6.399, skew 1.214 mm, planar copper lengths.
+  Trial orientation B, J4 → U23: D+ 7.658, D− 5.146, skew 2.512 mm, planar copper lengths.
+  Scratch routing withheld from the live design pending the D24 decision.
   USB trace centreline lengths in mm (planar copper only, excludes via barrels and pad traversal).
   | Segment | Before D+ / D− / skew | Live D+ / D− / skew |
   | --- | --- | --- |
   | J4 A contacts → U23 | 5.185 / 6.392 / 1.208 | 5.185 / 6.392 / 1.208 |
   | J4 B contacts → U23 | 7.658 / 5.361 / 2.296 | 7.658 / 5.361 / 2.296 |
   | R17/R18 → U2 | 3.973 / 3.725 / 0.249 | 3.973 / 3.725 / 0.249 |
-  Both connector orientations exceed the 0.500 mm skew target before any rework. The A-side D− path has two existing vias.
+  Existing centreline skew is within the 5 mm Full Speed target in both orientations. These are the unchanged live traces.
 Editor-task package vs 3287d57: 20 added or changed layer objects
   Minimum 0.132428 mm on layer 1, U6.9 (unassigned) to gge5566 (SYS_3V3_SS).
 Live PCB SHA-256 f74eb5af8b624199e9ae7ed3aca0a9672b529ae5afda4f4654e87fa3662d35e8

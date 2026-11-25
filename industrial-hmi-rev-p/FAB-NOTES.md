@@ -37,7 +37,7 @@ The live source has **zero plated slots**, **60 round plated component pads**, i
 | J11 locator | 1028.285 | 848.15 |
 | J11 locator | 1039.715 | 848.15 |
 
-The J4 reference below uses GCT B3 sheet 1. The source could encode these drills in the board only after the locator clearance is resolved and the new footprint is routed. The reference is separate from the live board. [J4 nominal reference footprint](Footprint_GCT-USB4105-GF-A-REV-P.json) · [GCT B3, sheet 1](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf)
+The approved-trim J4 library uses GCT B3 sheet 1 and stays separate from the live board until D24 clearance is resolved. [J4 nominal reference footprint](Footprint_GCT-USB4105-GF-A-REV-P.json) · [GCT B3, sheet 1](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf)
 
 | Nominal J4 feature | Drill geometry | Outer solder area |
 | --- | --- | --- |
@@ -45,6 +45,8 @@ The J4 reference below uses GCT B3 sheet 1. The source could encode these drills
 | SH3 and SH4 | 2 × plated slots 1.40 × 0.60 mm, along the insertion axis | 1.80 × 1.00 mm |
 | Locator pair | 2 × Ø0.65 mm NPTH at 5.78 mm centre spacing | None |
 
-This substitution would give **56 round plated component holes, four plated slots and nine NPTH** (five mounting, two J11 and two J4) plus vias. Count the 60 component holes/slots independently of the via drills and reconcile any via-count changes from rerouting. The as-drawn locator-to-GND-land clearance is **0.175100 mm**, below the **0.200 mm** requirement. An axial move of about 0.025 mm toward the mating face would meet only the nominal rule, before manufacturing tolerance. GCT's footprint note is ±0.05 mm, and the fabricator's published hole position tolerance is ±0.075 mm. Qualify actual drill registration, slot size and land fit for any approved change. BZ1 uses two nominal Ø1.00 mm finished PTH. Measure the purchased buzzer before release. [JLCPCB hole and routing capabilities](https://jlcpcb.com/capabilities/pcb-capabilities/)
+The approved deviation removes **0.051 mm** from the locator-facing end of J4 lands **A1/B12 and B1/A12**. Each remains **1.099 × 0.600 mm** with its far end and width preserved. The geometry gives **0.226091 mm** from each locator edge to its trimmed GND land. The nominal mating face stays at x = 1015.825 mm, with **0.175 mm overhang** at the board edge. Confirm drill registration and first-article seating against the purchased connector and enclosure. [GCT B3 sheet 1](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf)
+
+The trial source encodes **56 round plated component holes, four plated slots, nine NPTH** (five mounting, two J11 and two J4) and **664 vias**. The live source still has the counts listed above. Keep J4 on hold because the corrected VBUS and SBU2 lands remain only **0.045000 mm** from fixed D24.2 on Top. Check component holes/slots independently of via drills in the final native export. BZ1 uses two nominal Ø1.00 mm finished PTH. Measure the purchased buzzer before release. [JLCPCB hole and routing capabilities](https://jlcpcb.com/capabilities/pcb-capabilities/)
 
 The top silkscreen carries **Rev P DRAFT**. The separate **DO NOT FABRICATE** warning is on the EasyEDA Document layer.
