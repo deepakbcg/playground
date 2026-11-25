@@ -1,6 +1,6 @@
 212 schematic / PCB / BOM designators agree. TP1–TP4 and optional R4/R38 DNP. LCD1 and CELL1 external.
 Zero schematic-to-PCB footprint mismatches. Locked parts, R68 91 kΩ and BZ1 7.60 mm / 1.00 mm PTH checked.
-One live schematic, one live PCB and one ZIP containing the byte-identical sources and BZ1 library.
+One live schematic, one live PCB and one ZIP containing the byte-identical sources and local footprint libraries.
 208 fitted refs priced exactly once, including the external LCD. Board + cell INR 6009.05.
 108 purchase lines meet listed stock, MOQ, order multiples and spares.
   LCSC INR 15263.98
@@ -51,7 +51,7 @@ Phase 2 before / after
   7. USB_FET_GATE R72.1 → Q3 gate — OPEN → connected
   8. CAB_PRI R78.1 → mux PR1 divider — OPEN → connected
   9. 3V3 R83.1 → shared 3.3 V rail — OPEN → connected
-  10. U6.7 vs SYS_5V — 0.116002 mm (gge4935) → 0.125999 mm (U6.6); limit 0.125 mm.
+  10. U6.7 vs SYS_5V — 0.116002 mm (gge4935) → 0.300000 mm (U6.6); limit 0.125 mm.
 Phase 2 requested findings closed: 10/10.
 Pre-repair Rev P with current rule: 0 split named nets
 Pre-repair Rev P: 63 weak contacts or near-gaps, 13 between separate copper groups.
@@ -118,7 +118,7 @@ Pre-repair Rev P: 63 weak contacts or near-gaps, 13 between separate copper grou
   L4/2 GND gge5809 ↔ gge5808, (1076.550001, 794.594870) mm, shared 0.088260 mm, gap 0.000000 mm — OPEN between fragments.
   L4/2 GND gge5816 ↔ gge5151, (1079.500039, 768.543778) mm, shared 0.000000 mm, gap 0.000078 mm — alternate copper path.
   L4/2 GND gge5839 ↔ gge5833, (1085.099999, 821.875001) mm, shared 0.075194 mm, gap 0.000000 mm — OPEN between fragments.
-Final Rev P: 50 weak contacts or near-gaps, 0 between separate copper groups.
+Final Rev P: 51 weak contacts or near-gaps, 0 between separate copper groups.
   L1/1 1V1 gge4557 ↔ gge4547, (1038.637426, 814.974447) mm, shared 0.000000 mm, gap 0.009515 mm — alternate copper path.
   L1/1 1V1 C20.1 ↔ gge4548, (1051.497500, 816.300001) mm, shared 0.000000 mm, gap 0.005000 mm — alternate copper path.
   L1/1 3V3 C65.1 ↔ gge4329, (1018.600000, 806.449922) mm, shared 0.000000 mm, gap 0.000002 mm — alternate copper path.
@@ -130,6 +130,7 @@ Final Rev P: 50 weak contacts or near-gaps, 0 between separate copper groups.
   L1/1 DI4_N R47.2 ↔ gge4241, (1101.399999, 832.739097) mm, shared 0.000000 mm, gap 0.000007 mm — alternate copper path.
   L1/1 DI4_N R47.2 ↔ gge4273, (1101.399999, 832.739097) mm, shared 0.000000 mm, gap 0.000007 mm — alternate copper path.
   L1/1 GND J4.SH2 ↔ gge5667, (1022.244999, 819.815000) mm, shared 0.000000 mm, gap 0.010003 mm — bridged by gge962106.
+  L1/1 GND U23.5 ↔ gge5660, (1028.100110, 815.550001) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
   L1/1 RTC_SDA R31.2 ↔ gge4110, (1067.925000, 811.200001) mm, shared 0.000000 mm, gap 0.000000 mm — alternate copper path.
   L2/21 3V3 gge5208 ↔ gge5198, (1063.350811, 794.598933) mm, shared 0.000000 mm, gap 0.000026 mm — alternate copper path.
   L2/21 DI_COM gge6209 ↔ gge5293, (1099.600000, 856.349999) mm, shared 0.000000 mm, gap 0.000000 mm — bridged by gge962331.
@@ -182,11 +183,11 @@ Final Rev P: 50 weak contacts or near-gaps, 0 between separate copper groups.
   Removed gge5925, layer 2, DI_COM, 0.007505 mm², no lands or vias.
   Removed gge6096, layer 21, GND, 0.007953 mm², no lands or vias.
   Removed gge6167, layer 21, GND, 0.002781 mm², no lands or vias.
-Rev P vs pre-repair Rev P: 93 added or changed layer objects
+Rev P vs pre-repair Rev P: 111 added or changed layer objects
   Minimum 0.129078 mm on layer 21, gge962315 (GND) to gge5167 (LCD_B3).
-Rev P vs tagged FOOTPRINTS: 153 added or changed layer objects
+Rev P vs tagged FOOTPRINTS: 171 added or changed layer objects
   Minimum 0.128000 mm on layer 1, gge4853 (USB_CC1) to J4.SH3 (GND).
-Rev P vs tagged frozen PCB: 353 added or changed layer objects
+Rev P vs tagged frozen PCB: 371 added or changed layer objects
   Minimum 0.128000 mm on layer 1, gge4853 (USB_CC1) to J4.SH3 (GND).
 Changed foreign-net tracks and vias avoid the U21 exposed-pad projection.
   U1.1 CAB_FB connects to R69.2, R70.1.
@@ -198,10 +199,11 @@ Changed foreign-net tracks and vias avoid the U21 exposed-pad projection.
 U1 six pads and cabinet 5 V output path checked.
 Buck output and distribution geometry
   1 U6.3 ↔ gge962017 ↔ C94.1. Overlap 0.03005 / 0.14189 mm².
-  22 gge962012 ↔ gge962014 ↔ gge962011. Overlap 1.78800 / 1.39356 mm².
-  22 gge962011 ↔ gge962015 ↔ gge962013. Overlap 1.46081 / 2.09508 mm².
-  Two 1.40 mm Inner2 power legs, three plated vias at each transition, positive overlap into Bottom distribution and VOS tapped at C94.1.
-  Trace sizing assumes ≥35 µm finished Inner2 copper. Thermal qualification at 1.5 A pending.
+  22 gge962012 ↔ gge962014 ↔ gge962011. Overlap 1.78800 / 2.07233 mm².
+  22 gge962011 ↔ gge962015 ↔ gge962013. Overlap 2.07539 / 2.38030 mm².
+  Two 2.20 mm Inner2 power legs, three plated vias at each transition, positive overlap into Bottom distribution and VOS tapped at C94.1.
+  IPC-2221 screening at 1.5 A and 17.5 µm inner copper gives 14.3 °C rise. Fabricator stackup and bench thermal test pending.
+  IPC-2221 screening at 1.5 A and 15.2 µm inner copper gives 18.0 °C rise. Fabricator stackup and bench thermal test pending.
 Requested local positive-overlap repairs
   1 C17.1 ↔ gge962101 ↔ gge5387. Overlap 0.09534 / 0.05647 mm².
   1 C15.1 ↔ gge962102 ↔ gge4946. Overlap 0.28928 / 0.06653 mm².
@@ -212,5 +214,52 @@ Requested local positive-overlap repairs
   21 J4.SH2 ↔ gge962107 ↔ gge5667. Overlap 0.10741 / 0.06526 mm².
   22 J4.SH2 ↔ gge962108 ↔ gge5667. Overlap 0.10741 / 0.06526 mm².
   2 J4.SH2 ↔ gge962109 ↔ gge5667. Overlap 0.10741 / 0.06526 mm².
-Live PCB SHA-256 5380d3baf6ce116a84dca47c33d0a85d60cb508ac64ae08eb30c6500b7eab3df
-DRAFT — DO NOT FABRICATE. Native EasyEDA import, copper rebuild, ERC/DRC, CAM and hardware pending.
+
+U6 — TI TPS62902 Rev A, p.45, RPJ0009A Example Board Layout. Values in mm, Top view relative to package origin.
+| Pad | Drawing x / y / width / height | PCB x / y / width / height | Drill | Result |
+| --- | --- | --- | --- | --- |
+| 1 | 0.625 / 0.250 / 0.650 / 0.200 | 0.625 / 0.250 / 0.650 / 0.200 | SMT | PASS |
+| 2 | 0.625 / -0.250 / 0.650 / 0.200 | 0.625 / -0.250 / 0.650 / 0.200 | SMT | PASS |
+| 3 | 0.625 / -0.750 / 0.650 / 0.200 | 0.625 / -0.750 / 0.650 / 0.200 | SMT | PASS |
+| 4 | -0.450 / -0.750 / 1.000 / 0.200 | -0.450 / -0.750 / 1.000 / 0.200 | SMT | PASS |
+| 5 | -0.625 / -0.250 / 0.650 / 0.200 | -0.625 / -0.250 / 0.650 / 0.200 | SMT | PASS |
+| 6 | -0.450 / 0.250 / 1.000 / 0.200 | -0.450 / 0.250 / 1.000 / 0.200 | SMT | PASS |
+| 7 | -0.500 / 0.925 / 0.250 / 0.550 | -0.500 / 0.925 / 0.250 / 0.550 | SMT | PASS |
+| 8 | 0.000 / 0.925 / 0.250 / 0.550 | 0.000 / 0.925 / 0.250 / 0.550 | SMT | PASS |
+| 9 | 0.500 / 0.925 / 0.250 / 0.550 | 0.500 / 0.925 / 0.250 / 0.550 | SMT | PASS |
+
+U23 — TI TS3USB221A Rev C, RSE0010A Example Board Layout, drawing 4220307/A. Values in mm, Top view relative to package origin.
+| Pad | Drawing x / y / width / height | PCB x / y / width / height | Drill | Result |
+| --- | --- | --- | --- | --- |
+| 1 | 0.675 / 0.750 / 0.550 / 0.250 | 0.675 / 0.750 / 0.550 / 0.250 | SMT | PASS |
+| 2 | 0.675 / 0.250 / 0.550 / 0.200 | 0.675 / 0.250 / 0.550 / 0.200 | SMT | PASS |
+| 3 | 0.675 / -0.250 / 0.550 / 0.200 | 0.675 / -0.250 / 0.550 / 0.200 | SMT | PASS |
+| 4 | 0.675 / -0.750 / 0.550 / 0.250 | 0.675 / -0.750 / 0.550 / 0.250 | SMT | PASS |
+| 5 | 0.000 / -0.900 / 0.300 / 0.600 | 0.000 / -0.900 / 0.300 / 0.600 | SMT | PASS |
+| 6 | -0.675 / -0.750 / 0.550 / 0.250 | -0.675 / -0.750 / 0.550 / 0.250 | SMT | PASS |
+| 7 | -0.675 / -0.250 / 0.550 / 0.200 | -0.675 / -0.250 / 0.550 / 0.200 | SMT | PASS |
+| 8 | -0.675 / 0.250 / 0.550 / 0.200 | -0.675 / 0.250 / 0.550 / 0.200 | SMT | PASS |
+| 9 | -0.675 / 0.750 / 0.550 / 0.250 | -0.675 / 0.750 / 0.550 / 0.250 | SMT | PASS |
+| 10 | 0.000 / 0.900 / 0.300 / 0.600 | 0.000 / 0.900 / 0.300 / 0.600 | SMT | PASS |
+
+D25 — TI MPDS340 p.1 and linked Ultra Librarian DRT0003A Top copper CAD. Values in mm, Top view relative to package origin.
+| Pad | Drawing x / y / width / height | PCB x / y / width / height | Drill | Result |
+| --- | --- | --- | --- | --- |
+| 1 | -0.575 / -0.350 / 0.450 / 0.300 | -0.575 / -0.350 / 0.450 / 0.300 | SMT | PASS |
+| 2 | -0.575 / 0.350 / 0.450 / 0.300 | -0.575 / 0.350 / 0.450 / 0.300 | SMT | PASS |
+| 3 | 0.575 / 0.000 / 0.450 / 0.300 | 0.575 / 0.000 / 0.450 / 0.300 | SMT | PASS |
+
+J4 — GCT USB4105 B3 sheet 1. Slots and locators remain an editor task.
+| Feature | Drawing | PCB | Result |
+| --- | --- | --- | --- |
+| SH1 | 1.70 × 0.60 plated slot | Ø0.60 round, plated | OPEN |
+| SH2 | 1.70 × 0.60 plated slot | Ø0.60 round, plated | OPEN |
+| SH3 | 1.40 × 0.60 plated slot | Ø0.60 round, plated | OPEN |
+| SH4 | 1.40 × 0.60 plated slot | Ø0.60 round, plated | OPEN |
+| Locators | 2 × Ø0.65 NPTH, 5.78 centres | Absent | OPEN |
+| Contacts | 16 designations / 12 lands | 16 / 12, aliased pairs share net | PASS |
+J4 existing CC1-to-shell gap 0.128000 mm, J4.SH3 ↔ gge4853, layer 1.
+Editor-task package vs 3287d57: 20 added or changed layer objects
+  Minimum 0.132428 mm on layer 1, U6.9 (unassigned) to gge5566 (SYS_3V3_SS).
+Live PCB SHA-256 f74eb5af8b624199e9ae7ed3aca0a9672b529ae5afda4f4654e87fa3662d35e8
+DRAFT — DO NOT FABRICATE. Native EasyEDA import, ERC/DRC, CAM and hardware checks pending.

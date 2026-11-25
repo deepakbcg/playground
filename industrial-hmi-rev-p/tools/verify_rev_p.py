@@ -14,7 +14,7 @@ import sys
 from zipfile import ZipFile
 
 from copper_geometry import (Board, LAYERS, MIN_SHARED_EDGE, NEAR_GAP, changed_copper,
-                             pieces, positive_overlap)
+                             mm_point, pieces, positive_overlap)
 
 HERE = Path(__file__).resolve().parents[1]
 REPO = HERE.parent
@@ -30,6 +30,8 @@ LOCKED = "U1 U2 U5 U6 U8 U14 U21 U22 U23 J4 D4 D10 Q3".split()
 PRICE_RATE = Decimal("92.67")
 RULE = .125
 BEFORE_CONTACTS = "5c50b9ed31a15b2b3ecd2a13da255f656f167cfe"
+BEFORE_EDITOR = "3287d57908d69a05234727b70805f117002ee217"
+EDITOR_PACKAGES = {"U6": "TI-RPJ0009A-REV-P", "U23": "TI-RSE0010A-REV-P", "D25": "TI-DRT0003A-REV-P"}
 BUCK_LOADS = ("L4.2", "C94.1", "U6.3", "C15.1", "U2.15", "C34.1", "TP3.1")
 REMOVED_FRAGMENTS = {
     "gge5700", "gge5725", "gge5753", "gge5776", "gge5777", "gge5778", "gge5779",
@@ -90,6 +92,110 @@ def indexed_csv(path, ref_column, count_column):
     return indexed
 
 
+def pad_fields(body):
+    return {f[8]: f for s in body if (f := s.split("~"))[0] == "PAD"}
+
+
+def load_prior_pcb(revision):
+    path = (HERE / cad_name("PCB")).relative_to(REPO)
+    return json.loads(subprocess.check_output(["git", "show", f"{revision}:{path}"], cwd=REPO))
+
+
+def footprint_drawing_rows():
+    rpj = {}
+    for pin in range(1, 7):
+        side = 1 if pin <= 3 else -1
+        width = 1.0 if pin in (4, 6) else .65
+        x = side * (.45 if width == 1 else .625)
+        y = {1: .25, 2: -.25, 3: -.75, 4: -.75, 5: -.25, 6: .25}[pin]
+        rpj[str(pin)] = (x, y, width, .20)
+    for pin in (7, 8, 9):
+        rpj[str(pin)] = ((pin - 8) * .5, .925, .25, .55)
+
+    rse = {}
+    for pin in (1, 2, 3, 4, 6, 7, 8, 9):
+        x = .675 if pin < 5 else -.675
+        y = {1: .75, 2: .25, 3: -.25, 4: -.75, 6: -.75, 7: -.25, 8: .25, 9: .75}[pin]
+        rse[str(pin)] = (x, y, .55, .20 if pin in (2, 3, 7, 8) else .25)
+    rse.update({"5": (0, -.9, .30, .60), "10": (0, .9, .30, .60)})
+    drt = {"1": (-.575, -.35, .45, .30), "2": (-.575, .35, .45, .30), "3": (.575, 0, .45, .30)}
+    return {
+        "U6": ("TI TPS62902 Rev A, p.45, RPJ0009A Example Board Layout", rpj),
+        "U23": ("TI TS3USB221A Rev C, RSE0010A Example Board Layout, drawing 4220307/A", rse),
+        "D25": ("TI MPDS340 p.1 and linked Ultra Librarian DRT0003A Top copper CAD", drt),
+    }
+
+
+def verify_editor_footprints(pcb, schematic, board):
+    footprints = components(pcb, False)
+    symbols = components(schematic, True)
+    live = {(p.layer, p.name): p for p in board.pieces}
+
+    def fmt(values):
+        return " / ".join(f"{v:.3f}" for v in values)
+
+    for ref, (source, dimensions) in footprint_drawing_rows().items():
+        _, h, body = footprints[ref]
+        package = EDITOR_PACKAGES[ref]
+        lib = json.loads((HERE / f"Footprint_{package}.json").read_bytes())
+        lib_origin = mm_point(lib["head"]["x"], lib["head"]["y"])
+        assert lib["head"]["uuid"] == h[8] == symbols[ref][1][7] and attrs(h)["package"] == package
+        origin_x, origin_y = mm_point(*h[1:3])
+        pads, library_pads = pad_fields(body), pad_fields(lib["shape"])
+        assert pads.keys() == library_pads.keys() == dimensions.keys()
+        print(f"\n{ref} — {source}. Values in mm, Top view relative to package origin.")
+        print("| Pad | Drawing x / y / width / height | PCB x / y / width / height | Drill | Result |")
+        print("| --- | --- | --- | --- | --- |")
+        for pin, target in sorted(dimensions.items(), key=lambda a: int(a[0])):
+            f, lib_pad = pads[pin], library_pads[pin]
+            x, y = mm_point(*f[2:4])
+            measured = (x - origin_x, y - origin_y, *mm_point(*f[4:6]))
+            lx, ly = mm_point(*lib_pad[2:4])
+            in_library = (lx - lib_origin[0], ly - lib_origin[1], *mm_point(*lib_pad[4:6]))
+            match = all(abs(a - b) < .00001 for a, b in zip(measured, target, strict=True))
+            print(f"| {pin} | {fmt(target)} | {fmt(measured)} | SMT | {'PASS' if match else 'FAIL'} |")
+            assert match and f[6] == "1" and float(f[9]) == 0
+            assert all(abs(a - b) < .00001 for a, b in zip(in_library, target, strict=True))
+            assert not lib_pad[7]
+            if ref == "U23":
+                assert f[1] == "POLYGON" and len(f[10].split()) > 16
+            if f[7]:
+                pad = live["1", f"{ref}.{pin}"]
+                assert any(q.net == pad.net and q.kind != "PAD" and positive_overlap(q.geometry, pad.geometry)
+                           for idx in board.query("1", pad.geometry) for q in [board.pieces[idx]]), pad.name
+
+    old_j4 = components(load_prior_pcb(BEFORE_EDITOR), False)["J4"]
+    assert footprints["J4"][1:] == old_j4[1:]
+    pins = pad_fields(footprints["J4"][2])
+    contacts = {key: f for key, f in pins.items() if key.startswith(("A", "B"))}
+    assert len(contacts) == 16 and len({(f[2], f[3], f[4], f[5]) for f in contacts.values()}) == 12
+    for a, b in (("A1", "B12"), ("A4", "B9"), ("B4", "A9"), ("B1", "A12")):
+        assert contacts[a][2:8] == contacts[b][2:8]
+    for key in ("SH1", "SH2", "SH3", "SH4"):
+        assert pins[key][7] == "GND" and pins[key][15] == "Y"
+    print("\nJ4 — GCT USB4105 B3 sheet 1. Slots and locators remain an editor task.")
+    print("| Feature | Drawing | PCB | Result |")
+    print("| --- | --- | --- | --- |")
+    for key, length in (("SH1", 1.70), ("SH2", 1.70), ("SH3", 1.40), ("SH4", 1.40)):
+        hole = 2 * float(pins[key][9]) * .254
+        print(f"| {key} | {length:.2f} × 0.60 plated slot | Ø{hole:.2f} round, plated | OPEN |")
+    print("| Locators | 2 × Ø0.65 NPTH, 5.78 centres | Absent | OPEN |")
+    print("| Contacts | 16 designations / 12 lands | 16 / 12, aliased pairs share net | PASS |")
+    shell_gap = min((p.geometry.distance(q.geometry), p.name, q.name, p.layer)
+                    for p in board.pieces if p.name in {"J4.SH1", "J4.SH2", "J4.SH3", "J4.SH4"}
+                    for q in board.pieces if q.net == "USB_CC1" and q.layer == p.layer)
+    assert shell_gap[0] >= RULE, shell_gap
+    print(f"J4 existing CC1-to-shell gap {shell_gap[0]:.6f} mm, {shell_gap[1]} ↔ {shell_gap[2]}, layer {shell_gap[3]}.")
+    usb = (("USB_CC1", "J4.A5", "U21.2"), ("USB_CC2", "J4.B5", "U21.4"),
+           ("USB_VBUS", "J4.A4", "C87.1"), ("USB_DP_CONN", "J4.A6", "D25.1", "U23.8"),
+           ("USB_DM_CONN", "J4.A7", "D25.2", "U23.7"))
+    assert all(board.connected(net, *pins) for net, *pins in usb)
+    silk = [v for s in pcb["shape"] if s.startswith("TEXT~") for v in [s.split("~")]]
+    assert any(v[10] == "Rev P DRAFT" and v[7] == "3" and v[11].startswith("M ") for v in silk)
+    assert all(v[7] == "12" for v in silk if v[10] == "DO NOT FABRICATE")
+    assert any(v[10] == "DO NOT FABRICATE" for v in silk)
+
+
 def verify_sources(schematic, pcb, old_schematic, base_parts, bom):
     symbols, footprints = components(schematic, True), components(pcb, False)
     assert len(footprints) == 212 and set(bom) - EXTERNAL == symbols.keys() == footprints.keys()
@@ -101,9 +207,21 @@ def verify_sources(schematic, pcb, old_schematic, base_parts, bom):
                          ("BOM_Supplier Part", "LCSC part")):
             if ref not in DNP or key == "package":
                 assert symbol.get(key, "") == footprint.get(key, "") == bom[ref][col], (ref, key)
-        assert footprints[ref][2] == base_parts[ref][2], (ref, "placement or native footprint changed")
-        assert footprints[ref][1][:3] == base_parts[ref][1][:3]
-        assert footprints[ref][1][4:] == base_parts[ref][1][4:]
+        if ref in EDITOR_PACKAGES and footprint["package"] == EDITOR_PACKAGES[ref]:
+            before_pads = pad_fields(base_parts[ref][2])
+            after_pads = pad_fields(footprints[ref][2])
+            assert {pin: (f[6], f[7], f[12]) for pin, f in before_pads.items()} == {
+                pin: (f[6], f[7], f[12]) for pin, f in after_pads.items()
+            }, ref
+            assert footprints[ref][1][4:8] == base_parts[ref][1][4:8]
+            assert footprints[ref][1][9:] == base_parts[ref][1][9:]
+            x, y = mm_point(*footprints[ref][1][1:3])
+            bx, by = mm_point(*base_parts[ref][1][1:3])
+            assert abs(x - bx) < .00001 and abs(y - by - (.25 if ref == "U6" else 0)) < .00001
+        else:
+            assert footprints[ref][2] == base_parts[ref][2], (ref, "placement or native footprint changed")
+            assert footprints[ref][1][:3] == base_parts[ref][1][:3]
+            assert footprints[ref][1][4:] == base_parts[ref][1][4:]
     old_symbols = components(old_schematic, True)
     for ref in LOCKED:
         pin = attrs(old_symbols[ref][1])
@@ -142,10 +260,12 @@ def verify_sources(schematic, pcb, old_schematic, base_parts, bom):
 
     with ZipFile(HERE / f"{PREFIX}-EasyEDA-{HOLD}.zip") as zipped:
         names = {cad_name("PCB"), cad_name("Schematic"), BUZZER}
+        names.update(f"Footprint_{attrs(symbols[ref][1])['package']}.json" for ref in EDITOR_PACKAGES
+                     if attrs(symbols[ref][1])["package"] == EDITOR_PACKAGES[ref])
         assert zipped.testzip() is None and set(zipped.namelist()) == names
         assert all(zipped.read(name) == (HERE / name).read_bytes() for name in names)
     assert len(list(HERE.glob("*.zip"))) == len(list(HERE.glob("PCB_*.json"))) == len(list(HERE.glob("Schematic_*.json"))) == 1
-    print("One live schematic, one live PCB and one ZIP containing the byte-identical sources and BZ1 library.")
+    print("One live schematic, one live PCB and one ZIP containing the byte-identical sources and local footprint libraries.")
     return footprints
 
 
@@ -277,7 +397,8 @@ def audit_clearance(label, board, baseline):
               for p in changed for gap, other in board.clearances(p, .5)]
     if around:
         gap, layer, name, net, other, other_net = min(around)
-        print(f"  Minimum {gap:.6f} mm on layer {layer}, {name} ({net}) to {other} ({other_net}).")
+        print(f"  Minimum {gap:.6f} mm on layer {layer}, "
+              f"{name} ({net or 'unassigned'}) to {other} ({other_net or 'unassigned'}).")
     else:
         print("  Minimum exceeds 0.5 mm search bound.")
     bad = sorted(set(hit for hit in around if hit[0] < RULE))
@@ -343,10 +464,15 @@ def verify_buck_and_local_contacts(board, pcb):
     records = {v[5]: v for s in pcb["shape"] if s.startswith("TRACK~") for v in [s.split("~")]}
     assert not {"gge4947", "gge4940"} & records.keys()
     for trace in ("gge962014", "gge962015"):
-        assert abs(float(records[trace][1]) * .254 - 1.40) < .00001
-    print("  Two 1.40 mm Inner2 power legs, three plated vias at each transition, "
+        assert abs(float(records[trace][1]) * .254 - 2.20) < .00001
+    print("  Two 2.20 mm Inner2 power legs, three plated vias at each transition, "
           "positive overlap into Bottom distribution and VOS tapped at C94.1.")
-    print("  Trace sizing assumes ≥35 µm finished Inner2 copper. Thermal qualification at 1.5 A pending.")
+    for copper in (.0175, .0152):
+        area_mil2 = 2.20 * copper / .0254 ** 2
+        rise = (1.5 / (.024 * area_mil2 ** .725)) ** (1 / .44)
+        assert rise <= 20
+        print(f"  IPC-2221 screening at 1.5 A and {copper * 1000:g} µm inner copper gives {rise:.1f} °C rise. "
+              "Fabricator stackup and bench thermal test pending.")
     print("Requested local positive-overlap repairs")
     for pin, neighbor, layer, bridge in REINFORCEMENTS:
         verify_triplet(layer, bridge, pin, neighbor)
@@ -451,8 +577,12 @@ def main():
     if not args.phase1:
         assert not board.opens(), "split named pad net"
         verify_buck_and_local_contacts(board, pcb)
+        verify_editor_footprints(pcb, schematic, board)
+        editor_base = load_prior_pcb(BEFORE_EDITOR)
+        audit_clearance("Editor-task package vs 3287d57", board,
+                        Board(pieces(editor_base, components(editor_base, False))))
     print(f"Live PCB SHA-256 {sha256(pcb_path.read_bytes()).hexdigest()}")
-    print("DRAFT — DO NOT FABRICATE. Native EasyEDA import, copper rebuild, ERC/DRC, CAM and hardware pending.")
+    print("DRAFT — DO NOT FABRICATE. Native EasyEDA import, ERC/DRC, CAM and hardware checks pending.")
 
 
 if __name__ == "__main__":

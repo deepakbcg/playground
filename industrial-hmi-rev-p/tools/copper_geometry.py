@@ -70,7 +70,7 @@ def from_record(record, ref=""):
         if form == "ELLIPSE":
             assert abs(width - height) < LINEAR_TOLERANCE, oid
             shape = disc(center, width)
-        elif form == "RECT" and ring:
+        elif form in {"RECT", "POLYGON"} and ring:
             shape = external_polygon(ring)
         elif form == "RECT":
             cx, cy = center

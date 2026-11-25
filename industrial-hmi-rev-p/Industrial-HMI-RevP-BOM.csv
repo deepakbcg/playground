@@ -120,15 +120,15 @@ R79,1,43.2 kΩ,0603WAF4322T5E,0603,Fit,,UNI-ROYAL,C23053
 R81,1,44.2 kΩ,0603WAF4422T5E,0603,Fit,,UNI-ROYAL(Uniroyal Elec),C23056
 "C91, C96",2,100 nF,CC0603KRX7R0BB104,0603,Fit,,YAGEO,C113803
 C92,1,4.7 µF 16 V,GRM21BR71C475KA73L,0805,Fit,,muRata,C86040
-U6,1,Shared 3.3 V / 2 A buck,TPS62902RPJR,TI-RPJ-9,Fit,Shared logic and Ethernet 3.3 V rail.,TI,C2870154
+U6,1,Shared 3.3 V / 2 A buck,TPS62902RPJR,TI-RPJ0009A-REV-P,Fit,Shared logic and Ethernet 3.3 V rail.,TI,C2870154
 R82,1,40.2 kΩ,0603WAF4022T5E,0603,Fit,,UNI-ROYAL(Uniroyal Elec),C12447
 L4,1,1 µH shielded,MWSA0402S-1R0MT,SUNLORD-MWSA0402S,Fit,,Sunlord,C408332
 C93,1,10 µF 25 V,C3216X7R1E106KT000N,1206,Fit,,TDK,C76661
 C94,1,22 µF 16 V,C3216X5R1C226MTJ00N,1206,Fit,,TDK,C342621
 C95,1,4.7 nF,CC0603JRX7R9BB472,0603,Fit,,YAGEO,C115060
-U23,1,USB data switch,TS3USB221ARSER,TI-RSE-10,Fit,Gates programming data on valid USB VBUS. Retain R17 and R18.,TI,C128396
+U23,1,USB data switch,TS3USB221ARSER,TI-RSE0010A-REV-P,Fit,Gates programming data on valid USB VBUS. Retain R17 and R18.,TI,C128396
 Q4,1,USB data enable,"2N7002,215",SOT-23,Fit,,Nexperia,C65189
-D25,1,USB D+/D− ESD TVS,TPD2EUSB30DRTR,TI-DRT-3,Fit,,TI,C97502
+D25,1,USB D+/D− ESD TVS,TPD2EUSB30DRTR,TI-DRT0003A-REV-P,Fit,,TI,C97502
 LCD1,1,7-inch 800x480 RGB888 resistive touchscreen,Adafruit 2354 / CH700WV03A-T,Panel mounted,Fit,Verify the factory label and FPC orientation.,,
 CELL1,1,3 V primary lithium battery,CR2032,BT1 retainer,Fit after reflow,Panasonic CR2032. Positive face up. Keep RTC charger disabled.,,
 TP1,1,SYS_5V test point,,TP-1.6,DNP,Exposed PCB probe land.,,
