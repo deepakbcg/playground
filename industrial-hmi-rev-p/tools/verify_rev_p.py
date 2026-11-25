@@ -19,12 +19,14 @@ from shapely.geometry import LineString, Point, Polygon, box
 from shapely.ops import nearest_points, unary_union
 
 from copper_geometry import (Board, LAYERS, MIN_SHARED_EDGE, NEAR_GAP, changed_copper,
-                             disc, from_record, mm_point, pad_drill, pieces, points, positive_overlap)
+                             disc, from_record, hole_diameter, hole_drill, mm_point, pad_drill, pieces,
+                             points, positive_overlap)
 
 HERE = Path(__file__).resolve().parents[1]
 REPO = HERE.parent
 sys.path.insert(0, str(REPO / "industrial-hmi-rev-n" / "tools"))
 from verify_rev_n import attrs, cents, components, refs, rows, U1_PAD_NETS, U1_PIN_NUMBERS
+from scan_islands import islands
 
 PREFIX = "Industrial-HMI-RevP"
 HOLD = "DO-NOT-FABRICATE"
@@ -43,6 +45,12 @@ J4_FACE = (1015.825, 816.0)
 J4_PACKAGE = "GCT-USB4105-GF-A-REV-P"
 D24_SHIFT = .120
 J4_DATA_TRACKS = tuple(f"gge{i}" for i in range(4886, 4894))
+BEFORE_R2 = "96fbc65"
+# r2: nudges in mm on EasyEDA axes (+y down) so the four different-net SMD pad pairs reach >= 0.17 mm.
+R2_MOVES = {"C38": (0, .035), "C47": (0, .040), "C96": (0, -.040), "C23": (-.015, 0), "C13": (.015, 0)}
+R2_PAIRS = (("C38.1", "C35.2"), ("C47.1", "C46.2"), ("C23.2", "C13.1"), ("C96.2", "C12.1"))
+R2_REMOVED = {"gge963028": "2", "gge930016": "2"}
+R2_STITCH = ("gge964001", ("2", "gge962202"), ("21", "gge5963"))
 EDITOR_PACKAGES = {"U6": "TI-RPJ0009A-REV-P", "U23": "TI-RSE0010A-REV-P", "D25": "TI-DRT0003A-REV-P"}
 BUCK_LOADS = ("L4.2", "C94.1", "U6.3", "C15.1", "U2.15", "C34.1", "TP3.1")
 REMOVED_FRAGMENTS = {
@@ -167,7 +175,7 @@ def j4_usb_lengths(pcb):
 
 def verify_j4_routes(pcb, previous, board, drills):
     assert not board.shorts() and not board.opens()
-    assert j4_drill_counts(pcb) == (4, 56, 9, 664)
+    assert j4_drill_counts(pcb) == (4, 56, 9, 665)
     baseline = Board(pieces(previous, components(previous, False)))
     paths = (
         ("USB_VBUS", "J4.A4", "J4.B4", "C87.1", "D24.1", "Q3.1"),
@@ -179,7 +187,7 @@ def verify_j4_routes(pcb, previous, board, drills):
     )
     assert all(board.connected(net, *refs) for net, *refs in paths)
     print("  USB paths, both U21 dead-battery pins and all shell ground paths are connected.")
-    print("  Live drill source: 4 plated slots, 56 round plated pads, 9 NPTH and 664 vias.")
+    print("  Live drill source: 4 plated slots, 56 round plated pads, 9 NPTH and 665 vias (r2 adds stitch via gge964001).")
     print("  Native drill export pending.")
     changes = list(changed_copper(board, baseline))
     clearance = [(gap, p.layer, p.name, q.name, p, q)
@@ -229,7 +237,7 @@ def verify_j4_routes(pcb, previous, board, drills):
                         if p.net != fields[7] and (p.oid, layer) in changed_ids:
                             assert opening.distance(p.geometry) >= limit, (fields[12], p.name, layer)
             elif fields[0] == "HOLE":
-                opening = disc(mm_point(*fields[1:3]), float(fields[3]) * .254)
+                opening = hole_drill(fields)
                 for layer in LAYERS:
                     for index in board.query(layer, opening, .20):
                         p = board.pieces[index]
@@ -433,12 +441,12 @@ def verify_j4_footprint(pcb, footprints, board, schematic):
     location = [relative(f[1:3]) for f in pcb_holes]
     equal((dist(*location),), (5.78,))
     for index, (f, y, (x_measured, y_measured)) in enumerate(zip(pcb_holes, (-2.89, 2.89), location, strict=True), 1):
-        equal((x_measured, y_measured, float(f[3]) * .254), (6.28, y, .65))
+        equal((x_measured, y_measured, hole_diameter(f)), (6.28, y, .65))
         name = f"locator {index}"
-        drills[name] = disc(mm_point(*f[1:3]), float(f[3]) * .254)
+        drills[name] = hole_drill(f)
         lib_hole = library_holes[index - 1]
-        equal((x_measured, y_measured, float(f[3]) * .254),
-              (*relative(lib_hole[1:3], origin), float(lib_hole[3]) * .254))
+        equal((x_measured, y_measured, hole_diameter(f)),
+              (*relative(lib_hole[1:3], origin), hole_diameter(lib_hole)))
         print(f"| {name} | 6.28 / {y:+.2f} | {x_measured:.2f} / {y_measured:+.2f} | Ø0.65 NPTH, 5.78 spacing | PASS |")
 
     # The live document-layer body outline provides the current mating-face x.
@@ -453,7 +461,7 @@ def verify_j4_footprint(pcb, footprints, board, schematic):
     print("  Approved trim clearance, locator drill to the two trimmed PCB GND lands:")
     for index, pin in enumerate(("A1/B12", "B1/A12"), 1):
         centre = Point(mm_point(*pcb_holes[index - 1][1:3]))
-        gap = centre.distance(copper[pin.split("/")[0]]) - .325
+        gap = centre.distance(copper[pin.split("/")[0]]) - hole_diameter(pcb_holes[index - 1]) / 2
         assert gap >= .225
         print(f"    PASS L1: locator {index} ↔ J4.{pin}, {gap:.6f} mm vs 0.225 mm.")
     equal((origin_x, origin_y), J4_FACE)
@@ -553,6 +561,20 @@ def verify_sources(schematic, pcb, old_schematic, base_parts, bom):
             x, y = mm_point(*footprints[ref][1][1:3])
             bx, by = mm_point(*base_parts[ref][1][1:3])
             assert abs(x - bx) < .00001 and abs(y - by - (.25 if ref == "U6" else 0)) < .00001
+        elif ref in R2_MOVES:
+            # r2 pad-spacing nudge: same footprint and attributes, translated by the recorded offset.
+            dx, dy = R2_MOVES[ref]
+            assert footprints[ref][1][4:] == base_parts[ref][1][4:]
+            before_body, after_body = base_parts[ref][2], footprints[ref][2]
+            assert [r.split("~")[0] for r in before_body] == [r.split("~")[0] for r in after_body], ref
+            before_pads, after_pads = pad_fields(before_body), pad_fields(after_body)
+            assert before_pads.keys() == after_pads.keys()
+            for pin, f in before_pads.items():
+                g = after_pads[pin]
+                assert [v for i, v in enumerate(f) if i not in {2, 3, 10, 14, len(f) - 1}] == \
+                       [v for i, v in enumerate(g) if i not in {2, 3, 10, 14, len(g) - 1}], (ref, pin)
+                (x0, y0), (x1, y1) = mm_point(*f[2:4]), mm_point(*g[2:4])
+                assert abs(x1 - x0 - dx) < 1e-5 and abs(y1 - y0 - dy) < 1e-5, (ref, pin)
         else:
             assert footprints[ref][2] == base_parts[ref][2], (ref, "placement or native footprint changed")
             assert footprints[ref][1][:3] == base_parts[ref][1][:3]
@@ -887,6 +909,41 @@ def verify_copper(current, base, frozen, phase1, before=None):
     print("U1 six pads and cabinet 5 V output path checked.")
 
 
+def verify_r2(pcb, board):
+    """r2: HOLE radius, SMD pad spacing, isolated copper."""
+    prior = load_prior_pcb(BEFORE_R2)
+    old, new = components(prior, False), components(pcb, False)
+    assert old.keys() == new.keys()
+    print("r2 changes against 96fbc65")
+    holes = {f[4]: f for s in pcb["shape"] for r in s.split("#@$") if (f := r.split("~"))[0] == "HOLE"}
+    sizes = sorted(round(hole_diameter(f), 4) for f in holes.values())
+    assert sizes == [.65] * 2 + [3.2] * 7, sizes
+    print("  HOLE size field is a radius: 7 × Ø3.20 mm mounting/J11 NPTH and 2 × Ø0.65 mm J4 locators.")
+    for ref in old:
+        (ox, oy), (nx, ny) = (mm_point(*parts[ref][1][1:3]) for parts in (old, new))
+        dx, dy = R2_MOVES.get(ref, (0, 0))
+        assert abs(nx - ox - dx) < 1e-5 and abs(ny - oy - dy) < 1e-5, (ref, nx - ox, ny - oy)
+        if ref in R2_MOVES:
+            print(f"  Moved {ref} ({ox:.3f}, {oy:.3f}) → ({nx:.3f}, {ny:.3f}) mm, Δ ({dx:+.3f}, {dy:+.3f}).")
+    by_name = {(p.layer, p.name): p for p in board.pieces}
+    for a, b in R2_PAIRS:
+        gap = by_name["1", a].geometry.distance(by_name["1", b].geometry)
+        assert gap >= .17 - 1e-6, (a, b, gap)
+        print(f"  SMD pads {a} ({by_name['1', a].net}) ↔ {b} ({by_name['1', b].net}): {gap:.3f} mm ≥ 0.17 mm.")
+    for oid, layer in R2_REMOVED.items():
+        assert not any(p.oid == oid for p in board.pieces)
+    via, *joins = R2_STITCH
+    for layer, oid in joins:
+        assert positive_overlap(by_name[layer, via].geometry, by_name[layer, oid].geometry), (via, oid)
+    print(f"  Removed isolated GND slivers {', '.join(R2_REMOVED)}. Stitch via {via} joins "
+          + " and ".join(f"{oid} (layer {layer})" for layer, oid in joins) + " with positive overlap.")
+    floating = [g for g in board.groups.values() if not any(p.kind in {"PAD", "VIA"} for p in g)]
+    assert not floating, [[p.oid for p in g] for g in floating]
+    strict = islands(pcb)
+    print(f"  0 copper groups without a pad or via under the contact rule. {len(strict)} fixed-region groups "
+          "touch the rest of their net only by shared edges ≥0.15 mm; tools/scan_islands.py lists them.")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--phase1", action="store_true", help="Require precisely the tagged FOOTPRINTS copper.")
@@ -912,6 +969,7 @@ def main():
         assert not board.opens(), "split named pad net"
         verify_buck_and_local_contacts(board, pcb)
         verify_editor_footprints(pcb, schematic, board)
+        verify_r2(pcb, board)
         editor_base = load_prior_pcb(BEFORE_EDITOR)
         audit_clearance("Rev P cumulative vs 3287d57", board,
                         Board(pieces(editor_base, components(editor_base, False))))

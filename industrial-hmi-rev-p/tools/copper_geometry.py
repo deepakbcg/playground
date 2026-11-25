@@ -43,6 +43,16 @@ def oblong(ends, diameter):
     return LineString(ends).buffer(diameter / 2, quad_segs=CIRCLE_STEPS)
 
 
+def hole_diameter(fields):
+    # HOLE~x~y~radius~id: the size field is a radius, like PAD holeR and VIA holeR.
+    # EasyEDA Pro's Standard importer, KiCad's importer and easyeda2kicad all double it.
+    return 2 * float(fields[3]) * MM_PER_UNIT
+
+
+def hole_drill(fields):
+    return disc(mm_point(*fields[1:3]), hole_diameter(fields))
+
+
 def pad_drill(fields):
     diameter = 2 * float(fields[9]) * MM_PER_UNIT
     if fields[14]:

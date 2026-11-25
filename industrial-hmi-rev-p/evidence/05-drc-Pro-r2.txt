@@ -1,0 +1,31 @@
+Rev P r2 native DRC record (EasyEDA Pro substitute run, NOT EasyEDA Standard)
+Date: 2026-11-25
+Editor: EasyEDA Pro client 3.2.206, half-offline mode, local project only, driven through the API bridge.
+Source: Industrial-HMI-RevP-EasyEDA-DO-NOT-FABRICATE.zip (r2), SHA-256 b347227e440ff0d073ef359cbf8bfc41cf3b6395de059095e01bde7171ef30d8
+        Imported unmodified as EasyEDA (Standard) format, "Import document" only, into local project
+        Industrial-HMI-RevP-ProCheck-r2.
+
+Import: 212 PCB components, 4 copper layers, 99.2 x 96.0 mm outline, 665 vias.
+
+Rule set (runbook values; Pro has one Hole row):
+  Track min 0.150; different-net copper 0.125; SMD pad-pad 0.150; hole-to-copper 0.200 (all hole types);
+  board outline 0.200; hole-to-hole 0.200; via min 0.50 / 0.25.
+  Component PTH 0.28 outer / 0.30 inner is not separable in Pro; tools/verify_rev_p.py checks changed copper against it.
+
+Procedure: apply rules -> Calculate ratlines (required: a DRC run before ratline calculation can report stale
+"Fill Region disconnected" items) -> Check DRC (strict) -> repeat.
+
+Result (both runs identical): 1 finding
+  Netlist Error: "PCB and schematic netlist does not match" - known Pro import artifact: Pro assigns wrong
+  value/name fields to 120 schematic parts. Protel2 netlist comparison of the same import: 212/212 components,
+  766/766 pins, 0 pin-net and 0 footprint differences.
+  0 clearance, 0 hole/slot, 0 connection findings.
+
+Compared with the first Pro pass (05-drc-Pro.txt):
+  138 NPTH-size findings  -> 0  (HOLE size field now written as a radius)
+  4 SMD pad-pad findings  -> 0  (C38, C47, C96 nudged; C23/C13 split)
+  6 GND fill connection   -> 0  (gge963028, gge930016 deleted; gge962202 stitched by via gge964001;
+                                 gge963029, gge5962, gge930018 are connected in the source and no longer reported)
+
+Disposition: no open DRC findings in the Pro substitute check. Fabrication hold remains until EasyEDA Standard
+native DRC/CAM and an independent CAM review are completed.

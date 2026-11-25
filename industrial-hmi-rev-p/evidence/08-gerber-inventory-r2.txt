@@ -1,0 +1,20 @@
+bottom-copper: 'Gerber_BottomLayer.GBL' (1343901 bytes)
+bottom-mask: 'Gerber_BottomSolderMaskLayer.GBS' (3054 bytes)
+bottom-silk: 'Gerber_BottomSilkscreenLayer.GBO' (637 bytes)
+inner-1: 'Gerber_InnerLayer1.G1' (1540465 bytes)
+inner-2: 'Gerber_InnerLayer2.G2' (56200 bytes)
+npth: 'Drill_NPTH_Through.DRL' (361 bytes)
+outline: 'Gerber_BoardOutlineLayer.GKO' (743 bytes)
+pth: 'Drill_PTH_Through.DRL' (10291 bytes)
+top-copper: 'Gerber_TopLayer.GTL' (230452 bytes)
+top-mask: 'Gerber_TopSolderMaskLayer.GTS' (38124 bytes)
+top-paste: 'Gerber_TopPasteMaskLayer.GTP' (40146 bytes)
+top-silk: 'Gerber_TopSilkscreenLayer.GTO' (79986 bytes)
+via-pth: 'Drill_PTH_Through_Via.DRL' (8993 bytes)
+Unclassified, review if relevant: 'FlyingProbeTesting.json'
+Unclassified, review if relevant: 'Gerber_DocumentLayer.GDL'
+Unclassified, review if relevant: 'Gerber_DrillDrawingLayer.GDD'
+Unclassified, review if relevant: 'How-to-order-PCB.txt'
+Expected native filename roles present for 4 copper layers.
+Inspect file contents and layer mapping in a CAM viewer before release.
+exit 0

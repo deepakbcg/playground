@@ -11,12 +11,15 @@ from zipfile import BadZipFile, ZipFile
 
 NATIVE_FILES = {
     "gerber_boardoutline.gko": "outline",
+    "gerber_boardoutlinelayer.gko": "outline",  # EasyEDA Pro
     "gerber_toplayer.gtl": "top-copper",
     "gerber_bottomlayer.gbl": "bottom-copper",
     "gerber_topsoldermasklayer.gts": "top-mask",
     "gerber_bottomsoldermasklayer.gbs": "bottom-mask",
     "gerber_topsilklayer.gto": "top-silk",
+    "gerber_topsilkscreenlayer.gto": "top-silk",  # EasyEDA Pro
     "gerber_bottomsilklayer.gbo": "bottom-silk",
+    "gerber_bottomsilkscreenlayer.gbo": "bottom-silk",  # EasyEDA Pro
     "gerber_toppastemasklayer.gtp": "top-paste",
     "gerber_bottompastemasklayer.gbp": "bottom-paste",
     "drill_pth_through.drl": "pth",
@@ -27,16 +30,19 @@ EXTRA_REQUIREMENTS = (
     "top-mask", "bottom-mask", "top-silk", "bottom-silk",
     "top-paste", "bottom-paste", "pth", "npth",
 )
+# Fallback by Protel-style extension when an exporter uses another basename.
+EXTENSION_ROLES = {".gko": "outline", ".gto": "top-silk", ".gbo": "bottom-silk"}
 INNER_LAYER = re.compile(r"gerber_innerlayer([1-9][0-9]*)\.gp?\1")
 
 
 def file_role(filename):
     """Match documented native names, including legacy GP inner-layer suffixes."""
-    name = PurePosixPath(filename).name.lower()
+    path = PurePosixPath(filename)
+    name = path.name.lower()
     inner = INNER_LAYER.fullmatch(name)
     if inner:
         return f"inner-{inner[1]}"
-    return NATIVE_FILES.get(name)
+    return NATIVE_FILES.get(name) or EXTENSION_ROLES.get(path.suffix.lower())
 
 
 def read_inventory(path):

@@ -11,8 +11,8 @@
 | Layers | L1 Top (EasyEDA 1), L2 Inner1 GND reference (21), L3 Inner2 mixed signals and 3V3 (22), L4 Bottom (2). Keep the two isolated RS-485 field circuits separate from logic GND and from each other on all layers. |
 | Copper | Nominal 1 oz outer. Nominal 0.5 oz inner with **at least 15.2 µm finished L3 copper** and **at least 2.067 mm finished width** on each specified 2.20 mm buck leg. A thicker inner option can be qualified against the same thermal limit if the standard process cannot meet these widths. |
 | Finish and mask | ENIG recommended for the RP2354B 0.40 mm-pitch QFN-80 and USB/power QFNs. Green LPI mask. Check actual mask/paste openings and dams using the exports. |
-| Track / copper clearance | 0.150 mm minimum nominal track used. 0.125 mm design clearance for different-net routing. Check JLC PCB-specific SMD pad-to-pad clearance of 0.150 mm separately. The manufacturer's multilayer trace/space capability floor is 0.09/0.09 mm at 1 oz. |
-| Vias | 664 in the current source, all 0.50 mm land / Ø0.25 mm mechanical through drill. Check via-hole to foreign copper ≥0.20 mm, including on inner layers. |
+| Track / copper clearance | 0.150 mm minimum nominal track used. 0.125 mm design clearance for different-net routing. Check JLC PCB-specific SMD pad-to-pad clearance of 0.150 mm separately. The minimum different-net SMD pad pair after r2 is 0.175 mm (C23.2/C13.1). The manufacturer's multilayer trace/space capability floor is 0.09/0.09 mm at 1 oz. |
+| Vias | 665 in the current source (r2 adds GND stitch via `gge964001`), all 0.50 mm land / Ø0.25 mm mechanical through drill. Check via-hole to foreign copper ≥0.20 mm, including on inner layers. |
 | Component PTH | Inner hole-to-foreign-copper ≥0.30 mm. Use ≥0.28 mm elsewhere. Inspect finished hole dimensions, plating and annuli as separate checks. |
 | NPTH and board edge | NPTH-to-copper ≥0.20 mm and copper-to-routed-edge ≥0.20 mm. Check hole-to-hole spacing ≥0.20 mm edge to edge, including connector hardware. |
 | Impedance | The current artwork has no controlled-impedance verification. Review USB FS differential routing against a 90 Ω ±15% planning target and the 10/100 PHY-to-MagJack pairs against 100 Ω ±10%. Require a selected stackup and re-evaluation of widths, spacings, return and skew before claiming impedance control. |
@@ -25,7 +25,7 @@ Both dedicated L3 legs, `gge962014` and `gge962015`, are **2.20 mm nominal**. Th
 
 ## Drill and connector requirements
 
-The live source encodes **56 round plated component holes, four plated slots, nine NPTH and 664 plated vias**. Coordinates below are absolute EasyEDA millimetres.
+The live source encodes **56 round plated component holes, four plated slots, nine NPTH and 665 plated vias**. Coordinates below are absolute EasyEDA millimetres. The EasyEDA `HOLE` size field is a radius: the mounting holes store 6.29921 (Ø3.20 mm) and the J4 locators 1.27952756 (Ø0.65 mm). Before r2 the source stored diameters, and the native export drilled Ø6.40 mm and Ø1.30 mm. The r2 EasyEDA Pro export drills 7 × Ø3.20 mm and 2 × Ø0.65 mm NPTH. [r2 drill counts](evidence/08-hole-counts-r2.txt)
 
 | Ø3.20 mm NPTH feature | x | y |
 | --- | ---: | ---: |

@@ -183,11 +183,11 @@ Final Rev P: 51 weak contacts or near-gaps, 0 between separate copper groups.
   Removed gge5925, layer 2, DI_COM, 0.007505 mm², no lands or vias.
   Removed gge6096, layer 21, GND, 0.007953 mm², no lands or vias.
   Removed gge6167, layer 21, GND, 0.002781 mm², no lands or vias.
-Rev P vs pre-repair Rev P: 220 added or changed layer objects
+Rev P vs pre-repair Rev P: 246 added or changed layer objects
   Minimum 0.129078 mm on layer 21, gge962315 (GND) to gge5167 (LCD_B3).
-Rev P vs tagged FOOTPRINTS: 277 added or changed layer objects
+Rev P vs tagged FOOTPRINTS: 303 added or changed layer objects
   Minimum 0.129078 mm on layer 21, gge962315 (GND) to gge5167 (LCD_B3).
-Rev P vs tagged frozen PCB: 477 added or changed layer objects
+Rev P vs tagged frozen PCB: 495 added or changed layer objects
   Minimum 0.129078 mm on layer 21, gge962315 (GND) to gge5167 (LCD_B3).
 Changed foreign-net tracks and vias avoid the U21 exposed-pad projection.
   U1.1 CAB_FB connects to R69.2, R70.1.
@@ -279,9 +279,9 @@ Values are measured on the live PCB relative to the mating face and centreline.
     PASS L1: locator 1 ↔ J4.A1/B12, 0.226091 mm vs 0.225 mm.
     PASS L1: locator 2 ↔ J4.B1/A12, 0.226091 mm vs 0.225 mm.
   USB paths, both U21 dead-battery pins and all shell ground paths are connected.
-  Live drill source: 4 plated slots, 56 round plated pads, 9 NPTH and 664 vias.
+  Live drill source: 4 plated slots, 56 round plated pads, 9 NPTH and 665 vias (r2 adds stitch via gge964001).
   Native drill export pending.
-  J4/D24 changes, minimum copper 0.130429 mm on layer 1: gge4853 (1019.921, 810.950) ↔ gge961301 (1020.044, 810.992).
+  J4/D24 changes, minimum copper 0.129722 mm on layer 1: C13.1 (1055.110, 818.125) ↔ gge5683 (1055.239, 818.133).
   Existing fixed regions locally cleared: gge5848 (layer 2), gge5859 (layer 2), gge961106 (layer 2), gge961304 (layer 2).
   NPTH-to-copper minimum 0.203985 mm, locator 1 ↔ gge5848 on layer 2.
   Plated slot-to-foreign copper, outer minimum 0.391341 mm, SH1 ↔ gge5670 on layer 1.
@@ -303,7 +303,20 @@ Values are measured on the live PCB relative to the mating face and centreline.
   | J4 B contacts → U23 | 7.658 / 5.361 / 2.296 | 7.658 / 5.146 / 2.512 |
   | R17/R18 → U2 | 3.973 / 3.725 / 0.249 | 3.973 / 3.725 / 0.249 |
   Both orientations meet the 5 mm Full Speed skew rule.
-Rev P cumulative vs 3287d57: 133 added or changed layer objects
-  Minimum 0.130429 mm on layer 1, gge4853 (USB_CC1) to gge961301 (USB_RAW_SENSE).
-Live PCB SHA-256 d2caa2920e6069acac30a419147f11ebd67f50b8db71c11295b26a66bdbb7601
+r2 changes against 96fbc65
+  HOLE size field is a radius: 7 × Ø3.20 mm mounting/J11 NPTH and 2 × Ø0.65 mm J4 locators.
+  Moved C38 (1069.400, 797.500) → (1069.400, 797.535) mm, Δ (+0.000, +0.035).
+  Moved C47 (1050.900, 843.260) → (1050.900, 843.300) mm, Δ (+0.000, +0.040).
+  Moved C13 (1054.620, 818.475) → (1054.635, 818.475) mm, Δ (+0.015, +0.000).
+  Moved C23 (1052.800, 818.400) → (1052.785, 818.400) mm, Δ (-0.015, +0.000).
+  Moved C96 (1028.100, 818.400) → (1028.100, 818.360) mm, Δ (+0.000, -0.040).
+  SMD pads C38.1 (EVE_1V2) ↔ C35.2 (GND): 0.180 mm ≥ 0.17 mm.
+  SMD pads C47.1 (232_C2P) ↔ C46.2 (232_C1N): 0.180 mm ≥ 0.17 mm.
+  SMD pads C23.2 (GND) ↔ C13.1 (XIN): 0.175 mm ≥ 0.17 mm.
+  SMD pads C96.2 (GND) ↔ C12.1 (3V3): 0.180 mm ≥ 0.17 mm.
+  Removed isolated GND slivers gge963028, gge930016. Stitch via gge964001 joins gge962202 (layer 2) and gge5963 (layer 21) with positive overlap.
+  0 copper groups without a pad or via under the contact rule. 219 fixed-region groups touch the rest of their net only by shared edges ≥0.15 mm; tools/scan_islands.py lists them.
+Rev P cumulative vs 3287d57: 159 added or changed layer objects
+  Minimum 0.129722 mm on layer 1, C13.1 (XIN) to gge5683 (GND).
+Live PCB SHA-256 98dc9f4aa4ce060b066d8fcbae0689a74a871f4672d046cac7c12de8277cc363
 DRAFT — DO NOT FABRICATE. Native EasyEDA import, ERC/DRC, CAM and hardware checks pending.

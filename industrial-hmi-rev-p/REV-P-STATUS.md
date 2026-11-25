@@ -71,7 +71,7 @@ The approved USB4105-GF-A footprint is bound in the live schematic, PCB and BOM.
 | SH3 and SH4 front slots | 1018.425 / 811.680 and 820.320 | Preserved the Top CC1 escape around the front shell and detoured around the VBUS via. Inner1 links both front lands to the rear shell ground stitches. |
 | Ø0.65 locators | 1022.105 / 813.110 and 818.890 | Moved the lower VBUS branch `gge4901` to the right of the lands. Moved GND via `gge5667` to (1021.780, 819.690) and reconnected its SH2 bridges on all four layers. Cleared Bottom fixed regions `gge5848`, `gge5859`, `gge961106` and `gge961304` locally. |
 
-The existing D− crossover vias were reused, adjacent Inner1 GND covers the signal path outside their antipads, and both U21 dead-battery connections pass. J4-to-U23 planar skew is **1.214 mm** in orientation A and **2.512 mm** in B, within the **5 mm** Full Speed limit. The live source has **4 plated slots, 56 round plated component holes, 9 NPTH and 664 vias**. Native drill export and CAM review are pending. [Recorded verification](tools/verification-output.txt)
+The existing D− crossover vias were reused, adjacent Inner1 GND covers the signal path outside their antipads, and both U21 dead-battery connections pass. J4-to-U23 planar skew is **1.214 mm** in orientation A and **2.512 mm** in B, within the **5 mm** Full Speed limit. The live source has **4 plated slots, 56 round plated component holes, 9 NPTH and 665 vias**. An EasyEDA Pro drill export matches these counts. EasyEDA Standard export and independent CAM review are pending. [Recorded verification](tools/verification-output.txt)
 
 ### D24 placement and return
 
@@ -81,10 +81,30 @@ D24.2 has **0.165 mm** spacing to J4's A1/B12 GND land, its co-nearest A4/B9 VBU
 
 Updated copper passed the **0.125 mm** rule with a minimum **0.130429 mm** on Top from CC1 `gge4853` to USB_RAW_SENSE via `gge961301`. Minimum locator-to-copper was **0.203985 mm** against Bottom GND. Minimum shell-slot-to-foreign-copper was **0.391341 mm** on both inner and outer layers. Zero shorts and zero split named nets were found. [Clearance and connectivity report](tools/verification-output.txt)
 
+## r2 corrections: NPTH size encoding, pad spacing and isolated copper
+
+**NPTH size field.** EasyEDA Standard stores the `HOLE~x~y~size` field as a **radius** in 10 mil units, like PAD and VIA `holeR`. The Rev P source had written diameters, so every native reader drilled the nine NPTH at twice the intended size: Ø6.40 mm mounting/J11 holes and Ø1.30 mm J4 locators in the EasyEDA Pro export. Evidence: EasyEDA Pro's own Standard importer and exported drill file, KiCad's EasyEDA importer (`kdia = ConvertSize( field( 3 ) ) * 2`), easyeda2kicad (`size=ee_hole.radius * 2`) and LCSC library data, where a USB-C locating hole stored as 1.378 is Ø0.70 mm. Only the EasyEDA format page labels the field "diameter". r2 halves the field: `gge8021`–`gge8027` 12.59843 → 6.29921 (Ø3.20 mm) and J4 locators `gge963001`/`gge963002`, and `gge121`/`gge122` in the J4 footprint, 2.55905512 → 1.27952756 (Ø0.65 mm). Positions and intended sizes are unchanged. The verifier and `copper_geometry.py` now read the field as a radius, and every clearance result is identical to the pre-r2 run.
+
+**SMD pad spacing.** Four different-net Top pad pairs were 0.140–0.145 mm, below the 0.150 mm pad-to-pad rule. r2 translates five capacitors and drags the attached track ends with them, preserving positive overlap. EasyEDA +y is down.
+
+| Part | Centre before → after (mm) | Attached track ends moved | Pair gap |
+| --- | --- | --- | --- |
+| C38 | (1069.400, 797.500) → (1069.400, 797.535) | `gge3890`, `gge3987`, `gge4081` | C38.1 EVE_1V2 ↔ C35.2 GND 0.145 → **0.180** |
+| C47 | (1050.900, 843.260) → (1050.900, 843.300) | `gge4123`, `gge4124` | C47.1 232_C2P ↔ C46.2 232_C1N 0.140 → **0.180** |
+| C23 | (1052.800, 818.400) → (1052.785, 818.400) | `gge4380`, `gge960057` | C23.2 GND ↔ C13.1 XIN 0.145 → **0.175** |
+| C13 | (1054.620, 818.475) → (1054.635, 818.475) | `gge4397`, `gge4524`, `gge4529` | (with C23) |
+| C96 | (1028.100, 818.400) → (1028.100, 818.360) | `gge4944`, `gge4945`, `gge5012` | C96.2 GND ↔ C12.1 3V3 0.140 → **0.180** |
+
+C23/C13 are split 0.015 mm each because moving either alone would bring C23.1 within 0.12 mm of LED_STATUS `gge5426` or C13.1 within 0.115 mm of GND region `gge5683`. The tightest changed copper is now **0.129722 mm**, C13.1 to `gge5683`. All 20 existing same-net overlaps on the moved pads are preserved.
+
+**Isolated copper.** `tools/scan_islands.py` lists copper groups that have no pad or via and no positive overlap to other same-net copper. It found 222 on the pre-r2 board. Three were isolated even counting shared edges: Bottom GND slivers `gge963028` (0.015 mm², at J4 locator 1) and `gge930016` (0.374 mm²) were deleted. `gge962202` (8.16 mm², x 1029.574–1036.345, y 801.579–803.321) is stitched by new GND via **`gge964001`**, 0.50/0.25 mm at **(1032.348, 801.879)**, into Inner1 GND `gge5963`. The via is ≥0.30 mm from foreign copper on every layer. The remaining 219 are fixed-region tiles joined to the rest of their net by continuous shared edges ≥0.15 mm, including the 19.4 mm `gge5825` seam and the C14-side squares `gge5835`/`gge5836`. The project contact rule accepts them, they need no edit and EasyEDA Pro reports none of them. [Island dispositions](evidence/06-islands-r2.txt)
+
+**Checks run.** `tools/verify_rev_p.py`: 0 split named nets, 0 mixed-net groups, all audits ≥0.125 mm. [Recorded verification](tools/verification-output.txt) EasyEDA Pro 3.2.206, as a substitute for Standard, imported the regenerated ZIP. With the runbook rules and a ratline recalculation, its DRC reports only the netlist message caused by Pro's mis-import of 120 schematic values. Pin and net lists match exactly. The Pro Gerber export has 56 round plated component holes, 4 plated J4 slots (Ø0.60 mm, 1.70 and 1.40 mm, x-axis), 665 vias and NPTH 7 × Ø3.20 + 2 × Ø0.65 mm. [DRC record](evidence/05-drc-Pro-r2.txt) · [Drill counts](evidence/08-hole-counts-r2.txt) · [Inventory](evidence/08-gerber-inventory-r2.txt) · [SHA-256](evidence/09-gerber-sha256-r2.txt)
+
 ## Editor and release tasks
 
 1. **U1 FB and BZ1.** The optional R69/R70 relocation is deferred. A ≤3 mm FB divider placement and a quiet route around the U1 switch and L3 copper were not verified offline. Review the existing 20.6 mm Bottom CAB_FB route over Inner1 GND, and test noise and transient response. Measure BZ1 lead pitch, diameter and polarity against the nominal 7.6 mm footprint and check enclosure fit. [U1 routing history](../industrial-hmi-rev-n/U1-REROUTE.md)
-2. **Native release.** Import the live source pair and supplied libraries together, compare schematic and PCB, then run native DRC. Inspect copper, solder mask, slots, locator drills and assembly clearances in an independent CAM viewer. [Editor runbook](EDITOR-RUNBOOK.md) · [Fabrication notes](FAB-NOTES.md)
+2. **Native release.** EasyEDA Pro r2 checks are recorded above. EasyEDA Standard has not been run. Import the live source pair and supplied libraries together, compare schematic and PCB, then run native DRC. Inspect copper, solder mask, slots, locator drills and assembly clearances in an independent CAM viewer. [Editor runbook](EDITOR-RUNBOOK.md) · [Fabrication notes](FAB-NOTES.md)
 
 ### Bring-up after release checks
 

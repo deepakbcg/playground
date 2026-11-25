@@ -1,0 +1,17 @@
+Rev P r2 drill counts, EasyEDA Pro 3.2.206 Gerber export evidence/RevP-Gerbers-Pro-r2.zip (parsed Excellon; GerbView not installed)
+Expected: 56 round plated component holes, 4 plated J4 slots, 665 vias (664 + stitch via gge964001), NPTH 7 x 3.20 + 2 x 0.65 mm.
+
+Drill_PTH_Through.DRL: round hits 721 by size {0.25: 665, 0.8: 2, 0.9: 8, 1.0: 24, 1.02: 4, 1.1: 11, 1.3: 5, 1.7: 2}; slots 4
+   slot Ø0.60 overall 1.700 mm, centre (6.605, -49.680), axis x
+   slot Ø0.60 overall 1.700 mm, centre (6.605, -58.320), axis x
+   slot Ø0.60 overall 1.400 mm, centre (2.425, -49.680), axis x
+   slot Ø0.60 overall 1.400 mm, centre (2.425, -58.320), axis x
+Drill_PTH_Through_Via.DRL: round hits 665 by size {0.25: 665}; slots 0
+Drill_NPTH_Through.DRL: round hits 9 by size {0.65: 2, 3.2: 7}; slots 0
+
+PTH component holes = 721 - 665 vias = 56 (0.8x2, 0.9x8, 1.0x24, 1.02x4, 1.1x11, 1.3x5, 1.7x2).
+Via file has the same 665 hits; count vias once.
+J4 slots: G85 routed with a 0.60 mm tool along x. Rear 1.70 mm at (6.605, -49.680/-58.320), front 1.40 mm at (2.425, -49.680/-58.320), board-relative mm. 8.64 mm apart.
+NPTH: J4 locators 0.65 mm at (6.105, -51.11)/(6.105, -56.89), 5.78 mm apart; 3.20 mm at (4.5,-4.5) (89.5,-4.5) (4.5,-69.5) (4.5,-91.5) (89.5,-91.5) (12.285,-86.15) (23.715,-86.15).
+Stitch via gge964001 present in Drill_PTH_Through_Via.DRL at X16.34807 Y-39.8791 (absolute 1032.348, 801.879).
+No drill hits at U23 pads.
