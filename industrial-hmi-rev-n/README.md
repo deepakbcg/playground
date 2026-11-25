@@ -9,6 +9,7 @@ Rev N updates sourcing and corrects the cabinet converter pin mapping on the 99.
 | File | What it contains |
 | --- | --- |
 | [EasyEDA Standard ZIP — DO NOT FABRICATE](Industrial-HMI-RevN-EasyEDA-DO-NOT-FABRICATE.zip) | Schematic, four-layer PCB and local buzzer footprint for editor rework. |
+| [U1 reroute working copy](Industrial-HMI-RevN-U1-REROUTE-DO-NOT-FABRICATE.zip) · [Routing checks](U1-REROUTE.md) | Separate EasyEDA Standard draft with U1 copper rerouted and native checks pending. |
 | [Schematic JSON](Schematic_Industrial-HMI-RevN-DO-NOT-FABRICATE.json) · [PCB JSON](PCB_Industrial-HMI-RevN-DO-NOT-FABRICATE.json) | Editable Rev N documents with fabrication-hold labels. |
 | [BOM](Industrial-HMI-RevN-BOM.csv) · [Itemized INR pricing](Industrial-HMI-RevN-BOM-Cost-INR.csv) | Fitted and DNP designators, orderable parts, known tiers and availability. |
 | [Three-board purchase list](PURCHASE-LIST.csv) | Order quantities with spares, stock snapshots, supplier subtotals and shipping thresholds. |
