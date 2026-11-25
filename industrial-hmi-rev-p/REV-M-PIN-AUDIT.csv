@@ -1,0 +1,91 @@
+Ref,Pin,Datasheet function,Rev M pin label,Rev M schematic net,Rev M PCB pad net,Expected net,Pin-to-net result,Board context,Datasheet location,Source
+U6,1,PG,PG,NC,NC,NC,Match,Unused open-drain PG may be left open per §7.3.6.,"TI TPS62902 Rev A Table 5-1, §§7.3.3 and 7.3.6, Tables 7-1/7-2",https://www.ti.com/lit/ds/symlink/tps62902.pdf
+U6,2,SW,SW,SYS_3V3_SW,SYS_3V3_SW,SYS_3V3_SW,Match,,"TI TPS62902 Rev A Table 5-1, §§7.3.3 and 7.3.6, Tables 7-1/7-2",https://www.ti.com/lit/ds/symlink/tps62902.pdf
+U6,3,VOS,VOS,3V3,3V3,3V3,Match,,"TI TPS62902 Rev A Table 5-1, §§7.3.3 and 7.3.6, Tables 7-1/7-2",https://www.ti.com/lit/ds/symlink/tps62902.pdf
+U6,4,GND,GND,GND,GND,GND,Match,Net assignment matches. Inherited copper open.,"TI TPS62902 Rev A Table 5-1, §§7.3.3 and 7.3.6, Tables 7-1/7-2",https://www.ti.com/lit/ds/symlink/tps62902.pdf
+U6,5,EN,EN,SYS_5V,SYS_5V,SYS_5V,Match,Net assignment matches. Inherited copper open.,"TI TPS62902 Rev A Table 5-1, §§7.3.3 and 7.3.6, Tables 7-1/7-2",https://www.ti.com/lit/ds/symlink/tps62902.pdf
+U6,6,VIN,VIN,SYS_5V,SYS_5V,SYS_5V,Match,Net assignment matches. Inherited copper open.,"TI TPS62902 Rev A Table 5-1, §§7.3.3 and 7.3.6, Tables 7-1/7-2",https://www.ti.com/lit/ds/symlink/tps62902.pdf
+U6,7,MODE/S-CONF,MODE,SYS_3V3_MODE,SYS_3V3_MODE,SYS_3V3_MODE,Match,40.2 kΩ on MODE selects VSET at 2.5 MHz. Inherited 0.116 mm clearance.,"TI TPS62902 Rev A Table 5-1, §§7.3.3 and 7.3.6, Tables 7-1/7-2",https://www.ti.com/lit/ds/symlink/tps62902.pdf
+U6,8,SS/TR,SS/TR,SYS_3V3_SS,SYS_3V3_SS,SYS_3V3_SS,Match,,"TI TPS62902 Rev A Table 5-1, §§7.3.3 and 7.3.6, Tables 7-1/7-2",https://www.ti.com/lit/ds/symlink/tps62902.pdf
+U6,9,FB/VSET,VSET,NC,NC,NC,Match,Open VSET selects 3.3 V in this mode.,"TI TPS62902 Rev A Table 5-1, §§7.3.3 and 7.3.6, Tables 7-1/7-2",https://www.ti.com/lit/ds/symlink/tps62902.pdf
+U21,1,CC1DB,CC1DB,USB_CC1,USB_CC1,USB_CC1,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,2,CC1,CC1,USB_CC1,USB_CC1,USB_CC1,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,3,NU,NU,NC,NC,NC,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,4,CC2,CC2,USB_CC2,USB_CC2,USB_CC2,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,5,CC2DB,CC2DB,USB_CC2,USB_CC2,USB_CC2,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,6,RESET,RESET,GND,GND,GND,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,7,SCL,SCL,NC,NC,NC,Match,Floating with unused I²C.,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,8,SDA,SDA,NC,NC,NC,Match,Floating with unused I²C.,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,9,DISCH,DISCH,USB_SYS_DISCH,USB_SYS_DISCH,USB_SYS_DISCH,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,10,GND,GND,GND,GND,GND,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,11,ATTACH,ATTACH,NC,NC,NC,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,12,ADDR0,ADDR0,GND,GND,GND,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,13,ADDR1,ADDR1,GND,GND,GND,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,14,RP_1A5,RP_1A5,NC,NC,NC,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,15,GPIO,GPIO,NC,NC,NC,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,16,VBUS_EN_SNK,VBUS_EN_SNK,USB_GATE_CTRL,USB_GATE_CTRL,USB_GATE_CTRL,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,17,A_B_SIDE,A_B_SIDE,NC,NC,NC,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,18,VBUS_VS_DISCH,VBUS_VS_DISCH,USB_RAW_SENSE,USB_RAW_SENSE,USB_RAW_SENSE,Match,Net assignment matches. Inherited copper open.,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,19,ALERT,ALERT,NC,NC,NC,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,20,RP_3A,RP_3A,USB_OV2,USB_OV2,USB_OV2,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,21,VREG_1V2,VREG_1V2,USB_REG12,USB_REG12,USB_REG12,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,22,VSYS,VSYS,GND,GND,GND,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,23,VREG_2V7,VREG_2V7,USB_REG27,USB_REG27,USB_REG27,Match,Net assignment matches. Inherited copper open.,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,24,VDD,VDD,USB_VBUS,USB_VBUS,USB_VBUS,Match,Net assignment matches. Inherited copper open.,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U21,EP (25),EP,EP,GND,GND,GND,Match,,"ST STUSB4500L Rev 6 Table 1, QFN-24 column; §§2.2 and 3.3",https://www.st.com/resource/en/datasheet/stusb4500l.pdf
+U22,1,OUT,OUT,SYS_5V,SYS_5V,SYS_5V,Match,,"TI TPS2121 Rev F §6 Pin Functions, VQFN-HR column; Table 9-3",https://www.ti.com/lit/ds/symlink/tps2121.pdf
+U22,2,IN2,IN2,USB_SW_VBUS,USB_SW_VBUS,USB_SW_VBUS,Match,,"TI TPS2121 Rev F §6 Pin Functions, VQFN-HR column; Table 9-3",https://www.ti.com/lit/ds/symlink/tps2121.pdf
+U22,3,CP2,CP2,GND,GND,GND,Match,CP2 grounded for internal-reference priority mode.,"TI TPS2121 Rev F §6 Pin Functions, VQFN-HR column; Table 9-3",https://www.ti.com/lit/ds/symlink/tps2121.pdf
+U22,4,OV2,OV2,USB_OV2,USB_OV2,USB_OV2,Match,,"TI TPS2121 Rev F §6 Pin Functions, VQFN-HR column; Table 9-3",https://www.ti.com/lit/ds/symlink/tps2121.pdf
+U22,5,OV1,OV1,CAB_OV,CAB_OV,CAB_OV,Match,,"TI TPS2121 Rev F §6 Pin Functions, VQFN-HR column; Table 9-3",https://www.ti.com/lit/ds/symlink/tps2121.pdf
+U22,6,PR1,PR1,CAB_PRI,CAB_PRI,CAB_PRI,Match,,"TI TPS2121 Rev F §6 Pin Functions, VQFN-HR column; Table 9-3",https://www.ti.com/lit/ds/symlink/tps2121.pdf
+U22,7,IN1,IN1,CAB_5V,CAB_5V,CAB_5V,Match,,"TI TPS2121 Rev F §6 Pin Functions, VQFN-HR column; Table 9-3",https://www.ti.com/lit/ds/symlink/tps2121.pdf
+U22,8,OUT,OUT,SYS_5V,SYS_5V,SYS_5V,Match,,"TI TPS2121 Rev F §6 Pin Functions, VQFN-HR column; Table 9-3",https://www.ti.com/lit/ds/symlink/tps2121.pdf
+U22,9,ST,ST,GND,GND,GND,Match,Unused ST grounded per pin function entry.,"TI TPS2121 Rev F §6 Pin Functions, VQFN-HR column; Table 9-3",https://www.ti.com/lit/ds/symlink/tps2121.pdf
+U22,10,ILIM,ILM,MUX_ILM,MUX_ILM,MUX_ILM,Match,,"TI TPS2121 Rev F §6 Pin Functions, VQFN-HR column; Table 9-3",https://www.ti.com/lit/ds/symlink/tps2121.pdf
+U22,11,SS,SS,MUX_SS,MUX_SS,MUX_SS,Match,,"TI TPS2121 Rev F §6 Pin Functions, VQFN-HR column; Table 9-3",https://www.ti.com/lit/ds/symlink/tps2121.pdf
+U22,12,GND,GND,GND,GND,GND,Match,,"TI TPS2121 Rev F §6 Pin Functions, VQFN-HR column; Table 9-3",https://www.ti.com/lit/ds/symlink/tps2121.pdf
+U23,1,1D+,1D+,USB_DP_GATE,USB_DP_GATE,USB_DP_GATE,Match,,TI TS3USB221A Rev C Table 4-1 and truth table; RSE0010A drawing,https://www.ti.com/lit/ds/symlink/ts3usb221a.pdf
+U23,2,1D-,1D−,USB_DM_GATE,USB_DM_GATE,USB_DM_GATE,Match,,TI TS3USB221A Rev C Table 4-1 and truth table; RSE0010A drawing,https://www.ti.com/lit/ds/symlink/ts3usb221a.pdf
+U23,3,2D+,2D+,NC,NC,NC,Match,,TI TS3USB221A Rev C Table 4-1 and truth table; RSE0010A drawing,https://www.ti.com/lit/ds/symlink/ts3usb221a.pdf
+U23,4,2D-,2D−,NC,NC,NC,Match,,TI TS3USB221A Rev C Table 4-1 and truth table; RSE0010A drawing,https://www.ti.com/lit/ds/symlink/ts3usb221a.pdf
+U23,5,GND,GND,GND,GND,GND,Match,,TI TS3USB221A Rev C Table 4-1 and truth table; RSE0010A drawing,https://www.ti.com/lit/ds/symlink/ts3usb221a.pdf
+U23,6,OE_N,OE_N,USB_DATA_OE_N,USB_DATA_OE_N,USB_DATA_OE_N,Match,OE active low. Q4 pulls low on switched USB VBUS.,TI TS3USB221A Rev C Table 4-1 and truth table; RSE0010A drawing,https://www.ti.com/lit/ds/symlink/ts3usb221a.pdf
+U23,7,D-,D−,USB_DM_CONN,USB_DM_CONN,USB_DM_CONN,Match,,TI TS3USB221A Rev C Table 4-1 and truth table; RSE0010A drawing,https://www.ti.com/lit/ds/symlink/ts3usb221a.pdf
+U23,8,D+,D+,USB_DP_CONN,USB_DP_CONN,USB_DP_CONN,Match,,TI TS3USB221A Rev C Table 4-1 and truth table; RSE0010A drawing,https://www.ti.com/lit/ds/symlink/ts3usb221a.pdf
+U23,9,S,S,GND,GND,GND,Match,Low S selects channel 1.,TI TS3USB221A Rev C Table 4-1 and truth table; RSE0010A drawing,https://www.ti.com/lit/ds/symlink/ts3usb221a.pdf
+U23,10,VCC,VCC,3V3,3V3,3V3,Match,,TI TS3USB221A Rev C Table 4-1 and truth table; RSE0010A drawing,https://www.ti.com/lit/ds/symlink/ts3usb221a.pdf
+D24,1,K,K,USB_VBUS,USB_VBUS,USB_VBUS,Match,Unidirectional cathode goes to positive VBUS. CAD uses pad number 1 for K.,"Littelfuse SMF Rev E1 unidirectional functional diagram, cathode marking and electrical table, SMF6.0A row",https://www.littelfuse.com/assetdocs/tvs-diodes-smf-datasheet?assetguid=7eb8a5b6-bdd0-4561-8f19-0c3cc6f9b2af
+D24,2,A,A,GND,GND,GND,Match,Unidirectional anode goes to ground. CAD uses pad number 2 for A.,"Littelfuse SMF Rev E1 unidirectional functional diagram, cathode marking and electrical table, SMF6.0A row",https://www.littelfuse.com/assetdocs/tvs-diodes-smf-datasheet?assetguid=7eb8a5b6-bdd0-4561-8f19-0c3cc6f9b2af
+D25,1,D1+,D+,USB_DP_CONN,USB_DP_CONN,USB_DP_CONN,Match,,"TI TPD2EUSB30 Rev G Figure 5-1 and Table 5-1, DRT column",https://www.ti.com/lit/ds/symlink/tpd2eusb30.pdf
+D25,2,D1-,D−,USB_DM_CONN,USB_DM_CONN,USB_DM_CONN,Match,,"TI TPD2EUSB30 Rev G Figure 5-1 and Table 5-1, DRT column",https://www.ti.com/lit/ds/symlink/tpd2eusb30.pdf
+D25,3,GND,GND,GND,GND,GND,Match,,"TI TPD2EUSB30 Rev G Figure 5-1 and Table 5-1, DRT column",https://www.ti.com/lit/ds/symlink/tpd2eusb30.pdf
+Q4,1,G,G,USB_SW_VBUS,USB_SW_VBUS,USB_SW_VBUS,Match,,Nexperia 2N7002 Rev 7 Table 2 and SOT23 drawing,https://assets.nexperia.com/documents/data-sheet/2N7002.pdf
+Q4,2,S,S,GND,GND,GND,Match,,Nexperia 2N7002 Rev 7 Table 2 and SOT23 drawing,https://assets.nexperia.com/documents/data-sheet/2N7002.pdf
+Q4,3,D,D,USB_DATA_OE_N,USB_DATA_OE_N,USB_DATA_OE_N,Match,,Nexperia 2N7002 Rev 7 Table 2 and SOT23 drawing,https://assets.nexperia.com/documents/data-sheet/2N7002.pdf
+J4,A1,GND,GND,GND,GND,GND,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,A4,VBUS,VBUS,USB_VBUS,USB_VBUS,USB_VBUS,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,A5,CC1,CC1,USB_CC1,USB_CC1,USB_CC1,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,A6,Dp1,D+,USB_DP_CONN,USB_DP_CONN,USB_DP_CONN,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,A7,Dn1,D−,USB_DM_CONN,USB_DM_CONN,USB_DM_CONN,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,A8,SBU1,SBU1,NC,NC,NC,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,A9,VBUS,VBUS,USB_VBUS,USB_VBUS,USB_VBUS,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,A12,GND,GND,GND,GND,GND,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,B1,GND,GND,GND,GND,GND,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,B4,VBUS,VBUS,USB_VBUS,USB_VBUS,USB_VBUS,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,B5,CC2,CC2,USB_CC2,USB_CC2,USB_CC2,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,B6,Dp2,D+,USB_DP_CONN,USB_DP_CONN,USB_DP_CONN,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,B7,Dn2,D−,USB_DM_CONN,USB_DM_CONN,USB_DM_CONN,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,B8,SBU2,SBU2,NC,NC,NC,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,B9,VBUS,VBUS,USB_VBUS,USB_VBUS,USB_VBUS,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,B12,GND,GND,GND,GND,GND,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,SH1,SHELL,Shell,GND,GND,GND,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,SH2,SHELL,Shell,GND,GND,GND,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,SH3,SHELL,Shell,GND,GND,GND,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+J4,SH4,SHELL,Shell,GND,GND,GND,Match,,"GCT USB4105 drawing B3, sheet 1, Pin/Signal/Mating Sequence tables and recommended PCB layout",https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf
+U1,1,FB,VIN,VIN_PROT,VIN_PROT,CAB_FB,Mismatch,,TI LMR51635 Rev B Table 5-1; DDC0006A drawing; LMR51635EVM Fig 3-1,https://www.ti.com/lit/ds/symlink/lmr51635.pdf
+U1,2,EN,EN,CAB_EN,CAB_EN,CAB_EN,Match,,TI LMR51635 Rev B Table 5-1; DDC0006A drawing; LMR51635EVM Fig 3-1,https://www.ti.com/lit/ds/symlink/lmr51635.pdf
+U1,3,VIN,GND,GND,GND,VIN_PROT,Mismatch,,TI LMR51635 Rev B Table 5-1; DDC0006A drawing; LMR51635EVM Fig 3-1,https://www.ti.com/lit/ds/symlink/lmr51635.pdf
+U1,4,GND,FB,CAB_FB,CAB_FB,GND,Mismatch,,TI LMR51635 Rev B Table 5-1; DDC0006A drawing; LMR51635EVM Fig 3-1,https://www.ti.com/lit/ds/symlink/lmr51635.pdf
+U1,5,SW,SW,CAB_SW,CAB_SW,CAB_SW,Match,,TI LMR51635 Rev B Table 5-1; DDC0006A drawing; LMR51635EVM Fig 3-1,https://www.ti.com/lit/ds/symlink/lmr51635.pdf
+U1,6,CB,CB,CAB_CB,CAB_CB,CAB_CB,Match,,TI LMR51635 Rev B Table 5-1; DDC0006A drawing; LMR51635EVM Fig 3-1,https://www.ti.com/lit/ds/symlink/lmr51635.pdf

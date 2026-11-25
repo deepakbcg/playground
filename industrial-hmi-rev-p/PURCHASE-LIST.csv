@@ -1,0 +1,116 @@
+Row type,Supplier,References,Manufacturer part number,Supplier code,Per board,Three boards,Minimum spares,MOQ,Order multiple,Order quantity,Stock shown,Currency,Quoted unit,Unit INR,Line INR,Source URL,Checked IST,Notes
+Part,LCSC,R12,0402WGF1001TCE,C11702,1,3,2,100,100,100,14820400,USD,0.0011,0.101937,10.19,https://www.lcsc.com/product-detail/C11702.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R63,0402WGF1004TCE,C26083,1,3,2,100,100,100,1476700,USD,0.001,0.092670,9.27,https://www.lcsc.com/product-detail/C26083.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"R57, R58, R59, R60",0402WGF499JTCE,C25120,4,12,2,100,100,100,184000,USD,0.0012,0.111204,11.12,https://www.lcsc.com/product-detail/C25120.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,F1,045201.5MRL,C151122,1,3,1,5,5,5,2100,USD,0.3094,28.672098,143.36,https://www.lcsc.com/product-detail/C151122.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"R41, R74",0603WAF1000T5E,C22775,2,6,2,100,100,100,3524000,USD,0.0017,0.157539,15.75,https://www.lcsc.com/product-detail/C22775.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"R14, R16, R72",0603WAF1001T5E,C21190,3,9,2,100,100,100,12369800,USD,0.0016,0.148272,14.83,https://www.lcsc.com/product-detail/C21190.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"R26, R42, R34, R69, R71",0603WAF1003T5E,C25803,5,15,2,100,100,100,3200700,USD,0.0026,0.240942,24.09,https://www.lcsc.com/product-detail/C25803.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R67,0603WAF1004T5E,C22935,1,3,2,100,100,100,2285000,USD,0.0016,0.148272,14.83,https://www.lcsc.com/product-detail/C22935.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R70,0603WAF1912T5E,C22897,1,3,2,100,100,100,158600,USD,0.0016,0.148272,14.83,https://www.lcsc.com/product-detail/C22897.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R77,0603WAF3162T5E,C25967,1,3,2,100,100,100,29800,USD,0.0019,0.176073,17.61,https://www.lcsc.com/product-detail/C25967.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R13,0603WAF330JT5E,C23140,1,3,2,100,100,100,1013800,USD,0.0019,0.176073,17.61,https://www.lcsc.com/product-detail/C23140.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R82,0603WAF4022T5E,C12447,1,3,2,100,100,100,124100,USD,0.0017,0.157539,15.75,https://www.lcsc.com/product-detail/C12447.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R79,0603WAF4322T5E,C23053,1,3,2,100,100,100,21200,USD,0.0018,0.166806,16.68,https://www.lcsc.com/product-detail/C23053.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R81,0603WAF4422T5E,C23056,1,3,2,100,100,100,185600,USD,0.0018,0.166806,16.68,https://www.lcsc.com/product-detail/C23056.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"R31, R32, R37, R66",0603WAF4701T5E,C23162,4,12,2,100,100,100,5324600,USD,0.0018,0.166806,16.68,https://www.lcsc.com/product-detail/C23162.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"R27, R28, R29, R52, R53, R54, R55, R56, R33, R75, R76, R83",0603WAF4702T5E,C25819,12,36,4,100,100,100,185900,USD,0.0036,0.333612,33.36,https://www.lcsc.com/product-detail/C25819.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R73,0603WAF5600T5E,C23204,1,3,2,100,100,100,1637800,USD,0.0033,0.305811,30.58,https://www.lcsc.com/product-detail/C23204.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R43,0603WAF6800T5E,C23228,1,3,2,100,100,100,386800,USD,0.0021,0.194607,19.46,https://www.lcsc.com/product-detail/C23228.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R68,0603WAF9102T5E,C23265,1,3,2,100,100,100,76000,USD,0.0018,0.166806,16.68,https://www.lcsc.com/product-detail/C23265.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R5,0805W8F1002T5E,C17414,1,3,2,100,100,100,31792100,USD,0.0032,0.296544,29.65,https://www.lcsc.com/product-detail/C17414.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R3,0805W8F4701T5E,C17673,1,3,2,100,100,100,1394500,USD,0.0024,0.222408,22.24,https://www.lcsc.com/product-detail/C17673.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,J1,1715721,C5183929,1,3,1,1,1,4,2328,USD,0.5062,46.909554,187.64,https://www.lcsc.com/product-detail/C5183929.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,J3,1715734,C480520,1,3,1,1,1,4,380,USD,0.7477,69.289359,277.16,https://www.lcsc.com/product-detail/C480520.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"J6, J7",1751251,C91152,2,6,1,1,1,7,261,USD,1.3889,128.709363,900.97,https://www.lcsc.com/product-detail/C91152.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,J9,1751277,C6787265,1,3,1,1,1,4,86,USD,2.1338,197.739246,790.96,https://www.lcsc.com/product-detail/C6787265.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"D12, D15, D18, D21",1N4148WS-7-F,C60580,4,12,2,20,20,20,398260,USD,0.0331,3.067377,61.35,https://www.lcsc.com/product-detail/C60580.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,D9,1N5819HW-7-F,C82544,1,3,1,10,10,10,282680,USD,0.0557,5.161719,51.62,https://www.lcsc.com/product-detail/C82544.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,Q4,"2N7002,215",C65189,1,3,1,50,50,50,417500,USD,0.0166,1.538322,76.92,https://www.lcsc.com/product-detail/C65189.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C3,35ZLH47MEFC5X11,C109390,1,3,1,10,10,10,51580,USD,0.0497,4.605699,46.06,https://www.lcsc.com/product-detail/C109390.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"X2, X1",ABM8-272-T3,C20625731,2,6,1,5,5,10,8555,USD,0.4004,37.105068,371.05,https://www.lcsc.com/product-detail/C20625731.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,Q2,AO3400A,C20917,1,3,1,5,5,5,795150,USD,0.0792,7.339464,36.70,https://www.lcsc.com/product-detail/C20917.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,L1,AOTA-B201610S3R3-101-T,C42411119,1,3,1,5,5,5,4160,USD,0.316,29.283720,146.42,https://www.lcsc.com/product-detail/C42411119.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,D6,B160-13-F,C24784,1,3,1,5,5,5,26950,USD,0.0811,7.515537,37.58,https://www.lcsc.com/product-detail/C24784.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,D1,B2100A-13-F,C150471,1,3,1,5,5,5,12105,USD,0.23,21.314100,106.57,https://www.lcsc.com/product-detail/C150471.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,J8,B6B-XH-A(LF)(SN),C144397,1,3,1,5,5,5,52715,USD,0.0923,8.553441,42.77,https://www.lcsc.com/product-detail/C144397.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,FB1,BLM18AG121SN1D,C76892,1,3,1,50,50,50,173650,USD,0.0146,1.352982,67.65,https://www.lcsc.com/product-detail/C76892.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C74,C1206X102K202T,C106012,1,3,1,1,1,4,75176,USD,0.0283,2.622561,10.49,https://www.lcsc.com/product-detail/C106012.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C94,C3216X5R1C226MTJ00N,C342621,1,3,1,5,5,5,1750,USD,0.2004,18.571068,92.86,https://www.lcsc.com/product-detail/C342621.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C93,C3216X7R1E106KT000N,C76661,1,3,1,5,5,5,12460,USD,0.1896,17.570232,87.85,https://www.lcsc.com/product-detail/C76661.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"C70, C71",CC0402KRX7R9BB682,C93654,2,6,2,100,100,100,147100,USD,0.0013,0.120471,12.05,https://www.lcsc.com/product-detail/C93654.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"C12, C34, C35, C45, C56, C65, C46, C47, C48, C49, C50, C22, C23, C24, C75, C76, C77, C81, C20",CC0603JRX7R9BB104,C91183,19,57,6,50,50,100,3897200,USD,0.0109,1.010103,101.01,https://www.lcsc.com/product-detail/C91183.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C95,CC0603JRX7R9BB472,C115060,1,3,2,100,100,100,729900,USD,0.0059,0.546753,54.68,https://www.lcsc.com/product-detail/C115060.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"C83, C84, C91, C96",CC0603KRX7R0BB104,C113803,4,12,2,50,50,50,402150,USD,0.0119,1.102773,55.14,https://www.lcsc.com/product-detail/C113803.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C44,CC0603KRX7R9BB224,C107083,1,3,1,50,50,50,167100,USD,0.0128,1.186176,59.31,https://www.lcsc.com/product-detail/C107083.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"D4, D10",CDSOT23-SM712,C404012,2,6,1,1,1,7,34482,USD,0.5288,49.003896,343.03,https://www.lcsc.com/product-detail/C404012.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C80,CL10B103KB8NNNC,C1589,1,3,2,50,50,50,1430650,USD,0.0071,0.657957,32.90,https://www.lcsc.com/product-detail/C1589.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C13,CL10C150JB8NNNC,C1644,1,3,1,50,50,50,181400,USD,0.0112,1.037904,51.90,https://www.lcsc.com/product-detail/C1644.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"C15, C11, C38, C43, C55, C64, C78",CL21B106KOQNNNE,C95841,7,21,3,10,10,30,325030,USD,0.0877,8.127159,243.81,https://www.lcsc.com/product-detail/C95841.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"C85, C86",CL32A476KOJNNNE,C2932477,2,6,1,1,1,7,42002,USD,0.3764,34.880988,244.17,https://www.lcsc.com/product-detail/C2932477.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,J10,DM3D-SF,C719027,1,3,1,1,1,4,7843,USD,1.1531,106.857777,427.43,https://www.lcsc.com/product-detail/C719027.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,J2,FH12-40S-0.5SH(55),C202114,1,3,1,1,1,4,8723,USD,0.6973,64.618791,258.48,https://www.lcsc.com/product-detail/C202114.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"R17, R18",FRC0603F27R0TS,C2907021,2,6,2,100,100,100,144400,USD,0.002,0.185340,18.53,https://www.lcsc.com/product-detail/C2907021.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"C39, C40, C14",GRM1555C1H150JA01D,C76950,3,9,2,100,100,100,98500,USD,0.0062,0.574554,57.46,https://www.lcsc.com/product-detail/C76950.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"C68, C69",GRM1555C1H180JA01D,C33149,2,6,1,50,50,50,248100,USD,0.014,1.297380,64.87,https://www.lcsc.com/product-detail/C33149.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"C16, C17, C19",GRM155R60J475ME47D,C82453,3,9,1,50,50,50,357050,USD,0.0134,1.241778,62.09,https://www.lcsc.com/product-detail/C82453.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C72,GRM155R71H103KA88D,C77019,1,3,2,100,100,100,372800,USD,0.0062,0.574554,57.46,https://www.lcsc.com/product-detail/C77019.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C73,GRM155R71H223KA12D,C77023,1,3,2,50,50,50,332600,USD,0.0093,0.861831,43.09,https://www.lcsc.com/product-detail/C77023.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C41,GRM188R61A475KAAJD,C668355,1,3,1,5,5,5,2700,USD,0.2811,26.049537,130.25,https://www.lcsc.com/product-detail/C668355.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"C31, C57, C87, C88, C89, C90",GRM188R71E105KA12D,C86020,6,18,2,20,20,20,80360,USD,0.0389,3.604863,72.10,https://www.lcsc.com/product-detail/C86020.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"C2, C7",GRM21BR71C105KA01L,C77079,2,6,1,10,10,10,10280,USD,0.0565,5.235855,52.36,https://www.lcsc.com/product-detail/C77079.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C92,GRM21BR71C475KA73L,C86040,1,3,1,10,10,10,3420,USD,0.0562,5.208054,52.08,https://www.lcsc.com/product-detail/C86040.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C6,GRM21BR71H104KA01L,C77082,1,3,1,50,50,50,164800,USD,0.0189,1.751463,87.57,https://www.lcsc.com/product-detail/C77082.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C42,GRM21BR71H105KA12L,C77083,1,3,1,10,10,10,68450,USD,0.0444,4.114548,41.15,https://www.lcsc.com/product-detail/C77083.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"C30, C32, C33, C36, C18, C25, C26, C27, C28, C66, C67, C21",GRT155R71H104KE01D,C711091,12,36,4,50,50,50,16750,USD,0.0147,1.362249,68.11,https://www.lcsc.com/product-detail/C711091.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,J11,LPJ4011ABNL,C49274777,1,3,1,1,1,4,38,USD,2.6107,241.933569,967.73,https://www.lcsc.com/product-detail/C49274777.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,D7,LTST-C170KGKT,C98221,1,3,1,20,20,20,142320,USD,0.0309,2.863503,57.27,https://www.lcsc.com/product-detail/C98221.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,U18,LTV-847S,C114599,1,3,1,5,5,5,2520,USD,0.3589,33.259263,166.30,https://www.lcsc.com/product-detail/C114599.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R61,RC0402FR-0710RL,C138066,1,3,2,100,100,100,3788300,USD,0.0026,0.240942,24.09,https://www.lcsc.com/product-detail/C138066.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"R44, R45, R46, R47, R78, R80",RC0603FR-0710KL,C98220,6,18,2,100,100,100,4756500,USD,0.0023,0.213141,21.31,https://www.lcsc.com/product-detail/C98220.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"R64, R65",RC0603FR-07330RL,C105881,2,6,2,100,100,100,5134300,USD,0.0023,0.213141,21.31,https://www.lcsc.com/product-detail/C105881.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R25,RC0805FR-071R5L,C137572,1,3,1,50,50,50,11400,USD,0.0123,1.139841,56.99,https://www.lcsc.com/product-detail/C137572.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,U2,RP2354B,C39843328,1,3,1,1,1,4,9906,USD,1.5296,141.748032,566.99,https://www.lcsc.com/product-detail/C39843328.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,J5,SM03B-SRSS-TB(LF)(SN),C160403,1,3,1,5,5,5,19400,USD,0.1975,18.302325,91.51,https://www.lcsc.com/product-detail/C160403.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,D2,SMBJ33A,C224019,1,3,1,5,5,5,25050,USD,0.1434,13.288878,66.44,https://www.lcsc.com/product-detail/C224019.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"D13, D16, D19, D22",SMF33CA,C19077520,4,12,2,20,20,20,265140,USD,0.0299,2.770833,55.42,https://www.lcsc.com/product-detail/C19077520.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,D24,SMF6.0A,C207260,1,3,1,5,5,5,5925,USD,0.1845,17.097615,85.49,https://www.lcsc.com/product-detail/C207260.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,U19,SN74LVC1G125DBVR,C23654,1,3,1,10,10,10,193710,USD,0.0682,6.320094,63.20,https://www.lcsc.com/product-detail/C23654.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,L3,SRP1038A-100M,C780184,1,3,1,1,1,4,2786,USD,0.9011,83.504937,334.02,https://www.lcsc.com/product-detail/C780184.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,"U5, U14",TD301D485H,C2992421,2,6,1,1,1,7,1260,USD,5.0525,468.215175,3277.51,https://www.lcsc.com/product-detail/C2992421.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,BZ1,TMB12A05,C96093,1,3,1,5,5,5,110250,USD,0.18,16.680600,83.40,https://www.lcsc.com/product-detail/C96093.html,2026-11-25,Public retail product-detail feed. Shravi ST2136CO8767 lists INR 15.47 and in-stock status without a numeric count. LCSC exact Huaneng part meets quantity.
+Part,LCSC,U22,TPS2121RUXR,C485916,1,3,1,1,1,4,30306,USD,0.8846,81.975882,327.90,https://www.lcsc.com/product-detail/C485916.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,U9,TPS61165DBVR,C58756,1,3,1,1,1,4,34602,USD,0.7599,70.419933,281.68,https://www.lcsc.com/product-detail/C58756.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,U6,TPS62902RPJR,C2870154,1,3,1,1,1,4,14162,USD,1.2324,114.206508,456.83,https://www.lcsc.com/product-detail/C2870154.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,U11,TRS3232EIPWR,C2652868,1,3,1,1,1,4,11192,USD,0.7873,72.959091,291.84,https://www.lcsc.com/product-detail/C2652868.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,U23,TS3USB221ARSER,C128396,1,3,1,5,5,5,94525,USD,0.2348,21.758916,108.79,https://www.lcsc.com/product-detail/C128396.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,U20,W5500,C32843,1,3,1,1,1,4,14141,USD,2.7949,259.003383,1036.01,https://www.lcsc.com/product-detail/C32843.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,X3,X1E0000210139,C91750,1,3,1,5,5,5,12220,USD,0.266,24.650220,123.25,https://www.lcsc.com/product-detail/C91750.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R62,0402WGF1242TCE,C11692,1,3,2,100,100,100,285000,USD,0.0013,0.120471,12.05,https://www.lcsc.com/product-detail/C11692.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,R30,RC0402FR-0722RL,C114765,1,3,2,100,100,100,7684600,USD,0.0013,0.120471,12.05,https://www.lcsc.com/product-detail/C114765.html,2026-11-25,Public retail product-detail feed.
+Part,LCSC,C37,CL05B104KB54PNC,C307331,1,3,2,100,100,100,2200,USD,0.0086,0.796962,79.70,https://www.lcsc.com/product-detail/C307331.html,2026-11-25,Public retail product-detail feed.
+Supplier subtotal,LCSC,,,,,,,,,,,,,,15263.98,https://www.lcsc.com/help-center/shipping-delivering/shipping-cost-calculation,2026-11-25,"Weight, carrier and destination at checkout"
+Part,DigiKey India,LCD1,2354,1528-1870-ND,1,3,1,1,1,4,176,INR,3339.47,3339.470000,13357.88,https://www.digikey.in/en/products/detail/adafruit-industries-llc/2354/6618721,2026-11-25,Adafruit 2354 external 7-inch panel. Included in purchase-list total.
+Part,DigiKey India,BT1,3034,36-3034-ND,1,3,1,1,1,4,46157,INR,45.65,45.650000,182.60,https://www.digikey.in/en/products/detail/keystone-electronics/3034/4499289,2026-11-25,"Indexed distributor listing. Indexed listing, crawled ~1 week before check"
+Part,DigiKey India,U8,BT818Q-T,2005-BT818Q-T-ND,1,3,1,1,1,4,545,INR,1052.87,1052.870000,4211.48,https://www.digikey.in/en/products/detail/bridgetek-pte-ltd/BT818Q-T/13242743,2026-11-25,Published distributor listing.
+Part,DigiKey India,"D11, D14, D17, D20",BZT52B8V2-AQ,4878-BZT52B8V2-AQCT-ND,4,12,2,1,1,14,11310,INR,12.364,12.364000,173.10,https://www.digikey.in/en/products/detail/diotec-semiconductor/BZT52B8V2-AQ/29178538,2026-11-25,Stock exceeds the 50-unit Zener requirement.
+Part,DigiKey India,"C1, C82",C3216X7S2A225K160AB,445-5207-1-ND,2,6,1,1,1,7,43,INR,64.97,64.970000,454.79,https://www.digikey.in/en/products/detail/tdk-corporation/C3216X7S2A225K160AB/2116323,2026-11-25,India cut-tape pricing. Newer DigiKey global snapshot shows 43 units.
+Part,DigiKey India,"R48, R49, R50, R51",ERJ-P08F2001V,10-ERJ-P08F2001VCT-ND,4,12,2,1,1,14,4294,INR,11.179,11.179000,156.51,https://www.digikey.in/en/products/detail/panasonic-industry/ERJ-P08F2001V/21281796,2026-11-25,Published distributor listing.
+Part,DigiKey India,L4,MWSA0402S-1R0MT,3442-MWSA0402S-1R0MTCT-ND,1,3,1,1,1,4,2054,INR,68.05,68.050000,272.20,https://www.digikey.in/en/products/detail/shenzhen-sunlord-electronics-co-ltd/MWSA0402S-1R0MT/14120035,2026-11-25,Published distributor listing.
+Part,DigiKey India,L2,SRP5030TA-100M,SRP5030TA-100MCT-ND,1,3,1,1,1,4,898,INR,99.37,99.370000,397.48,https://www.digikey.in/en/products/detail/bourns-inc/SRP5030TA-100M/5429753,2026-11-25,"Indexed distributor listing. DigiKey listing, crawled ~1 month before check."
+Part,DigiKey India,Q3,STL6P3LLH6,497-15315-1-ND,1,3,1,1,1,4,9472,INR,164.35,164.350000,657.40,https://www.digikey.in/en/products/detail/stmicroelectronics/STL6P3LLH6/5170838,2026-11-25,Published distributor listing.
+Part,DigiKey India,U21,STUSB4500LQTR,497-STUSB4500LQCT-ND,1,3,1,1,1,4,6460,INR,211.17,211.170000,844.68,https://www.digikey.in/en/products/detail/stmicroelectronics/STUSB4500LQTR/10709019,2026-11-25,"Indexed distributor listing. listing, crawled ~2 months before check"
+Part,DigiKey India,D25,TPD2EUSB30DRTR,296-25509-1-ND,1,3,1,1,1,4,336,INR,124.22,124.220000,496.88,https://www.digikey.in/en/products/detail/texas-instruments/TPD2EUSB30DRTR/2193486,2026-11-25,Published distributor listing.
+Part,DigiKey India,J4,USB4105-GF-A,2073-USB4105-GF-ACT-ND,1,3,1,1,1,4,140016,INR,76.44,76.440000,305.76,https://www.digikey.in/en/products/detail/gct/USB4105-GF-A/11198441,2026-11-25,Published distributor listing.
+Supplier subtotal,DigiKey India,,,,,,,,,,,,,,21510.76,https://www.digikey.in/en/help-support/delivery-information/delivery-time-and-cost,2026-11-25,"Free from INR 7000, INR 1200 below for direct INR orders"
+Part,Mouser India,"SW1, SW2",434133025816,710-434133025816,2,6,1,1,1,7,14963,INR,52.55,52.550000,367.85,https://www.mouser.in/en/ProductDetail/Wurth-Elektronik/434133025816,2026-11-25,"Indexed distributor listing. Indexed Mouser listing, crawled ~1 week before check."
+Part,Mouser India,U1,LMR51635XDDCR,595-LMR51635XDDCR,1,3,1,1,1,4,250,INR,208.72,208.720000,834.88,https://www.mouser.in/en/ProductDetail/Texas-Instruments/LMR51635XDDCR,2026-11-25,"Indexed distributor listing. Mouser listing, crawled ~2 months before check."
+Part,Mouser India,U10,RV-3028-C7 32.768KHZ 1PPM-TA-QA,428-203603-MG01,1,3,1,1,1,4,2805,INR,234.81,234.810000,939.24,https://www.mouser.in/en/ProductDetail/Micro-Crystal/RV-3028-C7-32.768kHz-1ppm-TA-QA,2026-11-25,"Indexed distributor listing. Mouser listing, crawled ~2 months before check."
+Part,Mouser India,D23,TPD4E1B06DCKR,595-TPD4E1B06DCKR,1,3,1,1,1,4,11796,INR,101.27,101.270000,405.08,https://www.mouser.in/en/c/circuit-protection/esd-protection-diodes-tvs-diodes/?series=TPD4E1B06,2026-11-25,"LCSC has 2. Original MPN, Mouser cut tape."
+Supplier subtotal,Mouser India,,,,,,,,,,,,,,2547.05,https://www.mouser.in/en/Contact/,2026-11-25,Depends on order and delivery method
+Supplier subtotal,Sharvi,,,,,,,,,,,,,,0.00,https://sharvielectronics.com/aboutus/,2026-11-25,Free above INR 2999; no quantities allocated
+Part,element14 India,C79,CL10A475KO8NNNC,3013397,1,3,1,10,10,10,46292,INR,5.86,5.860000,58.60,https://in.element14.com/samsung-electro-mechanics/cl10a475ko8nnnc/cap-4-7uf-16v-mlcc-0603/dp/3013397,2026-11-25,Indexed India cut-tape listing.
+Supplier subtotal,element14 India,,,,,,,,,,,,,,58.60,https://in.element14.com/terms-and-conditions,2026-11-25,INR 7000 threshold in terms; confirm charge at checkout
+Part,Electro Global,CELL1,CR2032,EG0136-P5,1,3,1,5,5,5,500,INR,27.60,27.600000,138.00,https://electroglobal.in/store/maxell-cr2032-lithium-cell-3v,2026-11-25,100 packs displayed. One pack of five cells costs INR 138.
+Supplier subtotal,Electro Global,,,,,,,,,,,,,,138.00,https://electroglobal.in/store/maxell-cr2032-lithium-cell-3v,2026-11-25,Free above INR 999 per storefront
+Overall subtotal,,,,,,,,,,,,INR,,,39518.39,,2026-11-25,"Three Rev P main boards with spares and external LCDs. Excluding LCDs INR 26160.51. Freight, taxes, duties, bare PCBs and optional relay boards are outside this subtotal."

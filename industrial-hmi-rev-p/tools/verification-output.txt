@@ -1,0 +1,125 @@
+212 schematic / PCB / BOM designators agree. TP1–TP4 and optional R4/R38 DNP. LCD1 and CELL1 external.
+Zero schematic-to-PCB footprint mismatches. Locked parts, R68 91 kΩ and BZ1 7.60 mm / 1.00 mm PTH checked.
+One live schematic, one live PCB and one ZIP containing the byte-identical sources and BZ1 library.
+208 fitted refs priced exactly once, including the external LCD. Board + cell INR 6009.05.
+108 purchase lines meet listed stock, MOQ, order multiples and spares.
+  LCSC INR 15263.98
+  DigiKey India INR 21510.76
+  Mouser India INR 2547.05
+  Sharvi INR 0.00
+  element14 India INR 58.60
+  Electro Global INR 138.00
+  Overall INR 39518.39. Excluding LCDs INR 26160.51.
+120 sourced MPN changes have evidence. Configurator matches BOM and prices.
+Copper check uses positive area overlap above source coordinate precision.
+Layers 1, 21, 22, 2. Via and PTH annuli are connected across the stack.
+Rev N FOOTPRINTS: 9 split named nets
+  3V3 — largest group has 69 pads
+    C23.1, C26.1, C27.1, C28.1, C50.1, C67.1, R33.1, U11.16, U2.15, U2.24, U2.29, U2.41, U2.50
+    R83.1
+  CAB_PRI — largest group has 2 pads
+    R78.1
+  DI_COM — largest group has 3 pads
+    D15.2, D16.2, U18.4
+    D21.2, J9.1, U18.8
+    D18.2, U18.6
+    D19.2, D22.2
+  GND — largest group has 125 pads
+    BT1.2, C34.2, C35.2, C37.2, C38.2, C39.2, C40.2, C6.2, C7.2, J2.3, J2.36, J8.1, R27.2, U10.5, U5.2, U8.18, U8.23, U8.65, X2.2, X2.4
+    C2.2, C28.2, C85.2, C86.2, C92.2, R26.2, R78.2, R81.2
+    C56.2, C57.2, U14.2, U18.15
+    C45.2, U10.8
+    C74.2, R34.2
+    U18.11, U18.13
+    U8.33, U8.48
+    C27.2
+    C36.2
+    C41.2
+    J2.29
+    J2.42
+    Q2.2
+    R42.2
+    R76.2
+    U18.9
+    U6.4
+  SYS_5V — largest group has 13 pads
+    U6.5, U6.6
+  USB_FET_GATE — largest group has 2 pads
+    R72.1
+  USB_RAW_SENSE — largest group has 1 pads
+    U21.18
+  USB_REG27 — largest group has 1 pads
+    U21.23
+  USB_VBUS — largest group has 10 pads
+    C87.1
+    U21.24
+Rev P: 9 split named nets
+  3V3 — largest group has 69 pads
+    C23.1, C26.1, C27.1, C28.1, C50.1, C67.1, R33.1, U11.16, U2.15, U2.24, U2.29, U2.41, U2.50
+    R83.1
+  CAB_PRI — largest group has 2 pads
+    R78.1
+  DI_COM — largest group has 3 pads
+    D15.2, D16.2, U18.4
+    D21.2, J9.1, U18.8
+    D18.2, U18.6
+    D19.2, D22.2
+  GND — largest group has 125 pads
+    BT1.2, C34.2, C35.2, C37.2, C38.2, C39.2, C40.2, C6.2, C7.2, J2.3, J2.36, J8.1, R27.2, U10.5, U5.2, U8.18, U8.23, U8.65, X2.2, X2.4
+    C2.2, C28.2, C85.2, C86.2, C92.2, R26.2, R78.2, R81.2
+    C56.2, C57.2, U14.2, U18.15
+    C45.2, U10.8
+    C74.2, R34.2
+    U18.11, U18.13
+    U8.33, U8.48
+    C27.2
+    C36.2
+    C41.2
+    J2.29
+    J2.42
+    Q2.2
+    R42.2
+    R76.2
+    U18.9
+    U6.4
+  SYS_5V — largest group has 13 pads
+    U6.5, U6.6
+  USB_FET_GATE — largest group has 2 pads
+    R72.1
+  USB_RAW_SENSE — largest group has 1 pads
+    U21.18
+  USB_REG27 — largest group has 1 pads
+    U21.23
+  USB_VBUS — largest group has 10 pads
+    C87.1
+    U21.24
+Frozen Rev N: 3 mixed-net copper groups
+  GND (J1.2), VIN_PROT (U1.3)
+  CAB_FB (U1.1), VIN_PROT (D1.1)
+  CAB_FB (R69.2), GND (U1.4)
+Rev N FOOTPRINTS: 0 mixed-net copper groups
+Rev P: 0 mixed-net copper groups
+Every previously connected group of named pads stays connected.
+Phase 2 before / after
+  1. GND R76.2 → mux ground — OPEN → OPEN
+  2. GND U6.4 → input capacitor ground — OPEN → OPEN
+  3. SYS_5V U6.5/U6.6 → input capacitor and mux — OPEN → OPEN
+  4. USB_VBUS U21.24 → USB input and local bypass — OPEN → OPEN
+  5. USB_RAW_SENSE U21.18 → divider — OPEN → OPEN
+  6. USB_REG27 U21.23 → 2.7 V bypass — OPEN → OPEN
+  7. USB_FET_GATE R72.1 → Q3 gate — OPEN → OPEN
+  8. CAB_PRI R78.1 → mux PR1 divider — OPEN → OPEN
+  9. 3V3 R83.1 → shared 3.3 V rail — OPEN → OPEN
+  10. U6.7 vs SYS_5V — 0.116002 mm (gge4935) → 0.116002 mm (gge4935); limit 0.125 mm.
+Rev P vs tagged FOOTPRINTS: 0 added or changed layer objects
+Rev P vs tagged frozen PCB: 201 added or changed layer objects
+  Minimum 0.129809 mm on layer 1, C77.2 (GND) to gge4751 (ETH_AVDD).
+  U1.1 CAB_FB connects to R69.2, R70.1.
+  U1.2 CAB_EN connects to R67.2, R68.1.
+  U1.3 VIN_PROT connects to D1.1, C82.1, C83.1.
+  U1.4 GND connects to J1.2, C82.2, C83.2.
+  U1.5 CAB_SW connects to L3.1, C84.2.
+  U1.6 CAB_CB connects to C84.1.
+U1 six pads and cabinet 5 V output path checked.
+Live PCB SHA-256 c02fb746373b262ab2c57badf26398bc329fec5c6c223cd34fb16241466deac2
+DRAFT — DO NOT FABRICATE. Native EasyEDA import, copper rebuild, ERC/DRC, CAM and hardware pending.
