@@ -53,18 +53,15 @@ Rev N FOOTPRINTS: 9 split named nets
   USB_VBUS — largest group has 10 pads
     C87.1
     U21.24
-Rev P: 9 split named nets
-  3V3 — largest group has 69 pads
+Rev P: 3 split named nets
+  3V3 — largest group has 70 pads
     C23.1, C26.1, C27.1, C28.1, C50.1, C67.1, R33.1, U11.16, U2.15, U2.24, U2.29, U2.41, U2.50
-    R83.1
-  CAB_PRI — largest group has 2 pads
-    R78.1
   DI_COM — largest group has 3 pads
     D15.2, D16.2, U18.4
     D21.2, J9.1, U18.8
     D18.2, U18.6
     D19.2, D22.2
-  GND — largest group has 125 pads
+  GND — largest group has 127 pads
     BT1.2, C34.2, C35.2, C37.2, C38.2, C39.2, C40.2, C6.2, C7.2, J2.3, J2.36, J8.1, R27.2, U10.5, U5.2, U8.18, U8.23, U8.65, X2.2, X2.4
     C2.2, C28.2, C85.2, C86.2, C92.2, R26.2, R78.2, R81.2
     C56.2, C57.2, U14.2, U18.15
@@ -79,20 +76,7 @@ Rev P: 9 split named nets
     J2.42
     Q2.2
     R42.2
-    R76.2
     U18.9
-    U6.4
-  SYS_5V — largest group has 13 pads
-    U6.5, U6.6
-  USB_FET_GATE — largest group has 2 pads
-    R72.1
-  USB_RAW_SENSE — largest group has 1 pads
-    U21.18
-  USB_REG27 — largest group has 1 pads
-    U21.23
-  USB_VBUS — largest group has 10 pads
-    C87.1
-    U21.24
 Frozen Rev N: 3 mixed-net copper groups
   GND (J1.2), VIN_PROT (U1.3)
   CAB_FB (U1.1), VIN_PROT (D1.1)
@@ -101,19 +85,22 @@ Rev N FOOTPRINTS: 0 mixed-net copper groups
 Rev P: 0 mixed-net copper groups
 Every previously connected group of named pads stays connected.
 Phase 2 before / after
-  1. GND R76.2 → mux ground — OPEN → OPEN
-  2. GND U6.4 → input capacitor ground — OPEN → OPEN
-  3. SYS_5V U6.5/U6.6 → input capacitor and mux — OPEN → OPEN
-  4. USB_VBUS U21.24 → USB input and local bypass — OPEN → OPEN
-  5. USB_RAW_SENSE U21.18 → divider — OPEN → OPEN
-  6. USB_REG27 U21.23 → 2.7 V bypass — OPEN → OPEN
-  7. USB_FET_GATE R72.1 → Q3 gate — OPEN → OPEN
-  8. CAB_PRI R78.1 → mux PR1 divider — OPEN → OPEN
-  9. 3V3 R83.1 → shared 3.3 V rail — OPEN → OPEN
-  10. U6.7 vs SYS_5V — 0.116002 mm (gge4935) → 0.116002 mm (gge4935); limit 0.125 mm.
-Rev P vs tagged FOOTPRINTS: 0 added or changed layer objects
-Rev P vs tagged frozen PCB: 201 added or changed layer objects
-  Minimum 0.129809 mm on layer 1, C77.2 (GND) to gge4751 (ETH_AVDD).
+  1. GND R76.2 → mux ground — OPEN → connected
+  2. GND U6.4 → input capacitor ground — OPEN → connected
+  3. SYS_5V U6.5/U6.6 → input capacitor and mux — OPEN → connected
+  4. USB_VBUS U21.24 → USB input and local bypass — OPEN → connected
+  5. USB_RAW_SENSE U21.18 → VBUS sense resistor — OPEN → connected
+  6. USB_REG27 U21.23 → 2.7 V bypass — OPEN → connected
+  7. USB_FET_GATE R72.1 → Q3 gate — OPEN → connected
+  8. CAB_PRI R78.1 → mux PR1 divider — OPEN → connected
+  9. 3V3 R83.1 → shared 3.3 V rail — OPEN → connected
+  10. U6.7 vs SYS_5V — 0.116002 mm (gge4935) → 0.125999 mm (U6.6); limit 0.125 mm.
+Phase 2 requested findings closed: 10/10.
+Rev P vs tagged FOOTPRINTS: 62 added or changed layer objects
+  Minimum 0.128000 mm on layer 1, gge4853 (USB_CC1) to J4.SH3 (GND).
+Rev P vs tagged frozen PCB: 262 added or changed layer objects
+  Minimum 0.128000 mm on layer 1, gge4853 (USB_CC1) to J4.SH3 (GND).
+Changed foreign-net tracks and vias avoid the U21 exposed-pad projection.
   U1.1 CAB_FB connects to R69.2, R70.1.
   U1.2 CAB_EN connects to R67.2, R68.1.
   U1.3 VIN_PROT connects to D1.1, C82.1, C83.1.
@@ -121,5 +108,5 @@ Rev P vs tagged frozen PCB: 201 added or changed layer objects
   U1.5 CAB_SW connects to L3.1, C84.2.
   U1.6 CAB_CB connects to C84.1.
 U1 six pads and cabinet 5 V output path checked.
-Live PCB SHA-256 c02fb746373b262ab2c57badf26398bc329fec5c6c223cd34fb16241466deac2
+Live PCB SHA-256 7facd1a0a328ac778979ee19208df8808d025f29765a518c5697c9cc67c335fc
 DRAFT — DO NOT FABRICATE. Native EasyEDA import, copper rebuild, ERC/DRC, CAM and hardware pending.

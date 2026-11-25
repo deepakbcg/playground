@@ -174,6 +174,8 @@ class Board:
 def changed_copper(board, baseline):
     """Compare per object and layer; geometrically identical records do not count."""
     old = {(p.oid, p.layer): p for p in baseline.pieces}
+    assert len(old) == len(baseline.pieces), "duplicate source copper IDs"
+    assert len({(p.oid, p.layer) for p in board.pieces}) == len(board.pieces), "duplicate edited copper IDs"
     for piece in board.pieces:
         prior = old.get((piece.oid, piece.layer))
         if prior is None or prior.net != piece.net or not prior.geometry.equals(piece.geometry):

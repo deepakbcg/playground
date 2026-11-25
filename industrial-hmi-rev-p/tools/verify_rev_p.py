@@ -33,7 +33,7 @@ ROUTES = (
     ("U6.4 → input capacitor ground", "GND", ("U6.4", "C93.2", "J1.2")),
     ("U6.5/U6.6 → input capacitor and mux", "SYS_5V", ("U6.5", "U6.6", "C93.1", "U22.1")),
     ("U21.24 → USB input and local bypass", "USB_VBUS", ("U21.24", "C87.1", "Q3.1")),
-    ("U21.18 → divider", "USB_RAW_SENSE", ("U21.18", "R73.2")),
+    ("U21.18 → VBUS sense resistor", "USB_RAW_SENSE", ("U21.18", "R73.2")),
     ("U21.23 → 2.7 V bypass", "USB_REG27", ("U21.23", "C89.1")),
     ("R72.1 → Q3 gate", "USB_FET_GATE", ("R72.1", "Q3.4", "R71.2")),
     ("R78.1 → mux PR1 divider", "CAB_PRI", ("R78.1", "R77.2", "U22.6")),
@@ -88,13 +88,14 @@ def verify_sources(schematic, pcb, old_schematic, base_parts, bom):
         assert footprints[ref][2] == base_parts[ref][2], (ref, "placement or native footprint changed")
         assert footprints[ref][1][:3] == base_parts[ref][1][:3]
         assert footprints[ref][1][4:] == base_parts[ref][1][4:]
+    old_symbols = components(old_schematic, True)
     for ref in LOCKED:
-        pin = attrs(components(old_schematic, True)[ref][1])
+        pin = attrs(old_symbols[ref][1])
         assert pin["BOM_Manufacturer Part"] == bom[ref]["Manufacturer part number"], ref
     assert all(before == after or (before.startswith("T~L~") and "Rev P" in after)
                for before, after in zip(old_schematic["shape"], schematic["shape"], strict=True)
                if not before.startswith("LIB~"))
-    for ref, (_, _, body) in components(old_schematic, True).items():
+    for ref, (_, _, body) in old_symbols.items():
         assert symbols[ref][2] == body
     for filename, doc in ((cad_name("PCB"), pcb), (cad_name("Schematic"), schematic)):
         assert doc["head"]["c_para"]["Title"].startswith("DO NOT FABRICATE")
@@ -293,16 +294,29 @@ def verify_copper(current, base, frozen, phase1):
         assert current.connected(net, *names), (net, sorted(names), "new split")
     print("Every previously connected group of named pads stays connected.")
     print("Phase 2 before / after")
+    unresolved = []
     for i, (label, net, named) in enumerate(ROUTES, 1):
         before, after = (board.connected(net, *named) for board in (base, current))
+        if not after:
+            unresolved.append(i)
         print(f"  {i}. {net} {label} — {'connected' if before else 'OPEN'} → {'connected' if after else 'OPEN'}")
     gap_before, old_object = mode_gap(base)
     gap_after, new_object = mode_gap(current)
     print(f"  10. U6.7 vs SYS_5V — {gap_before:.6f} mm ({old_object}) → {gap_after:.6f} mm ({new_object}); limit {RULE:.3f} mm.")
+    if gap_after < RULE:
+        unresolved.append(10)
     if phase1:
         assert not list(changed_copper(current, base)) and not list(changed_copper(base, current))
+    else:
+        print(f"Phase 2 requested findings closed: {10 - len(unresolved)}/10.")
+        assert not unresolved, f"Requested copper findings still open: {unresolved}"
     audit_clearance("Rev P vs tagged FOOTPRINTS", current, base)
     audit_clearance("Rev P vs tagged frozen PCB", current, frozen)
+    exposed, = [p for p in current.pieces if p.name == "U21.25" and p.layer == "1"]
+    for piece in changed_copper(current, base):
+        if piece.kind in {"TRACK", "VIA"} and piece.net != exposed.net:
+            assert piece.geometry.intersection(exposed.geometry).area == 0, (piece.name, exposed.name)
+    print("Changed foreign-net tracks and vias avoid the U21 exposed-pad projection.")
     endpoints = {"1": ("R69.2", "R70.1"), "2": ("R67.2", "R68.1"), "3": ("D1.1", "C82.1", "C83.1"),
                  "4": ("J1.2", "C82.2", "C83.2"), "5": ("L3.1", "C84.2"), "6": ("C84.1",)}
     for pin, expected in U1_PAD_NETS.items():

@@ -19,11 +19,38 @@ LCSC public product-detail feed checked on 25 November 2026 IST. The 100-piece q
 
 ## Copper closure
 
-The consolidation has identical copper to the tagged FOOTPRINTS archive. The ten local copper tasks are to connect R76.2 and U6.4 to GND, U6.5/6 to SYS_5V, U21.24 to USB_VBUS, U21.18 to R73.2, U21.23 to C89.1, R72.1 to the Q3 gate, R78.1 to CAB_PRI and R83.1 to 3V3, and correct the U6.7 clearance. The stored-geometry verifier reports overlap and clearance before and after each edit. [Recorded verification](tools/verification-output.txt)
+Phase 1 preserved the tagged FOOTPRINTS copper exactly. Phase 2 closes all ten requested findings in the stored geometry. Component placements and footprints are identical to the Phase 1 PCB. The coordinates below are absolute EasyEDA positions in millimetres.
+
+| # | Location | Verified edit |
+| --- | --- | --- |
+| 1 | R76.2 at (1040.075, 799.100) | Added the 0.15 mm GND top trace and off-pad via `gge961054` at (1041.550, 799.400) to the existing ground group shared with U22.3. |
+| 2 | U6.4 at (1031.125, 806.050) | Added a 0.36 mm GND escape to via `gge961017` at (1030.475, 806.150) and the plane return shared with C93.2. |
+| 3 | U6.5/6 at (1031.125, 806.550/807.050) | Joined VIN/EN to C93.1 and the mux output with 0.36 mm Top/Bottom copper and via `gge961019` at (1030.475, 807.020). |
+| 4 | U21.24 at (1021.300, 808.500) and C87.1 | Routed STUSB4500L VDD to the existing USB_VBUS trunk through via `gge961102` at (1020.700, 808.620). Joined C87.1 to the trunk with a 0.36 mm Inner2 stub. Moved C89's ground via `gge5644` to (1019.140, 808.750) and rerouted its Top connection to C89.2. |
+| 5 | U21.18 at (1021.950, 805.350) and R73.2 at (1020.525, 810.400) | Connected VBUS_VS_DISCH to the 560 Ω sense resistor through via `gge961301` at (1020.280, 811.075) and a 0.15 mm Inner2 trace to the existing U21.18 escape. Shifted a local section of Top CC1 trace `gge4853` beside J4.SH3. |
+| 6 | U21.23 at (1021.300, 808.000) | Added a 0.15 mm Top `USB_REG27` bypass route to C89.1 after shortening the unused end of 3V3 trace `gge4343`. |
+| 7 | R72.1 at (1025.625, 805.100) | Connected Q3.4 and R71.2 to R72.1 with 0.15 mm Top/Inner2 tracks through new via `gge961004` at (1024.425, 804.225) and the existing R72 via. |
+| 8 | R78.1 at (1044.775, 799.700) | Added a 0.55 mm long, 0.15 mm wide `CAB_PRI` branch from `gge4868` to the pad centre. The old copper was about 0.000001 mm from the pad and did not overlap it. |
+| 9 | R83.1 at (1029.625, 815.350) | Bridged its Top 3V3 island to the main rail with a 2.60 mm long, 0.23 mm wide trace at y = 813.550 mm. U23.10 and U6.3 now share that group. |
+| 10 | U6.7 near (1031.250, 807.475) | Set back the end of the adjacent SYS_5V trace `gge4935`. The limiting gap is now **0.125999 mm**, against U6.6, up from 0.116002 mm. |
+
+The through vias use the existing 0.50 mm land and 0.25 mm drill. Fixed copper clearances were opened in Top 3V3 region `gge5673`, Inner1 GND regions `gge5955`, `gge5956`, `gge5958`, `gge5962`, and Bottom GND regions `gge5850`, `gge5852`, `gge5853`. The minimum clearance involving added or changed copper was **0.128 mm** from Top `USB_CC1` to J4.SH3. Both tagged comparisons meet the **0.125 mm** draft rule. The offline check found zero mixed-net groups and preserved every previously connected pad group. [Recorded verification](tools/verification-output.txt) · [TI TPS62902 layout guidance](https://www.ti.com/lit/ds/symlink/tps62902.pdf) · [ST STUSB4500L data sheet](https://www.st.com/resource/en/datasheet/stusb4500l.pdf)
+
+## Copper still open outside the ten listed items
+
+Under the positive-overlap check, **GND, 3V3 and DI_COM** still have inherited split groups. Verify whether adjacent fixed regions join in the native copper output, and add deliberate copper overlap or routing for any true gaps.
+
+| Net | Where to inspect | Expected result |
+| --- | --- | --- |
+| GND | Smaller groups include R78.2 and C85.2/C86.2 near the cabinet divider and output, plus the display, RTC and optocoupler returns in the report. | Each intended return joins J1.2 without crossing isolated field returns. The `CAB_PRI` pad repair alone verifies only the top of the R78 divider network. |
+| 3V3 | The 13-pad group includes U2.15/.24/.29/.41/.50, C23/C26–C28, U11.16 and R33.1. | All these pads join U6.3 and the main output rail. |
+| DI_COM | Smaller groups include J9.1 with U18.8, U18.4/.6 and their Zener branches. | All `DI_COM` groups join J9.1 on the isolated field side. |
+
+[Complete list of smaller copper groups](tools/verification-output.txt)
 
 ## Editor and release tasks
 
-1. **J4, USB4105-GF-A.** Replace the four round shell drills with two 1.70 × 0.60 mm and two 1.40 × 0.60 mm plated slots. Add the two Ø0.65 mm NPTH locator holes on 5.78 mm centers. Confirm coincident USB contacts export as the 12 physical SMT lands shown on the drawing. [GCT USB4105 drawing, recommended PCB layout](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf)
+1. **J4, USB4105-GF-A.** Replace the four round shell drills with two 1.70 × 0.60 mm and two 1.40 × 0.60 mm plated slots. Add the two Ø0.65 mm NPTH locator holes on 5.78 mm centers. Confirm coincident USB contacts export as the 12 physical SMT lands shown on the drawing. Recheck the revised CC1 clearance near J4.SH3 and the R73.2 sense via after changing the shell lands. Check solder mask separation at the sense via and R73.2. [GCT USB4105 drawing, recommended PCB layout](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf)
 2. **D25, TPD2EUSB30DRTR.** Replace the 1.06 mm pitch pads 1 and 2 with the TI DRT lands at 0.70 mm pitch. Check mask, solderable overlap and the ground return. [TI DRT package drawing](https://www.ti.com/lit/ml/mpds340/mpds340.pdf)
 3. **U6 and U23.** At U6, compare pads 4/6 (0.65 × 0.20 mm, 0.625 mm offset) with TI's 1.00 × 0.20 mm, 0.45 mm offset. Compare pads 7–9 (0.25 × 0.40 mm) with the 0.25 × 0.55 mm example. At U23, compare pads 2/3/7/8 (0.55 × 0.25 mm) with TI's 0.55 × 0.20 mm and pads 5/10 (0.25 × 0.60 mm on 1.90 mm centers) with TI's 0.30 × 0.60 mm on 1.80 mm centers. Recheck local escape clearances after correcting the lands. [TI TPS62902, RPJ0009A](https://www.ti.com/lit/ds/symlink/tps62902.pdf) · [TI TS3USB221A, RSE0010A](https://www.ti.com/lit/ds/symlink/ts3usb221a.pdf)
 4. **U1 FB and BZ1.** Inspect the 20.6 mm bottom CAB_FB route to R69/R70. Review its proximity to the switch node, Inner1 ground reference and feedback response. Measure the purchased buzzer's pin pitch, lead diameter and polarity against the 7.6 mm footprint and check enclosure fit. [U1 routing history](../industrial-hmi-rev-n/U1-REROUTE.md)

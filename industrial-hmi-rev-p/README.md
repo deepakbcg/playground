@@ -8,7 +8,8 @@
 | [BOM](Industrial-HMI-RevP-BOM.csv) · [Costed BOM](Industrial-HMI-RevP-BOM-Cost-INR.csv) · [Three-board purchase list](PURCHASE-LIST.csv) | Fitted parts, DNPs, cost and supplier quantities with spares. |
 | [Build configurator](Industrial-HMI-RevP-Build-Configurator.html) · [Panel pinout](Industrial-HMI-RevP-Panel-Pinout.csv) | Staged population and display connector wiring. |
 | [Pin audit](REV-M-PIN-AUDIT.md) · [Pin audit CSV](REV-M-PIN-AUDIT.csv) · [Substitution evidence](tools/substitution-evidence.csv) | Datasheet assignments and sourcing rationale. |
-| [Specification PDF](Industrial-HMI-RevP-Specification.pdf) · [Schematic PDF](Industrial-HMI-RevP-Draft-Schematic.pdf) · [PCB preview](Industrial-HMI-RevP-PCB.png) · [Placement preview](Industrial-HMI-RevP-Placement.png) | Rev M/N artwork — re-export pending in EasyEDA. |
+| [Specification PDF](Industrial-HMI-RevP-Specification.pdf) | Rev P specifications with marked historical reference pages. |
+| [Schematic PDF](Industrial-HMI-RevP-Draft-Schematic.pdf) · [PCB preview](Industrial-HMI-RevP-PCB.png) · [Placement preview](Industrial-HMI-RevP-Placement.png) | Rev M/N artwork — re-export pending in EasyEDA. |
 | [Verifier](tools/verify_rev_p.py) · [Recorded verification](tools/verification-output.txt) · [Reference license](Raspberry-Pi-Reference-LICENSE.txt) | Stored-geometry checks and reference license. |
 
 Run the verifier from this checkout with Python and Shapely 2.1 or newer. Keep the local annotated `rev-n` tag available for the copper comparisons.
