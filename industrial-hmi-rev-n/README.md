@@ -10,6 +10,7 @@ Rev N updates sourcing and corrects the cabinet converter pin mapping on the 99.
 | --- | --- |
 | [EasyEDA Standard ZIP — DO NOT FABRICATE](Industrial-HMI-RevN-EasyEDA-DO-NOT-FABRICATE.zip) | Schematic, four-layer PCB and local buzzer footprint for editor rework. |
 | [U1 reroute working copy](Industrial-HMI-RevN-U1-REROUTE-DO-NOT-FABRICATE.zip) · [Routing checks](U1-REROUTE.md) | Separate EasyEDA Standard draft with U1 copper rerouted and native checks pending. |
+| [Footprint routing working copy](Industrial-HMI-RevN-FOOTPRINTS-DO-NOT-FABRICATE.zip) · [Layout status](FOOTPRINT-ROUTING.md) | U1 reroute plus 52 of 55 planned 0603 footprints and the 7.6 mm BZ1 layout. Native checks pending. |
 | [Schematic JSON](Schematic_Industrial-HMI-RevN-DO-NOT-FABRICATE.json) · [PCB JSON](PCB_Industrial-HMI-RevN-DO-NOT-FABRICATE.json) | Editable Rev N documents with fabrication-hold labels. |
 | [BOM](Industrial-HMI-RevN-BOM.csv) · [Itemized INR pricing](Industrial-HMI-RevN-BOM-Cost-INR.csv) | Fitted and DNP designators, orderable parts, known tiers and availability. |
 | [Three-board purchase list](PURCHASE-LIST.csv) | Order quantities with spares, stock snapshots, supplier subtotals and shipping thresholds. |
@@ -39,7 +40,7 @@ Design references include [Raspberry Pi RP2350 hardware resources](https://pip.r
 
 ## Passive consolidation and 0603
 
-The schematic and BOM retain 31 fitted 0402 positions, including the 16 sensitive placements restored to their checkpoint footprints. The remaining 55 footprint changes are listed in the editor worklist. The PCB and placement artwork still describe the checkpoint layout. In a native EasyEDA working copy, use **Design → Update PCB**, review the footprint changes and resolve the worklist before assembly. C41 retains the existing part because the cheaper candidates examined lost capacitance on its 3.3 V rail. [Sourcing decisions and exceptions](REV-N-PASSIVES.md) · [Region-ordered placement checks](0603-WORKLIST.csv)
+The schematic and BOM retain 31 fitted 0402 positions, including the 16 sensitive placements restored to their checkpoint footprints. The remaining 55 footprint changes are listed in the editor worklist. The separate footprint routing working copy applies 52 of those changes. C37, R30 and R62 still need a layout decision before assembly. The standalone PCB and placement artwork describe the checkpoint layout. C41 retains the existing part because the cheaper candidates examined lost capacitance on its 3.3 V rail. [Sourcing decisions and exceptions](REV-N-PASSIVES.md) · [Region-ordered placement checks](0603-WORKLIST.csv)
 
 ## Buzzer and field-input Zeners
 
