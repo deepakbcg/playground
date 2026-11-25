@@ -7,14 +7,19 @@ from decimal import Decimal
 from hashlib import sha256
 from io import BytesIO
 import json
+from math import dist, sqrt
 from pathlib import Path
 import re
 import subprocess
 import sys
 from zipfile import ZipFile
 
+from shapely.affinity import translate
+from shapely.geometry import LineString, Point
+from shapely.ops import nearest_points
+
 from copper_geometry import (Board, LAYERS, MIN_SHARED_EDGE, NEAR_GAP, changed_copper,
-                             mm_point, pieces, positive_overlap)
+                             disc, from_record, mm_point, pad_drill, pieces, points, positive_overlap)
 
 HERE = Path(__file__).resolve().parents[1]
 REPO = HERE.parent
@@ -31,6 +36,8 @@ PRICE_RATE = Decimal("92.67")
 RULE = .125
 BEFORE_CONTACTS = "5c50b9ed31a15b2b3ecd2a13da255f656f167cfe"
 BEFORE_EDITOR = "3287d57908d69a05234727b70805f117002ee217"
+BEFORE_J4 = "2cde613"
+J4_REFERENCE = "Footprint_GCT-USB4105-GF-A-REV-P.json"
 EDITOR_PACKAGES = {"U6": "TI-RPJ0009A-REV-P", "U23": "TI-RSE0010A-REV-P", "D25": "TI-DRT0003A-REV-P"}
 BUCK_LOADS = ("L4.2", "C94.1", "U6.3", "C15.1", "U2.15", "C34.1", "TP3.1")
 REMOVED_FRAGMENTS = {
@@ -126,6 +133,185 @@ def footprint_drawing_rows():
     }
 
 
+def j4_drill_counts(doc):
+    records = [row.split("~") for shape in doc["shape"] for row in shape.split("#@$")]
+    plated = [f for f in records if f[0] == "PAD" and f[6] == "11" and f[15] == "Y"]
+    slots = sum(bool(f[14]) for f in plated)
+    holes = sum(f[0] == "HOLE" for f in records)
+    vias = sum(f[0] == "VIA" for f in records)
+    return slots, len(plated) - slots, holes, vias
+
+
+def j4_usb_lengths(pcb):
+    tracks = {f[5]: f for s in pcb["shape"] if (f := s.split("~"))[0] == "TRACK"}
+
+    def centreline(net, *ids):
+        routes = [tracks["gge" + str(ident)] for ident in ids]
+        assert all(route[3] == net for route in routes)
+        return sum(LineString(points(route[4])).length for route in routes)
+
+    plus_a = centreline("USB_DP_CONN", 4887, 4888)
+    minus_b = centreline("USB_DM_CONN", 4889, 4893)
+    return (
+        (plus_a, minus_b - centreline("USB_DM_CONN", 4889) + centreline("USB_DM_CONN", 4891, 4890)),
+        (plus_a + centreline("USB_DP_CONN", 4886), minus_b),
+        (centreline("USB_DP", 4519, 4520, 4521, 4522, 4523),
+         centreline("USB_DM", 4532, 4533, 4534, 4535, 4536, 4537)),
+    )
+
+
+def verify_j4_reference(pcb, footprints, board):
+    baseline = load_prior_pcb(BEFORE_J4)
+    _, current_head, current_body = footprints["J4"]
+    assert footprints["J4"][1:] == components(baseline, False)["J4"][1:]
+    current = pad_fields(current_body)
+    library = json.loads((HERE / J4_REFERENCE).read_bytes())
+    proposed = pad_fields(library["shape"])
+    npth = [f for s in library["shape"] if (f := s.split("~"))[0] == "HOLE"]
+    assert current_head[8] != library["head"]["uuid"]
+    assert all(not f[7] for f in proposed.values())
+    assert current.keys() == proposed.keys()
+    origin = mm_point(library["head"]["x"], library["head"]["y"])
+    shell = {f"SH{n}" for n in range(1, 5)}
+
+    # B3 sheet 1, recommended land-pattern view. Axial dimensions start at
+    # the mating face. The SMT front edge shares the rear-slot axial datum.
+    contact_rows = (
+        ("A1/B12", -3.20, .60, "GND"), ("A4/B9", -2.40, .60, "USB_VBUS"),
+        ("B8", -1.75, .30, ""), ("A5", -1.25, .30, "USB_CC1"),
+        ("B7", -.75, .30, "USB_DM_CONN"), ("A6", -.25, .30, "USB_DP_CONN"),
+        ("A7", .25, .30, "USB_DM_CONN"), ("B6", .75, .30, "USB_DP_CONN"),
+        ("A8", 1.25, .30, ""), ("B5", 1.75, .30, "USB_CC2"),
+        ("B4/A9", 2.40, .60, "USB_VBUS"), ("B1/A12", 3.20, .60, "GND"),
+    )
+
+    def relative(f):
+        return tuple(v - o for v, o in zip(mm_point(*f), origin, strict=True))
+
+    def equal(actual, target):
+        assert all(abs(a - b) < .00001 for a, b in zip(actual, target, strict=True)), (actual, target)
+
+    print("\nJ4 — GCT USB4105 B3 sheet 1, Recommended PCB Layout and pin/signal table.")
+    print("PASS in the tables means the standalone library matches the drawing. It is not placed.")
+    print("| SMT land | Drawing x / y / axial length / width (mm) | Library (mm) | Live net | Result |")
+    print("| --- | --- | --- | --- | --- |")
+    copper = {}
+    for aliases, y, width, net in contact_rows:
+        values = (6.78 + 1.15 / 2, y, 1.15, width)
+        for pin in aliases.split("/"):
+            f = proposed[pin]
+            actual = (*relative(f[2:4]), *mm_point(*f[4:6]))
+            equal(actual, values)
+            assert f[1] == "RECT" and f[6] == "1" and float(f[9]) == 0
+            assert current[pin][7] == net
+            assert current[pin][2:8] == current[aliases.split("/")[0]][2:8]
+            copper[pin] = next(from_record("~".join(f))).geometry
+            equal(copper[pin].bounds, (origin[0] + values[0] - 1.15 / 2,
+                                       origin[1] + y - width / 2,
+                                       origin[0] + values[0] + 1.15 / 2,
+                                       origin[1] + y + width / 2))
+        expected = " / ".join(f"{v:.3f}" for v in values)
+        measured = " / ".join(f"{v:.3f}" for v in actual)
+        print(f"| {aliases} | {expected} | {measured} | {net or 'SBU unconnected'} | PASS |")
+    assert len({g.bounds for g in copper.values()}) == 12 and len(copper) == 16
+
+    print("| Drill | Drawing x / y (mm) | Library x / y (mm) | Drawing / library drill and copper (mm) | Result |")
+    print("| --- | --- | --- | --- | --- |")
+    drills = {}
+    for pin, x, y, length in (("SH1", 6.78, -4.32, 1.70), ("SH2", 6.78, 4.32, 1.70),
+                              ("SH3", 2.60, -4.32, 1.40), ("SH4", 2.60, 4.32, 1.40)):
+        f = proposed[pin]
+        assert f[1] == "OVAL" and f[6] == "11" and f[15] == "Y"
+        assert current[pin][7] == "GND"
+        measured = relative(f[2:4])
+        equal(measured, (x, y))
+        outer_w, outer_h = mm_point(*f[4:6])
+        annuli = list(from_record("~".join(f)))
+        assert {p.layer for p in annuli} == set(LAYERS) and all(p.plated for p in annuli)
+        drills[pin] = pad_drill(f)
+        bounds = drills[pin].bounds
+        equal((bounds[2] - bounds[0], bounds[3] - bounds[1]), (length, .60))
+        equal((float(f[13]) * .254, outer_w, outer_h), (length, length + .40, 1.00))
+        outer = annuli[0].geometry.bounds
+        equal((outer[2] - outer[0], outer[3] - outer[1]), (outer_w, outer_h))
+        pad_x, pad_y = mm_point(*f[2:4])
+        equal(((bounds[2] + bounds[0]) / 2, (bounds[3] + bounds[1]) / 2), (pad_x, pad_y))
+        equal(((outer[2] + outer[0]) / 2, (outer[3] + outer[1]) / 2), (pad_x, pad_y))
+        print(f"| {pin} | {x:.2f} / {y:+.2f} | {measured[0]:.2f} / {measured[1]:+.2f} | "
+              f"{length:.2f} × 0.60 slot, x axis, plated, {outer_w:.2f} × {outer_h:.2f} copper all four layers | PASS |")
+    assert len(npth) == 2
+    location = [relative(f[1:3]) for f in npth]
+    equal((dist(*location),), (5.78,))
+    for index, (f, y, (x_measured, y_measured)) in enumerate(zip(npth, (-2.89, 2.89), location, strict=True), 1):
+        equal((x_measured, y_measured, float(f[3]) * .254), (6.28, y, .65))
+        name = f"locator {index}"
+        drills[name] = disc(mm_point(*f[1:3]), float(f[3]) * .254)
+        print(f"| {name} | 6.28 / {y:+.2f} | {x_measured:.2f} / {y_measured:+.2f} | Ø0.65 NPTH, 5.78 spacing | PASS |")
+
+    # The live document-layer body outline provides the current mating-face x.
+    body, = (points(f[4]) for s in current_body if (f := s.split("~"))[0] == "TRACK" and f[2] == "12")
+    origin_x, origin_y = min(x for x, _ in body), mm_point(*current_head[1:3])[1]
+    outline, = (points(f[4]) for s in pcb["shape"] if (f := s.split("~"))[0] == "TRACK" and f[2] == "10")
+    edge = min(x for x, _ in outline)
+    print(f"  Mating face from live footprint outline x={origin_x:.3f} mm, board edge x={edge:.3f} mm, "
+          f"centreline y={origin_y:.3f} mm. Keeping the face gives {edge - origin_x:.3f} mm overhang.")
+    print(f"  The face-fixed nominal SMT row would be x={origin_x + 7.355:.3f} mm "
+          f"(live x={mm_point(*current['A1'][2:4])[0]:.3f} mm).")
+
+    print("  Intrinsic locator clearance, candidate drill to candidate SMT land (no routed copper):")
+    for index, pin in enumerate(("A1/B12", "B1/A12"), 1):
+        first_pin = pin.split("/")[0]
+        # Exact circle-to-rectangle distance. A polygonal circle approximation
+        # alone can slightly overstate the clearance.
+        centre = Point(mm_point(*npth[index - 1][1:3]))
+        gap = centre.distance(copper[first_pin]) - .325
+        assert .175 < gap < .176 and gap < .20
+        _, contact = nearest_points(centre, copper[first_pin])
+        print(f"    FAIL L1: locator {index} ↔ J4.{pin}, {gap:.6f} mm vs 0.200 mm, "
+              f"pad edge at ({contact.x - origin[0] + origin_x:.3f}, "
+              f"{contact.y - origin[1] + origin_y:.3f}) mm.")
+        adjustment = sqrt((.325 + .20) ** 2 - (contact.y - centre.y) ** 2) - (contact.x - centre.x)
+        print(f"      Axial shift toward the face needed to reach the limit: {adjustment:.6f} mm, before tolerance.")
+    print("  Projected holes against retained copper (exclude J4 pads being replaced):")
+    for name, hole in drills.items():
+        projected = translate(hole, xoff=origin_x - origin[0], yoff=origin_y - origin[1])
+        for layer in LAYERS:
+            limit = (.30 if layer in {"21", "22"} else .28) if name in shell else .20
+            found = []
+            for i in board.query(layer, projected, limit):
+                p = board.pieces[i]
+                if p.name.startswith("J4.") or (name in shell and p.net == "GND"):
+                    continue
+                found.append((p.geometry.distance(projected), p.name, p.net))
+            if found:
+                summary = ", ".join(f"{label} ({net or 'unassigned'}) {gap:.6f} mm"
+                                    for gap, label, net in sorted(found))
+                print(f"    {name}, layer {layer} ({limit:.2f} mm minimum): {summary}.")
+
+    live_counts = j4_drill_counts(pcb)
+    assert live_counts == (0, 60, 7, 665), live_counts
+    assert j4_drill_counts(library) == (4, 0, 2, 0)
+    print("  Live drill source: 0 plated slots, 60 round plated component holes, 7 NPTH, 665 vias.")
+    print("  Nominal substitution would encode 4 plated slots, 56 round plated component holes, "
+          "9 NPTH and 665 vias before rerouting. Native drill export pending.")
+    assert not list(changed_copper(board, Board(pieces(baseline, components(baseline, False)))))
+    assert pcb["shape"] == baseline["shape"]
+    print("  Live copper unchanged vs 2cde613. J4 reroute and clearance qualification BLOCKED.")
+    before, after = j4_usb_lengths(baseline), j4_usb_lengths(pcb)
+
+    def lengths(pair):
+        return f"{pair[0]:.3f} / {pair[1]:.3f} / {abs(pair[0] - pair[1]):.3f}"
+
+    print("  USB trace centreline lengths in mm (planar copper only, excludes via barrels and pad traversal).")
+    print("  | Segment | Before D+ / D− / skew | Live D+ / D− / skew |")
+    print("  | --- | --- | --- |")
+    for title, previous, live in zip(("J4 A contacts → U23", "J4 B contacts → U23", "R17/R18 → U2"),
+                                     before, after, strict=True):
+        print(f"  | {title} | {lengths(previous)} | {lengths(live)} |")
+    print("  Both connector orientations exceed the 0.500 mm skew target before any rework. "
+          "The A-side D− path has two existing vias.")
+
+
 def verify_editor_footprints(pcb, schematic, board):
     footprints = components(pcb, False)
     symbols = components(schematic, True)
@@ -164,30 +350,9 @@ def verify_editor_footprints(pcb, schematic, board):
                 assert any(q.net == pad.net and q.kind != "PAD" and positive_overlap(q.geometry, pad.geometry)
                            for idx in board.query("1", pad.geometry) for q in [board.pieces[idx]]), pad.name
 
-    old_j4 = components(load_prior_pcb(BEFORE_EDITOR), False)["J4"]
-    assert footprints["J4"][1:] == old_j4[1:]
-    pins = pad_fields(footprints["J4"][2])
-    contacts = {key: f for key, f in pins.items() if key.startswith(("A", "B"))}
-    assert len(contacts) == 16 and len({(f[2], f[3], f[4], f[5]) for f in contacts.values()}) == 12
-    for a, b in (("A1", "B12"), ("A4", "B9"), ("B4", "A9"), ("B1", "A12")):
-        assert contacts[a][2:8] == contacts[b][2:8]
-    for key in ("SH1", "SH2", "SH3", "SH4"):
-        assert pins[key][7] == "GND" and pins[key][15] == "Y"
-    print("\nJ4 — GCT USB4105 B3 sheet 1. Slots and locators remain an editor task.")
-    print("| Feature | Drawing | PCB | Result |")
-    print("| --- | --- | --- | --- |")
-    for key, length in (("SH1", 1.70), ("SH2", 1.70), ("SH3", 1.40), ("SH4", 1.40)):
-        hole = 2 * float(pins[key][9]) * .254
-        print(f"| {key} | {length:.2f} × 0.60 plated slot | Ø{hole:.2f} round, plated | OPEN |")
-    print("| Locators | 2 × Ø0.65 NPTH, 5.78 centres | Absent | OPEN |")
-    print("| Contacts | 16 designations / 12 lands | 16 / 12, aliased pairs share net | PASS |")
-    shell_gap = min((p.geometry.distance(q.geometry), p.name, q.name, p.layer)
-                    for p in board.pieces if p.name in {"J4.SH1", "J4.SH2", "J4.SH3", "J4.SH4"}
-                    for q in board.pieces if q.net == "USB_CC1" and q.layer == p.layer)
-    assert shell_gap[0] >= RULE, shell_gap
-    print(f"J4 existing CC1-to-shell gap {shell_gap[0]:.6f} mm, {shell_gap[1]} ↔ {shell_gap[2]}, layer {shell_gap[3]}.")
-    usb = (("USB_CC1", "J4.A5", "U21.2"), ("USB_CC2", "J4.B5", "U21.4"),
-           ("USB_VBUS", "J4.A4", "C87.1"), ("USB_DP_CONN", "J4.A6", "D25.1", "U23.8"),
+    verify_j4_reference(pcb, footprints, board)
+    usb = (("USB_CC1", "J4.A5", "U21.1", "U21.2"), ("USB_CC2", "J4.B5", "U21.4", "U21.5"),
+           ("USB_VBUS", "J4.A4", "J4.B4", "D24.1", "C87.1", "Q3.1"), ("USB_DP_CONN", "J4.A6", "D25.1", "U23.8"),
            ("USB_DM_CONN", "J4.A7", "D25.2", "U23.7"))
     assert all(board.connected(net, *pins) for net, *pins in usb)
     silk = [v for s in pcb["shape"] if s.startswith("TEXT~") for v in [s.split("~")]]
@@ -246,7 +411,6 @@ def verify_sources(schematic, pcb, old_schematic, base_parts, bom):
     assert [(p[1], p[7]) for p in pads.values()] == [("RECT", "SYS_5V"), ("ELLIPSE", "BUZZ_LOW")]
     assert all(p[6] == "11" and p[15] == "Y" and cents(Decimal(p[9]) * Decimal(".508")) == 1
                for p in pads.values())
-    from math import dist
     pitch = dist([float(x) for x in pads["1"][2:4]], [float(x) for x in pads["2"][2:4]]) * .254
     assert abs(pitch - 7.6) < .0001
     numbers = {}

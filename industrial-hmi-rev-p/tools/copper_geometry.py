@@ -39,6 +39,18 @@ def disc(center, diameter):
     return Point(center).buffer(diameter / 2, quad_segs=CIRCLE_STEPS)
 
 
+def oblong(ends, diameter):
+    return LineString(ends).buffer(diameter / 2, quad_segs=CIRCLE_STEPS)
+
+
+def pad_drill(fields):
+    diameter = 2 * float(fields[9]) * MM_PER_UNIT
+    if fields[14]:
+        # Slot endpoints are tool centres. The full length includes one tool diameter.
+        return oblong(points(fields[14]), diameter)
+    return disc(mm_point(*fields[2:4]), diameter)
+
+
 @dataclass(frozen=True)
 class Piece:
     oid: str
@@ -70,6 +82,9 @@ def from_record(record, ref=""):
         if form == "ELLIPSE":
             assert abs(width - height) < LINEAR_TOLERANCE, oid
             shape = disc(center, width)
+        elif form == "OVAL":
+            # Standard stores the major-axis centreline in the pad points field.
+            shape = oblong(points(ring), min(width, height))
         elif form in {"RECT", "POLYGON"} and ring:
             shape = external_polygon(ring)
         elif form == "RECT":
@@ -79,8 +94,7 @@ def from_record(record, ref=""):
             raise ValueError(f"Unsupported copper pad {form} {oid}")
         plated = layer == "11" and fields[15] == "Y"
         if plated:
-            assert not fields[14], (oid, "slot requires explicit geometry handling")
-            shape = shape.difference(disc(center, 2 * float(radius) * MM_PER_UNIT))
+            shape = shape.difference(pad_drill(fields))
         for physical_layer in LAYERS if layer == "11" else (layer,):
             yield Piece(oid, f"{ref}.{pad}" if ref else oid, kind, net, physical_layer, shape, plated)
     elif kind == "VIA":

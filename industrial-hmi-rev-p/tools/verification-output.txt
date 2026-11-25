@@ -249,16 +249,59 @@ D25 — TI MPDS340 p.1 and linked Ultra Librarian DRT0003A Top copper CAD. Value
 | 2 | -0.575 / 0.350 / 0.450 / 0.300 | -0.575 / 0.350 / 0.450 / 0.300 | SMT | PASS |
 | 3 | 0.575 / 0.000 / 0.450 / 0.300 | 0.575 / 0.000 / 0.450 / 0.300 | SMT | PASS |
 
-J4 — GCT USB4105 B3 sheet 1. Slots and locators remain an editor task.
-| Feature | Drawing | PCB | Result |
-| --- | --- | --- | --- |
-| SH1 | 1.70 × 0.60 plated slot | Ø0.60 round, plated | OPEN |
-| SH2 | 1.70 × 0.60 plated slot | Ø0.60 round, plated | OPEN |
-| SH3 | 1.40 × 0.60 plated slot | Ø0.60 round, plated | OPEN |
-| SH4 | 1.40 × 0.60 plated slot | Ø0.60 round, plated | OPEN |
-| Locators | 2 × Ø0.65 NPTH, 5.78 centres | Absent | OPEN |
-| Contacts | 16 designations / 12 lands | 16 / 12, aliased pairs share net | PASS |
-J4 existing CC1-to-shell gap 0.128000 mm, J4.SH3 ↔ gge4853, layer 1.
+J4 — GCT USB4105 B3 sheet 1, Recommended PCB Layout and pin/signal table.
+PASS in the tables means the standalone library matches the drawing. It is not placed.
+| SMT land | Drawing x / y / axial length / width (mm) | Library (mm) | Live net | Result |
+| --- | --- | --- | --- | --- |
+| A1/B12 | 7.355 / -3.200 / 1.150 / 0.600 | 7.355 / -3.200 / 1.150 / 0.600 | GND | PASS |
+| A4/B9 | 7.355 / -2.400 / 1.150 / 0.600 | 7.355 / -2.400 / 1.150 / 0.600 | USB_VBUS | PASS |
+| B8 | 7.355 / -1.750 / 1.150 / 0.300 | 7.355 / -1.750 / 1.150 / 0.300 | SBU unconnected | PASS |
+| A5 | 7.355 / -1.250 / 1.150 / 0.300 | 7.355 / -1.250 / 1.150 / 0.300 | USB_CC1 | PASS |
+| B7 | 7.355 / -0.750 / 1.150 / 0.300 | 7.355 / -0.750 / 1.150 / 0.300 | USB_DM_CONN | PASS |
+| A6 | 7.355 / -0.250 / 1.150 / 0.300 | 7.355 / -0.250 / 1.150 / 0.300 | USB_DP_CONN | PASS |
+| A7 | 7.355 / 0.250 / 1.150 / 0.300 | 7.355 / 0.250 / 1.150 / 0.300 | USB_DM_CONN | PASS |
+| B6 | 7.355 / 0.750 / 1.150 / 0.300 | 7.355 / 0.750 / 1.150 / 0.300 | USB_DP_CONN | PASS |
+| A8 | 7.355 / 1.250 / 1.150 / 0.300 | 7.355 / 1.250 / 1.150 / 0.300 | SBU unconnected | PASS |
+| B5 | 7.355 / 1.750 / 1.150 / 0.300 | 7.355 / 1.750 / 1.150 / 0.300 | USB_CC2 | PASS |
+| B4/A9 | 7.355 / 2.400 / 1.150 / 0.600 | 7.355 / 2.400 / 1.150 / 0.600 | USB_VBUS | PASS |
+| B1/A12 | 7.355 / 3.200 / 1.150 / 0.600 | 7.355 / 3.200 / 1.150 / 0.600 | GND | PASS |
+| Drill | Drawing x / y (mm) | Library x / y (mm) | Drawing / library drill and copper (mm) | Result |
+| --- | --- | --- | --- | --- |
+| SH1 | 6.78 / -4.32 | 6.78 / -4.32 | 1.70 × 0.60 slot, x axis, plated, 2.10 × 1.00 copper all four layers | PASS |
+| SH2 | 6.78 / +4.32 | 6.78 / +4.32 | 1.70 × 0.60 slot, x axis, plated, 2.10 × 1.00 copper all four layers | PASS |
+| SH3 | 2.60 / -4.32 | 2.60 / -4.32 | 1.40 × 0.60 slot, x axis, plated, 1.80 × 1.00 copper all four layers | PASS |
+| SH4 | 2.60 / +4.32 | 2.60 / +4.32 | 1.40 × 0.60 slot, x axis, plated, 1.80 × 1.00 copper all four layers | PASS |
+| locator 1 | 6.28 / -2.89 | 6.28 / -2.89 | Ø0.65 NPTH, 5.78 spacing | PASS |
+| locator 2 | 6.28 / +2.89 | 6.28 / +2.89 | Ø0.65 NPTH, 5.78 spacing | PASS |
+  Mating face from live footprint outline x=1015.825 mm, board edge x=1016.000 mm, centreline y=816.000 mm. Keeping the face gives 0.175 mm overhang.
+  The face-fixed nominal SMT row would be x=1023.180 mm (live x=1022.605 mm).
+  Intrinsic locator clearance, candidate drill to candidate SMT land (no routed copper):
+    FAIL L1: locator 1 ↔ J4.A1/B12, 0.175100 mm vs 0.200 mm, pad edge at (1022.605, 813.100) mm.
+      Axial shift toward the face needed to reach the limit: 0.024905 mm, before tolerance.
+    FAIL L1: locator 2 ↔ J4.B1/A12, 0.175100 mm vs 0.200 mm, pad edge at (1022.605, 818.900) mm.
+      Axial shift toward the face needed to reach the limit: 0.024905 mm, before tolerance.
+  Projected holes against retained copper (exclude J4 pads being replaced):
+    SH1, layer 1 (0.28 mm minimum): gge4900 (USB_VBUS) 0.000000 mm, gge4905 (USB_VBUS) 0.000000 mm, gge5596 (USB_VBUS) 0.000000 mm.
+    SH1, layer 21 (0.30 mm minimum): gge5596 (USB_VBUS) 0.000000 mm.
+    SH1, layer 22 (0.30 mm minimum): gge4899 (USB_VBUS) 0.000000 mm, gge4902 (USB_VBUS) 0.000000 mm, gge5596 (USB_VBUS) 0.000000 mm.
+    SH1, layer 2 (0.28 mm minimum): gge4850 (USB_CC2) 0.000000 mm, gge5596 (USB_VBUS) 0.000000 mm.
+    locator 1, layer 1 (0.20 mm minimum): gge5014 (GND) 0.186007 mm, gge5015 (GND) 0.188331 mm.
+    locator 1, layer 22 (0.20 mm minimum): gge4902 (USB_VBUS) 0.000000 mm.
+    locator 1, layer 2 (0.20 mm minimum): gge5848 (GND) 0.000000 mm, gge961106 (GND) 0.180000 mm.
+    locator 2, layer 1 (0.20 mm minimum): gge4901 (USB_VBUS) 0.000000 mm, gge5667 (GND) 0.109510 mm, gge5017 (GND) 0.172756 mm, gge5016 (GND) 0.188331 mm, gge962106 (GND) 0.199504 mm.
+    locator 2, layer 21 (0.20 mm minimum): gge5667 (GND) 0.109510 mm, gge962107 (GND) 0.199504 mm.
+    locator 2, layer 22 (0.20 mm minimum): gge5667 (GND) 0.109510 mm, gge962108 (GND) 0.199504 mm.
+    locator 2, layer 2 (0.20 mm minimum): gge5848 (GND) 0.000000 mm, gge5667 (GND) 0.109510 mm, gge961106 (GND) 0.180000 mm, gge962109 (GND) 0.199504 mm.
+  Live drill source: 0 plated slots, 60 round plated component holes, 7 NPTH, 665 vias.
+  Nominal substitution would encode 4 plated slots, 56 round plated component holes, 9 NPTH and 665 vias before rerouting. Native drill export pending.
+  Live copper unchanged vs 2cde613. J4 reroute and clearance qualification BLOCKED.
+  USB trace centreline lengths in mm (planar copper only, excludes via barrels and pad traversal).
+  | Segment | Before D+ / D− / skew | Live D+ / D− / skew |
+  | --- | --- | --- |
+  | J4 A contacts → U23 | 5.185 / 6.392 / 1.208 | 5.185 / 6.392 / 1.208 |
+  | J4 B contacts → U23 | 7.658 / 5.361 / 2.296 | 7.658 / 5.361 / 2.296 |
+  | R17/R18 → U2 | 3.973 / 3.725 / 0.249 | 3.973 / 3.725 / 0.249 |
+  Both connector orientations exceed the 0.500 mm skew target before any rework. The A-side D− path has two existing vias.
 Editor-task package vs 3287d57: 20 added or changed layer objects
   Minimum 0.132428 mm on layer 1, U6.9 (unassigned) to gge5566 (SYS_3V3_SS).
 Live PCB SHA-256 f74eb5af8b624199e9ae7ed3aca0a9672b529ae5afda4f4654e87fa3662d35e8

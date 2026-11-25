@@ -63,9 +63,21 @@ The verifier accepts positive area overlap or a continuous shared edge of at lea
 
 ## Editor and release tasks
 
-1. **J4, USB4105-GF-A.** The offline trial found the drawing's rear shell slot/annulus intersects Inner2 USB_VBUS and Bottom USB_CC2. The front locator crosses Top USB_CC1, and the opposite locator approaches Top VBUS. The live board retains the four round plated shell holes and no locators. It still has 16 contact designations on 12 physical SMT lands and 0.128 mm CC1-to-shell clearance. Apply the complete connector footprint and reroute the affected nets together, then check the mechanical datum, shell grounds, annuli and export. [GCT B3 sheet 1](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf)
+1. **J4, USB4105-GF-A is blocked by footprint clearance.** The new [nominal B3 library](Footprint_GCT-USB4105-GF-A-REV-P.json) matches the GCT drawing. It stays outside the live ZIP and the live J4 schematic, PCB and BOM bindings. Two Ø0.65 mm locator holes are only **0.175100 mm** from the adjacent A1/B12 and B1/A12 GND land edges. Rev P requires **0.200 mm** to any copper. The gap is set by the footprint itself, so rerouting or translating the whole footprint cannot correct it. The native J4 reroute requires an approved land-pattern or manufacturing-rule change. [GCT B3 sheet 1](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf) · [JLCPCB capabilities](https://jlcpcb.com/capabilities/pcb-capabilities/)
 2. **U1 FB and BZ1.** The optional R69/R70 relocation is deferred. A ≤3 mm FB divider placement and a quiet route around the U1 switch and L3 copper were not verified offline. Review the existing 20.6 mm Bottom CAB_FB route over Inner1 GND, and test noise and transient response. Measure BZ1 lead pitch, diameter and polarity against the nominal 7.6 mm footprint and check enclosure fit. [U1 routing history](../industrial-hmi-rev-n/U1-REROUTE.md)
 3. **Native release.** Import the corrected libraries and the live schematic/PCB pair, compare schematic and PCB, inspect the copper and isolation boundaries, then run native DRC. Inspect the generated Gerbers and plated/nonplated drills in an independent CAM viewer. [Editor runbook](EDITOR-RUNBOOK.md) · [Fabrication notes](FAB-NOTES.md)
+
+### J4 geometry and reroute locations
+
+Use the mating-face line at **x = 1015.825 mm**, y centreline **816.000 mm**, from the live footprint outline. This preserves the modeled **0.175 mm overhang** at the x = 1016.000 mm board edge. Aligning to the recommended flush edge instead would move the face 0.175 mm inboard. The face-fixed B3 SMT row projects to **x = 1023.180 mm**, 0.575 mm inboard of today's lands. Verify the modeled face against the enclosure at first article. [Recorded J4 measurements](tools/verification-output.txt)
+
+| Face-fixed feature | Projected centres (x / y in mm) | Existing copper to address |
+| --- | --- | --- |
+| SH1 and SH2 rear slots | 1022.605 / 811.680 and 820.320 | SH1 intersects VBUS via `gge5596` and tracks on L1/L3 including `gge4902`, and CC2 `gge4850` on L4. |
+| SH3 and SH4 front slots | 1018.425 / 811.680 and 820.320 | Check the new annuli and drill edges near L1 USB_CC1. The existing J4.SH3-to-CC1 copper gap is 0.128 mm with the old lands. |
+| Ø0.65 locators | 1022.105 / 813.110 and 818.890 | Both hit Bottom GND `gge5848`. The first hits Inner2 VBUS `gge4902`. The second hits Top VBUS `gge4901` and is too close to the `gge5667` ground copper and its SH2 bridges on all four layers. The GND pad corners at (1022.605, 813.100) and (1022.605, 818.900) independently fail the drill clearance. |
+
+The data paths to U23 currently differ by **1.208 mm (J4 A contacts)** and **2.296 mm (J4 B contacts)**, excluding via barrels and pad traversal. Include both orientations when rerouting to the 0.50 mm target. Preserve the existing 0.48 mm VBUS trunk and the VBUS and CC branch functions, including U21’s two dead-battery connections. Retain D24 and C87 in place. The draft copper, including the existing fixed regions, stayed unchanged. [Full conflict and length report](tools/verification-output.txt)
 
 ### Bring-up after release checks
 

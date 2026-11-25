@@ -25,7 +25,7 @@ Both dedicated L3 legs, `gge962014` and `gge962015`, are **2.20 mm nominal**. Th
 
 ## Drill and connector requirements
 
-The current source has **60 round plated component pads**, including the four temporary Ø0.60 mm J4 shell holes, plus the 665 plated vias. The seven existing **Ø3.20 mm NPTH** centres are below. Coordinates are absolute EasyEDA millimetres.
+The live source has **zero plated slots**, **60 round plated component pads**, including the four temporary Ø0.60 mm J4 shell holes, and **665 plated vias**. The seven existing **Ø3.20 mm NPTH** centres are below. Coordinates are absolute EasyEDA millimetres.
 
 | Feature | x | y |
 | --- | ---: | ---: |
@@ -37,6 +37,14 @@ The current source has **60 round plated component pads**, including the four te
 | J11 locator | 1028.285 | 848.15 |
 | J11 locator | 1039.715 | 848.15 |
 
-Before release, J4 needs **two 1.70 × 0.60 mm and two 1.40 × 0.60 mm plated slots** with 2.10 × 1.00 mm and 1.80 × 1.00 mm outer solder areas, respectively, and **two Ø0.65 mm NPTH** 5.78 mm apart. The target export consequently has 56 round plated component holes, four plated slots and nine NPTH, with the via count updated if the editor reroute changes it. Check the J4 footprint against the actual board edge, and verify the 60 component holes/slots independently of PTH via drill entries. BZ1 uses two nominal Ø1.00 mm finished PTH. Measure the purchased buzzer before release. [GCT USB4105 B3, sheet 1](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf)
+The J4 reference below uses GCT B3 sheet 1. The source could encode these drills in the board only after the locator clearance is resolved and the new footprint is routed. The reference is separate from the live board. [J4 nominal reference footprint](Footprint_GCT-USB4105-GF-A-REV-P.json) · [GCT B3, sheet 1](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf)
+
+| Nominal J4 feature | Drill geometry | Outer solder area |
+| --- | --- | --- |
+| SH1 and SH2 | 2 × plated slots 1.70 × 0.60 mm, along the insertion axis | 2.10 × 1.00 mm |
+| SH3 and SH4 | 2 × plated slots 1.40 × 0.60 mm, along the insertion axis | 1.80 × 1.00 mm |
+| Locator pair | 2 × Ø0.65 mm NPTH at 5.78 mm centre spacing | None |
+
+This substitution would give **56 round plated component holes, four plated slots and nine NPTH** (five mounting, two J11 and two J4) plus vias. Count the 60 component holes/slots independently of the via drills and reconcile any via-count changes from rerouting. The as-drawn locator-to-GND-land clearance is **0.175100 mm**, below the **0.200 mm** requirement. An axial move of about 0.025 mm toward the mating face would meet only the nominal rule, before manufacturing tolerance. GCT's footprint note is ±0.05 mm, and the fabricator's published hole position tolerance is ±0.075 mm. Qualify actual drill registration, slot size and land fit for any approved change. BZ1 uses two nominal Ø1.00 mm finished PTH. Measure the purchased buzzer before release. [JLCPCB hole and routing capabilities](https://jlcpcb.com/capabilities/pcb-capabilities/)
 
 The top silkscreen carries **Rev P DRAFT**. The separate **DO NOT FABRICATE** warning is on the EasyEDA Document layer.
