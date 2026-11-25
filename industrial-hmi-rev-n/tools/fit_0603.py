@@ -286,7 +286,7 @@ def calculate():
     for ref, (_, header, _) in parts.items():
         before = attrs(header)["package"]
         after = attrs(symbols[ref][1])["package"]
-        if before != after:
+        if before != after and ref[0] in BODY_TEMPLATES:
             assert attrs(parts[BODY_TEMPLATES[ref[0]]][1])["package"] == after == "0603"
             converted.append((ref, before, after))
 

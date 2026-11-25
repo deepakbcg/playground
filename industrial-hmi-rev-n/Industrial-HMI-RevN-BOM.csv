@@ -50,7 +50,7 @@ U11,1,RS-232 line transceiver,TRS3232EIPWR,TI-TSSOP-16-PW,Fit,,TI,C2652868
 C55,1,10 uF 16 V,CL21B106KOQNNNE,SMT-10-uF-16-V,Fit,Local Ethernet bypass on shared 3.3 V.,Samsung Electro-Mechanics,C95841
 U14,1,Isolated RS-485 port 2,TD301D485H,TD301D485H-15.24MM-8LEAD,Fit,"YLPTEC, LCSC C2992421. 3.3 V logic and power. CON low transmits, high receives. Qualify up to 115.2 kbps. Confirm first-article lead fit and direction timing.",YLPTEC,C2992421
 C57,1,1 uF,GRM188R71E105KA12D,C0603,Fit,,muRata,C86020
-BZ1,1,5 V active buzzer,AI-1027-TWT-5V-R,PUI-AI-1027-P5.0,Fit,Active magnetic indicator. Max 30 mA. Positive pad is square.,"PUI Audio, Inc.",C5550654
+BZ1,1,12 mm 5 V active magnetic buzzer,TMB12A05,BUZZER-D12-P7.6-PTH,Fit,"5 V active magnetic, 30 mA max. Measure purchased lead pitch before layout. Nominal 7.6 mm, finished PTH 1.0 mm. Pad 1 square + on SYS_5V.",Huaneng,C96093
 Q2,1,30 V N-MOSFET,AO3400A,SOT23-3,Fit,Low-side switch. GPIO high turns the load on.,AOS,C20917
 D9,1,40 V flyback,1N5819HW-7-F,SOD123,Fit,,DIODES,C82544
 R41,1,100 ohm,0603WAF1000T5E,0603,Fit,,UNI-ROYAL(Uniroyal Elec),C22775
@@ -59,7 +59,7 @@ R43,1,680 ohm,0603WAF6800T5E,0603,Fit,,UNI-ROYAL(Uniroyal Elec),C23228
 J7,1,Isolated RS-485 port 2,1751251,PHOENIX-MKDS-1-3-P3.5-RIGHT,Fit,Right-edge wiring. 3.5 mm screw pitch. Check pin 1 on the selected terminal block orientation.,Phoenix Contact,C91152
 J8,1,Relay board link,B6B-XH-A(LF)(SN),JST-XH-6-VERTICAL,Fit,Keyed one-to-one harness. Pin 1 is logic return. Pin 2 is the selected SYS_5V feed.,JST,C144397
 "R44, R45, R46, R47",4,10 k,RC0603FR-0710KL,0603,Fit,,YAGEO,C98220
-"D11, D14, D17, D20",4,8.2 V Zener,BZT52H-B8V2-QX,SOD123F,Fit,,Nexperia,C7507957
+"D11, D14, D17, D20",4,8.2 V Zener,BZT52B8V2-AQ,SOD123F,Fit,"SOD-123F, 8.2 V ±2%, 500 mW at 75°C terminal, AEC-Q101. Cathode remains pad 1.",Diotec Semiconductor,
 "D12, D15, D18, D21",4,Reverse clamp,1N4148WS-7-F,SOD323,Fit,,DIODES,C60580
 "R48, R49, R50, R51",4,"2 k, 0.66 W",ERJ-P08F2001V,R1206,Fit,,PANASONIC,C4244383
 "D13, D16, D19, D22",4,33 V bidirectional TVS,SMF33CA,SOD123FL,Fit,,R+O,C19077520
@@ -104,7 +104,7 @@ R68,1,91 kΩ,0603WAF9102T5E,0603,Fit,,UNI-ROYAL(Uniroyal Elec),C23265
 R70,1,19.1 kΩ,0603WAF1912T5E,0603,Fit,,UNI-ROYAL,C22897
 C82,1,2.2 µF 100 V,C3216X7S2A225K160AB,1206,Fit,,TDK,C2168259
 "C83, C84",2,100 nF 100 V,CC0603KRX7R0BB104,0603,Fit,,YAGEO,C113803
-"C85, C86",2,33 µF 16 V,C3225X5R1C336M250AC,1210,Fit,,,
+"C85, C86",2,47 µF 16 V,CL32A476KOJNNNE,1210,Fit,"Prototype choice for the 7-inch load. Run cabinet startup, load-step and loop-stability checks after U1 rework. See README.",Samsung Electro-Mechanics,C2932477
 L3,1,10 µH shielded,SRP1038A-100M,BOURNS-SRP1038A,Fit,,BOURNS,C780184
 J4,1,USB-C 5 V and USB 2.0,USB4105-GF-A,GCT-USB4105-GF-A,Fit,USB-C right-angle receptacle. Confirm shell slot dimensions and enclosure access.,Global Connector Technology,C3020560
 U21,1,USB-C 5 V sink controller,STUSB4500LQTR,ST-QFN24-4X4,Fit,Hardware 5 V Type-C sink and 3 A detection.,ST,C506650

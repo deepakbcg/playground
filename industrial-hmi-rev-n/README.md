@@ -8,9 +8,11 @@ Rev N updates sourcing and corrects the cabinet converter pin mapping on the 99.
 
 | File | What it contains |
 | --- | --- |
-| [EasyEDA Standard ZIP — DO NOT FABRICATE](Industrial-HMI-RevN-EasyEDA-DO-NOT-FABRICATE.zip) | Schematic and four-layer PCB source for editor rework. |
+| [EasyEDA Standard ZIP — DO NOT FABRICATE](Industrial-HMI-RevN-EasyEDA-DO-NOT-FABRICATE.zip) | Schematic, four-layer PCB and local buzzer footprint for editor rework. |
 | [Schematic JSON](Schematic_Industrial-HMI-RevN-DO-NOT-FABRICATE.json) · [PCB JSON](PCB_Industrial-HMI-RevN-DO-NOT-FABRICATE.json) | Editable Rev N documents with fabrication-hold labels. |
 | [BOM](Industrial-HMI-RevN-BOM.csv) · [Itemized INR pricing](Industrial-HMI-RevN-BOM-Cost-INR.csv) | Fitted and DNP designators, orderable parts, known tiers and availability. |
+| [Three-board purchase list](PURCHASE-LIST.csv) | Order quantities with spares, stock snapshots, supplier subtotals and shipping thresholds. |
+| [BZ1 footprint](Footprint_BUZZER-D12-P7.6-PTH.json) | EasyEDA Standard library source for the new 12 mm buzzer. |
 | [Build configurator](Industrial-HMI-RevN-Build-Configurator.html) · [Panel pinout](Industrial-HMI-RevN-Panel-Pinout.csv) | Offline fit/DNP selections and J2 wiring. |
 | [Sourcing checkpoint](REV-N-CHANGES.md) · [Substitution evidence](tools/substitution-evidence.csv) | Sourcing history and current part evidence. |
 | [Passive consolidation](REV-N-PASSIVES.md) · [0603 worklist](0603-WORKLIST.csv) | Planned BOM changes, 0402 exceptions and location-by-location PCB checks. |
@@ -24,11 +26,13 @@ The native PCB silkscreen includes Rev M vector outlines from the frozen baselin
 
 ## Cost and population
 
-The priced fitted-parts subtotal is **₹6,040.56 for 205 of 207 fitted main-board and cell positions**. This includes a ₹10 provisional independent-seller quote for the four field-input zeners. C85 and C86 have a stocked 47 µF candidate pending validation and remain unpriced in the fitted draft. Rev M’s published ₹9,073.32–₹9,193.32 used allowances and a different distributor mix. [Current pricing](Industrial-HMI-RevN-BOM-Cost-INR.csv)
+All **207 fitted main-board and cell positions** are priced at **₹6,009.29** per board. The external Adafruit 2354 LCD is quoted separately at **₹3,339.47**. [Current pricing](Industrial-HMI-RevN-BOM-Cost-INR.csv)
 
-**Q3 sourcing.** Rev N fits ST’s original STL6P3LLH6 at ₹131.43 in the checked one-unit tier. The verified STL9P3LLH6 alternative saves about ₹3.56, below the ₹50 threshold. [ST Q3 datasheet](https://www.st.com/resource/en/datasheet/stl6p3llh6.pdf) · [Price comparison](REV-N-CHANGES.md#q3-decision)
+The three-board list covers **107 orderables**. It totals **₹26,083.58** for board parts and cells, or **₹39,441.46** with the three LCDs and one spare. Totals account for 10% spares rounded up per MPN, at least two extras for passives under ₹1, and supplier minimums and order multiples. Line totals use the quoted tier and ₹92.67/USD. Freight, duties, taxes, bare PCBs and optional external relay assemblies are outside these totals. Quantities are based on the public LCSC feed and published distributor listings checked on 25 November 2026 IST, including indexed snapshots. [Purchase list](PURCHASE-LIST.csv)
 
-**USB-only first build.** Leaving out J1, F1, D1, D2, C1, U1, L3, C2, C82–C86, R5 and R67–R70 removes **₹540.79 in priced parts**. Unpriced positions in this group are **C85, C86**. The configuration still uses the USB-C qualification path, mux and 3.3 V buck and requires a source advertising 3 A. The starter is a fit preset for the draft and needs the USB and 3.3 V routing issues closed before use. [Build configurator](Industrial-HMI-RevN-Build-Configurator.html)
+**Q3 sourcing.** The list buys the original ST STL6P3LLH6 from DigiKey India because LCSC showed three and the order calls for four. [ST Q3 datasheet](https://www.st.com/resource/en/datasheet/stl6p3llh6.pdf) · [Purchase list](PURCHASE-LIST.csv)
+
+**USB-only first build.** Leaving out J1, F1, D1, D2, C1, U1, L3, C2, C82–C86, R5 and R67–R70 removes **₹610.55 in priced parts**. The configuration still uses the USB-C qualification path, mux and 3.3 V buck and requires a source advertising 3 A. The starter is a fit preset for the draft and needs the USB and 3.3 V routing issues closed before use. [Build configurator](Industrial-HMI-RevN-Build-Configurator.html)
 
 Design references include [Raspberry Pi RP2350 hardware resources](https://pip.raspberrypi.com/categories/1214-rp2350), [BT818](https://brtchip.com/wp-content/uploads/2022/04/DS_BT817_8.pdf), [STUSB4500L](https://www.st.com/resource/en/datasheet/stusb4500l.pdf), [TPS2121](https://www.ti.com/lit/ds/symlink/tps2121.pdf) and [TPS62902](https://www.ti.com/lit/ds/symlink/tps62902.pdf). The panel, nominal 5 V and 3.3 V loads, and independent field-side RS-485 returns are documented in the Rev M baseline. [Power budget and interfaces](../industrial-hmi-rev-m/README.md)
 
@@ -36,9 +40,21 @@ Design references include [Raspberry Pi RP2350 hardware resources](https://pip.r
 
 The schematic and BOM retain 31 fitted 0402 positions, including the 16 sensitive placements restored to their checkpoint footprints. The remaining 55 footprint changes are listed in the editor worklist. The PCB and placement artwork still describe the checkpoint layout. In a native EasyEDA working copy, use **Design → Update PCB**, review the footprint changes and resolve the worklist before assembly. C41 retains the existing part because the cheaper candidates examined lost capacitance on its 3.3 V rail. [Sourcing decisions and exceptions](REV-N-PASSIVES.md) · [Region-ordered placement checks](0603-WORKLIST.csv)
 
+## Buzzer and field-input Zeners
+
+**BZ1.** Fit Huaneng TMB12A05 or an equivalent 12 mm, 5 V active magnetic buzzer drawing at most 30 mA. Sharvi SKU `ST2136CO8767` was listed in stock at **₹15.47 excluding tax** on 25 November 2026 IST. Sharvi publishes availability without a quantity, so the three-board list uses the exact Huaneng `C96093` with an order quantity of five. **Measure the purchased part’s lead pitch and diameter before layout.** The library uses 7.6 mm pitch and 1.0 mm finished holes. Some equivalents use 6.5 mm. Pad 1 is square and connects to `SYS_5V`. Pad 2 connects to `BUZZ_LOW`. Q2, D9 and R41 stay fitted as designed. [Sharvi listing](https://sharvielectronics.com/product/tmb12a05-5v-electromagnetic-active-buzzer-pcb-mount-12mm-diameter/) · [Huaneng specification](https://sharvielectronics.com/wp-content/uploads/2025/11/TMB12A05.pdf) · [LCSC orderable](https://www.lcsc.com/product-detail/C96093.html)
+
+**D11, D14, D17 and D20.** Diotec `BZT52B8V2-AQ` maintains 8.2 V, the manufacturer’s ±2% class, AEC-Q101 and the SOD-123F land with the cathode on pad 1. Diotec rates it for 500 mW at a 75°C terminal with the specified copper area. Confirm the field input trip points on the first article because the 5 mA Zener impedance is up to 30 Ω. DigiKey India listed 11,310 units and ₹12.364 per unit at the 10-piece tier used for the 14-piece order. [Diotec ratings](https://diotec.com/en/product/BZT52B8V2-AQ.html) · [DigiKey India](https://www.digikey.in/en/products/detail/diotec-semiconductor/BZT52B8V2-AQ/29178538)
+
+## Cabinet output capacitors
+
+C85/C86 use Samsung `CL32A476KOJNNNE`, 47 µF ±10%, 16 V X5R in the existing 1210 lands. The previous 33 µF orderable had no verified exact quote or DC-bias curve. Samsung’s 25°C curve is about −41.2% at 5.0 V and −43.4% at 5.25 V. The pair is about 55.3 µF typical at 5.0 V and 53.2 µF typical at 5.25 V. Applying 10% initial tolerance and 15% X5R temperature allowance gives a planning estimate of **40.7 µF at 5.25 V**, before aging, with C2 excluded from the calculation. The DC-bias data are typical. [Samsung DC-bias data](https://product.samsungsem.com/mlcc/CL32A476KOJNNN.do) · [LCSC orderable](https://www.lcsc.com/product-detail/C2932477.html)
+
+For Rev N’s 7-inch power budget, applying TI’s 25%-to-75% load-step test to the 1.55 A allocation gives a 0.775 A step. Equation 12 requires about 31 µF effective at 400 kHz for a 250 mV deviation, or about 38 µF using 360 kHz with the −8.5% dither excursion. This supports fitting the Samsung pair for prototype qualification. A full 1.55 A step would require about 75 µF effective at that frequency corner and falls outside this screen. TI’s 3.5 A example calls for around 70 µF for its 1.76 A step at 400 kHz. The original pair had 66 µF nominal before derating. Compare measured startup and worst actual load steps with the 250 mV limit after the U1 reroute. Check ripple and loop stability across line, load and temperature, including the optional relays if fitted. [TI datasheet §§6.5, 8.2.2.5](https://www.ti.com/lit/ds/symlink/lmr51635.pdf) · [Power budget](../industrial-hmi-rev-m/README.md#7-inch-power-budget)
+
 ## LCSC retail stock
 
-The costed BOM records the retail stock check from 25 November 2026 IST. 6 below-floor lines were re-picked or moved to an exact-part catalog code with at least 1,000 units. 18 lines are still below the floor and one has an unavailable retail listing. [Replacement checks and open lines](REV-N-PASSIVES.md#lcsc-retail-stock-and-0402-follow-up) · [Costed BOM](Industrial-HMI-RevN-BOM-Cost-INR.csv)
+The costed BOM records the prior 1,000-unit retail screen and refreshed stock for the changed orderables. The purchase list applies the actual three-board order quantity and moves short lines to suppliers with sufficient published stock. [Prior retail screen](REV-N-PASSIVES.md#lcsc-retail-stock-and-0402-follow-up) · [Purchase list](PURCHASE-LIST.csv)
 
 ## Release blockers
 
@@ -71,7 +87,6 @@ These are planning ranges per fitted board before engineering and qualification.
 | J1/J3/J6/J7/J9 generic screw terminals | ₹200–450 | Match pitch, pin-one orientation, tool access, current, wire gauge and enclosure clearances. |
 | J2 generic 40-pin FPC | ₹0–40 | The exact Hirose can already be inexpensive. Verify contact side, FPC thickness, latch and lifecycle. |
 | F1 smaller SMD fuse or PTC | ₹5–20 | Preserve fault interruption, surge behavior, operating temperature and cabinet input rating. |
-| BZ1 generic active buzzer | ₹90–155 | Match 5 V drive, pin polarity, current, sound level and enclosure. |
 | J10 generic microSD | ₹20–65 | Verify insertion geometry, shell and pad drawing, pin numbering, hot plug and enclosure access. |
 | J11 HR911105A-class MagJack | ₹20–100 | Verify center-tap topology, isolation, Ethernet magnetics, LEDs, pegs and footprint. |
 | Replace STUSB4500L with CC comparators | ₹80–170 | Implement both CC orientations, dynamic current changes, valid VBUS, detach behavior, inrush and independent BOOTSEL data gating. |

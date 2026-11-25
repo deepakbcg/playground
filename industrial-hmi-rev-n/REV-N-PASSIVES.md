@@ -98,6 +98,8 @@ The screen uses current copper and simulated placements. It leaves pours, mask a
 
 ## LCSC retail stock and 0402 follow-up
 
+This section records the passive and stock checkpoint before the BZ1, field Zener and cabinet capacitor updates. Current purchase quantities and board pricing are in the purchase list and costed BOM. [Current Rev N handoff](README.md#cost-and-population)
+
 On 25 November 2026 IST, 6 below-floor source lines covering 43 placements moved to LCSC codes with at least 1,000 units in the public product-detail feed. Retail quantities are shown separately from each price source’s stock. The retail MOQ is pro-rated to the fitted quantity in the material estimate, which excludes the LCD, freight and tax. [Costed BOM](Industrial-HMI-RevN-BOM-Cost-INR.csv)
 
 **Restore to 0402.** C14, C39, C40, C68, C69, C70, C71, C72, C73, R12, R57, R58, R59, R60, R61, R63. All 16 use the original land names and rated orderables. Existing values, symbols’ pin geometry and schematic wiring are preserved. The 15 U2/U8 decouplers listed above also remain 0402. [Current worklist](0603-WORKLIST.csv)

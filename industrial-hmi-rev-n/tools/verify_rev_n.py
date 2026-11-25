@@ -18,6 +18,9 @@ VALUE_LABELS = {
     "C7": ("1 uF 10 V", "1 µF 16 V"),
     "C84": ("100 nF 16 V", "100 nF 100 V"),
     "R68": ("330 kΩ", "91 kΩ"),
+    "BZ1": ("5 V active buzzer", "12 mm 5 V active magnetic buzzer"),
+    "C85": ("33 µF 16 V", "47 µF 16 V"),
+    "C86": ("33 µF 16 V", "47 µF 16 V"),
 }
 PANEL = {"LCD1", "CELL1"}
 LOCKED = set("U1 U2 U5 U6 U8 U14 U21 U22 U23 D4 D10 J4 X1".split())
@@ -38,6 +41,10 @@ PASSIVE_0402_PACKAGES = {
 }
 PASSIVE_0603_PACKAGES = {"0603", "C0603", "R0603"}
 RESTORED_0402 = set("C14 C39 C40 C68 C69 C70 C71 C72 C73 R12 R57 R58 R59 R60 R61 R63".split())
+BUZZER_FOOTPRINT = "BUZZER-D12-P7.6-PTH"
+BUZZER_FOOTPRINT_FILE = f"Footprint_{BUZZER_FOOTPRINT}.json"
+ORIGINAL_BUZZER_FOOTPRINT_ID = "e44ef8f6a948552589cda44d2e5dd065"
+FIELD_ZENERS = {"D11", "D14", "D17", "D20"}
 
 
 def rows(path):
@@ -84,6 +91,9 @@ def geometry(doc, sch, worklist=None):
             entry = worklist[ref]
             assert attributes["package"] == entry["New footprint"], ref
             attributes["package"] = entry["Old footprint"]
+        if sch and ref == "BZ1" and attributes["package"] == BUZZER_FOOTPRINT:
+            attributes["package"] = "PUI-AI-1027-P5.0"
+            header[7] = ORIGINAL_BUZZER_FOOTPRINT_ID
         if sch and ref in VALUE_LABELS:
             old, new = VALUE_LABELS[ref]
             if attributes["name"] == new:
@@ -181,6 +191,77 @@ def normalize_u1(before, after, schematic):
     after["shape"][index] = before["shape"][index]
 
 
+def verify_buzzer_footprint(cad):
+    footprint = json.loads((HERE / BUZZER_FOOTPRINT_FILE).read_bytes())
+    head = footprint["head"]
+    assert head["docType"] == "4" and head["c_para"]["package"] == BUZZER_FOOTPRINT
+    assert head["uuid"] == cad["Schematic"]["BZ1"][1][7]
+    pads = {fields[8]: fields for fields in map(lambda s: s.split("~"), footprint["shape"])
+            if fields[0] == "PAD"}
+    assert pads.keys() == {"1", "2"}
+    assert pads["1"][1] == "RECT" and pads["1"][4] == pads["1"][5]
+    assert pads["2"][1] == "ELLIPSE" and pads["1"][2] == pads["2"][2]
+    scale = Decimal("0.254")
+    pitch = abs(Decimal(pads["1"][3]) - Decimal(pads["2"][3])) * scale
+    assert cents(pitch) == Decimal("7.60")
+    for pad in pads.values():
+        assert pad[6] == "11" and pad[15] == "Y"
+        assert cents(2 * Decimal(pad[9]) * scale) == Decimal("1.00")
+    current_nets = {p[8]: p[7] for p in (s.split("~") for s in cad["PCB"]["BZ1"][2]) if p[0] == "PAD"}
+    assert current_nets == {"1": "SYS_5V", "2": "BUZZ_LOW"}
+    print("BZ1 editor footprint checks passed. 7.60 mm pitch, 1.00 mm PTH, square positive pad 1 on SYS_5V.")
+
+
+def verify_purchase(pricing):
+    purchase = rows(HERE / "PURCHASE-LIST.csv")
+    covered, mpns = set(), set()
+    subtotals = {}
+    pending = Decimal(0)
+    supplier = None
+    for row in purchase[:-1]:
+        name = row["Supplier"]
+        assert name and row["Checked IST"] and row["Source URL"]
+        assert supplier is None or name == supplier
+        assert name not in subtotals
+        if row["Row type"] == "Supplier subtotal":
+            assert Decimal(row["Line INR"]) == pending and row["Notes"]
+            subtotals[name] = pending
+            pending = Decimal(0)
+            supplier = None
+            continue
+        supplier = name
+        assert row["Row type"] == "Part" and row["Supplier code"]
+        designators = refs(row["References"])
+        mpn = row["Manufacturer part number"]
+        assert mpn not in mpns and covered.isdisjoint(designators)
+        mpns.add(mpn)
+        covered.update(designators)
+        part = pricing[designators[0]]
+        assert all(pricing[ref] == part for ref in designators)
+        assert mpn == ("2354" if designators == ["LCD1"] else part["Manufacturer part number"])
+        quantity = int(row["Order quantity"])
+        stock = int(row["Stock shown"])
+        units = len(designators) * 3
+        assert int(row["Per board"]) == len(designators) and int(row["Three boards"]) == units
+        assert int(row["Minimum spares"]) >= (units + 9) // 10
+        assert stock >= quantity >= max(int(row["MOQ"]), units + int(row["Minimum spares"]))
+        assert quantity % int(row["Order multiple"]) == 0
+        assert row["Currency"] in {"INR", "USD"}
+        unit = Decimal(row["Quoted unit"]) * (Decimal("92.67") if row["Currency"] == "USD" else 1)
+        if all(re.fullmatch(r"(?:C|R|FB|L)\d+", ref) for ref in designators) and unit < 1:
+            assert quantity >= units + 2
+        assert cents(unit) == cents(row["Unit INR"])
+        subtotal = cents(unit * quantity)
+        assert subtotal == Decimal(row["Line INR"])
+        pending += subtotal
+        if set(designators) == FIELD_ZENERS:
+            assert name in {"LCSC", "DigiKey India", "Mouser India"} and stock >= 50
+    assert covered == pricing.keys() and supplier is None
+    total = sum(subtotals.values())
+    assert purchase[-1]["Row type"] == "Overall subtotal" and total == Decimal(purchase[-1]["Line INR"])
+    print(f"Purchase list covers {len(mpns)} orderables. MOQ, stock, spares and line totals verified. INR {total:.2f}.")
+
+
 def main():
     prefix = "Industrial-HMI-RevN"
     worklist_rows = rows(HERE / "0603-WORKLIST.csv")
@@ -238,6 +319,11 @@ def main():
     assert bom["R68"]["Description"] == "91 kΩ"
     assert bom["R68"]["Manufacturer part number"] == "0603WAF9102T5E"
     assert bom["R68"]["LCSC part"] == "C23265"
+    assert bom["BZ1"]["Manufacturer part number"] == "TMB12A05"
+    assert all(bom[ref]["Manufacturer part number"] == "BZT52B8V2-AQ" for ref in FIELD_ZENERS)
+    for ref in ("C85", "C86"):
+        assert bom[ref]["Manufacturer part number"] == "CL32A476KOJNNNE"
+        assert attrs(cad["Schematic"][ref][1])["name"] == bom[ref]["Description"] == "47 µF 16 V"
     _, r68_head, r68_body = cad["Schematic"]["R68"]
     assert attrs(r68_head)["name"] == bom["R68"]["Description"]
     assert [line.split("~")[12] for line in r68_body if line.startswith("T~N~")] == ["91 kΩ"]
@@ -262,9 +348,12 @@ def main():
             assert after_footprint == before_footprint and after_footprint in PASSIVE_0402_PACKAGES, ref
         if before_footprint != after_footprint:
             mismatched_footprints.add(ref)
-            assert before_footprint == worklist[ref]["Old footprint"] and before_footprint in PASSIVE_0402_PACKAGES
-            assert after_footprint == worklist[ref]["New footprint"] == "0603"
-            assert row["Population"].startswith("Fit") and ref.startswith(("R", "C", "FB"))
+            if ref == "BZ1":
+                assert before_footprint == "PUI-AI-1027-P5.0" and after_footprint == BUZZER_FOOTPRINT
+            else:
+                assert before_footprint == worklist[ref]["Old footprint"] and before_footprint in PASSIVE_0402_PACKAGES
+                assert after_footprint == worklist[ref]["New footprint"] == "0603"
+                assert row["Population"].startswith("Fit") and ref.startswith(("R", "C", "FB"))
         if row["Population"].startswith("Fit") and ref.startswith(("R", "C", "FB")):
             for footprint, count in ((before_footprint, before_sizes), (after_footprint, after_sizes)):
                 if footprint in PASSIVE_0402_PACKAGES:
@@ -272,22 +361,24 @@ def main():
                 if footprint in PASSIVE_0603_PACKAGES:
                     count["0603"] += 1
         if not ref.startswith(("R", "C", "FB")):
-            assert pcb["BOM_Manufacturer Part"] == mpn, ref
-    assert mismatched_footprints == worklist.keys()
+            checkpoint_mpn = ("AI-1027-TWT-5V-R" if ref == "BZ1" else
+                              "BZT52H-B8V2-QX" if ref in FIELD_ZENERS else mpn)
+            assert pcb["BOM_Manufacturer Part"] == checkpoint_mpn, ref
+    assert mismatched_footprints == worklist.keys() | {"BZ1"}
     assert not RESTORED_0402 & worklist.keys()
     print(f"Schematic, PCB and BOM agree on {len(cad['PCB'])} designators. TP1–TP4 are DNP.")
-    print(f"{len(worklist)} intentional footprint mismatches, all listed in 0603-WORKLIST.csv.")
+    print(f"{len(worklist)} passive footprint changes in 0603-WORKLIST.csv. BZ1 is listed in the PCB editor tasks.")
+    verify_buzzer_footprint(cad)
     print(f"Fitted passive packages 0402 {before_sizes['0402']} → {after_sizes['0402']}, "
           f"0603 {before_sizes['0603']} → {after_sizes['0603']}.")
     print("Panel and battery are external to the CAD refdes sets.")
 
-    needed = {ref for ref, row in bom.items() if row["Population"].startswith("Fit")} - {"LCD1"}
+    needed = {ref for ref, row in bom.items() if row["Population"].startswith("Fit")}
     priced = set()
-    total, missing = Decimal(0), []
+    total = Decimal(0)
     cost_rows = rows(HERE / f"{prefix}-BOM-Cost-INR.csv")
     retail_status = Counter()
     pricing = {}
-    external_panel = []
     for row in cost_rows[:-1]:
         designators = refs(row["References"])
         assert len(designators) == int(row["Quantity per board"])
@@ -306,43 +397,35 @@ def main():
             expected = "Listing unavailable" if code else "No LCSC code"
         assert row["LCSC stock status"] == expected, designators
         retail_status[expected] += 1
-        if designators == ["LCD1"]:
-            assert row["Manufacturer part number"] == bom["LCD1"]["Manufacturer part number"]
-            assert row["Supplier"] == "External panel" and not row["Extended INR"]
-            external_panel.extend(designators)
-            continue
         for ref in designators:
             assert ref in needed and ref not in priced, ref
             priced.add(ref)
             pricing[ref] = row
             assert row["Manufacturer part number"] == bom[ref]["Manufacturer part number"], ref
-        if row["Unit INR"]:
-            assert row["Price source"] and row["Checked IST"] and row["Applied tier"]
-            if row["Applied currency"] == "USD":
-                assert cents(Decimal(row["Applied unit"]) * Decimal("92.67")) == Decimal(row["Unit INR"])
-            else:
-                assert row["Applied currency"] == "INR"
-                assert cents(row["Applied unit"]) == Decimal(row["Unit INR"])
-            extended = Decimal(row["Unit INR"]) * len(designators)
-            assert extended == Decimal(row["Extended INR"])
-            total += extended
-            if row["Stock listed"].isdigit() and int(row["Stock listed"]) < 100:
-                assert "LOW STOCK" in row["Notes"], designators
+        assert row["Unit INR"] and row["Price source"] and row["Checked IST"] and row["Applied tier"], designators
+        if row["Applied currency"] == "USD":
+            assert cents(Decimal(row["Applied unit"]) * Decimal("92.67")) == Decimal(row["Unit INR"])
         else:
-            assert not row["Extended INR"]
-            missing.extend(designators)
+            assert row["Applied currency"] == "INR"
+            assert cents(row["Applied unit"]) == Decimal(row["Unit INR"])
+        extended = Decimal(row["Unit INR"]) * len(designators)
+        assert extended == Decimal(row["Extended INR"])
+        if designators != ["LCD1"]:
+            total += extended
+        if row["Stock listed"].isdigit() and int(row["Stock listed"]) < 100:
+            assert "LOW STOCK" in row["Notes"], designators
     assert priced == needed
-    assert external_panel == ["LCD1"]
     tail = cost_rows[-1]
-    assert tail["References"] == "TOTAL" and int(tail["Quantity per board"]) == len(needed)
+    assert tail["References"] == "TOTAL" and int(tail["Quantity per board"]) == len(needed) - 1
     assert Decimal(tail["Extended INR"]) == total
     bypass = {ref for ref, row in before_bom.items()
               if row["Manufacturer part number"] == "GRM155R71E104KE14D"}
     assert len(bypass) == 32 and bypass <= priced
-    print(f"{len(priced)} fitted main-board and cell refs entered once. Itemized price coverage {len(priced)-len(missing)}.")
-    print(f"Recomputed priced subtotal INR {total:.2f}. Unpriced refs {', '.join(missing) or 'none'}.")
+    print(f"All {len(priced)} fitted refs priced, including the separately priced LCD.")
+    print(f"Recomputed board and cell subtotal INR {total:.2f}.")
     print("LCSC retail line counts " + ", ".join(f"{key} {value}" for key, value in sorted(retail_status.items())) + ".")
     print("32 original 0402 bypass locations accounted for, including four Ethernet positions.")
+    verify_purchase(pricing)
 
     changed = {ref for ref, old in before_bom.items()
                if bom[ref]["Manufacturer part number"] != old["Manufacturer part number"]}
@@ -368,15 +451,16 @@ def main():
     for ref in needed:
         assert hmi[ref]["mpn"] == bom[ref]["Manufacturer part number"], ref
         value = pricing[ref]["Unit INR"]
-        assert hmi[ref]["cost"] == (int(Decimal(value) * 100) if value else None), ref
+        field = "panelCost" if ref == "LCD1" else "cost"
+        assert hmi[ref][field] == int(Decimal(value) * 100), ref
     print("Configurator uses the same fitted MPNs, prices and subtotal as the CSVs.")
 
     with ZipFile(HERE / f"{prefix}-EasyEDA-{HOLD_SUFFIX}.zip") as archive:
-        files = {f"{kind}_{prefix}-{HOLD_SUFFIX}.json" for kind in cad}
+        files = {f"{kind}_{prefix}-{HOLD_SUFFIX}.json" for kind in cad} | {BUZZER_FOOTPRINT_FILE}
         assert set(archive.namelist()) == files and archive.testzip() is None
         assert archive.comment.decode("ascii").startswith(HOLD_MARK)
         assert all(archive.read(name) == (HERE / name).read_bytes() for name in files)
-        print("ZIP contains the byte-identical schematic and PCB JSONs.")
+        print("ZIP contains the exact schematic, PCB and BZ1 footprint JSONs.")
     from fit_0603 import calculate
     assert worklist_rows == [{key: str(value) for key, value in row.items()} for row in calculate()]
     fit_counts = Counter(row["Fit status"] for row in worklist_rows)

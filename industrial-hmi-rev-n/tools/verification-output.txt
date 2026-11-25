@@ -7,16 +7,18 @@ Top-level shape counts CIRCLE 10, HOLE 7, LIB 212, SOLIDREGION 543, TEXT 34, TRA
 Q3 pad nets match Rev M.
 U1 pin numbers, pad nets and DDC0006A lands checked. U1 copper rerouting is pending.
 Schematic, PCB and BOM agree on 212 designators. TP1–TP4 are DNP.
-55 intentional footprint mismatches, all listed in 0603-WORKLIST.csv.
+55 passive footprint changes in 0603-WORKLIST.csv. BZ1 is listed in the PCB editor tasks.
+BZ1 editor footprint checks passed. 7.60 mm pitch, 1.00 mm PTH, square positive pad 1 on SYS_5V.
 Fitted passive packages 0402 86 → 31, 0603 30 → 85.
 Panel and battery are external to the CAD refdes sets.
-207 fitted main-board and cell refs entered once. Itemized price coverage 205.
-Recomputed priced subtotal INR 6040.56. Unpriced refs C85, C86.
-LCSC retail line counts Below 1,000 18, Listing unavailable 1, Meets 1,000 83, No LCSC code 5.
+All 208 fitted refs priced, including the separately priced LCD.
+Recomputed board and cell subtotal INR 6009.29.
+LCSC retail line counts Below 1,000 16, Listing unavailable 1, Meets 1,000 85, No LCSC code 5.
 32 original 0402 bypass locations accounted for, including four Ethernet positions.
-114 MPN changes have supplier and engineering evidence.
+Purchase list covers 107 orderables. MOQ, stock, spares and line totals verified. INR 39441.46.
+121 MPN changes have supplier and engineering evidence.
 Configurator uses the same fitted MPNs, prices and subtotal as the CSVs.
-ZIP contains the byte-identical schematic and PCB JSONs.
+ZIP contains the exact schematic, PCB and BZ1 footprint JSONs.
 0603 screen fits-in-place 16, needs-nudge 39.
 Baseline PCB SHA-256 8afd00695dc74bf8f5b1215cbbe43f0734204dc1179fff0e57a9fd2a53bfa4a7
 Offline draft comparisons passed. FABRICATION BLOCKED. Native EasyEDA import, ERC, DRC, CAM and hardware checks remain open.
