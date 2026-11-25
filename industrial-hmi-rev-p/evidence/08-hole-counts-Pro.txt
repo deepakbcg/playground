@@ -1,0 +1,28 @@
+Rev P drill counts from EasyEDA Pro 3.2.206 Gerber exports (parsed Excellon; GerbView not installed)
+Expected: 56 round plated component holes, 4 plated slots, 9 NPTH, 664 vias (vias appear in both PTH and Via files).
+
+== evidence/RevP-Gerbers-Pro-AsIs.zip
+Drill_PTH_Through.DRL: round hits 720 by size {0.25: 664, 0.8: 2, 0.9: 8, 1.0: 24, 1.02: 4, 1.1: 11, 1.3: 5, 1.7: 2}; slots 4
+   slot Ø0.60 overall 1.700 mm, centre (6.605, -49.680), axis x
+   slot Ø0.60 overall 1.700 mm, centre (6.605, -58.320), axis x
+   slot Ø0.60 overall 1.400 mm, centre (2.425, -49.680), axis x
+   slot Ø0.60 overall 1.400 mm, centre (2.425, -58.320), axis x
+Drill_PTH_Through_Via.DRL: round hits 664 by size {0.25: 664}; slots 0
+Drill_NPTH_Through.DRL: round hits 9 by size {1.3: 2, 6.4: 7}; slots 0
+
+== evidence/RevP-Gerbers-Pro-HoleFix.zip
+Drill_PTH_Through.DRL: round hits 720 by size {0.25: 664, 0.8: 2, 0.9: 8, 1.0: 24, 1.02: 4, 1.1: 11, 1.3: 5, 1.7: 2}; slots 4
+   slot Ø0.60 overall 1.700 mm, centre (6.605, -49.680), axis x
+   slot Ø0.60 overall 1.700 mm, centre (6.605, -58.320), axis x
+   slot Ø0.60 overall 1.400 mm, centre (2.425, -49.680), axis x
+   slot Ø0.60 overall 1.400 mm, centre (2.425, -58.320), axis x
+Drill_PTH_Through_Via.DRL: round hits 664 by size {0.25: 664}; slots 0
+Drill_NPTH_Through.DRL: round hits 9 by size {0.65: 2, 3.2: 7}; slots 0
+
+PTH component holes = 720 - 664 vias = 56 (0.8x2, 0.9x8, 1.0x24, 1.02x4, 1.1x11, 1.3x5, 1.7x2).
+J4 slots: G85 routed, Ø0.60 tool, x-axis, rear 1.70 mm, front 1.40 mm, 8.64 mm apart. Coordinates are board-relative (origin at outline top-left).
+J4 locators: HoleFix Ø0.65 at (6.105, -51.11)/(6.105, -56.89), 5.78 mm apart. AsIs Ø1.30 at the same centres.
+Mounting + J11 locators: HoleFix Ø3.20 x7. AsIs Ø6.40 x7 (defect).
+No drill hits at U23 (stray hole values on its SMD pads are ignored by the exporter).
+
+Inventory script: exit 1 on both, only because it does not classify Pro names Gerber_BoardOutlineLayer.GKO and Gerber_TopSilkscreenLayer.GTO (both present).

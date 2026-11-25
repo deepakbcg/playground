@@ -1,0 +1,56 @@
+Rev P native DRC record (EasyEDA Pro substitute run, NOT EasyEDA Standard)
+Date: 2026-11-25
+Editor: EasyEDA Pro client 3.2.206, half-offline mode, local projects only. Driven via the API bridge.
+Source: Industrial-HMI-RevP-EasyEDA-DO-NOT-FABRICATE.zip, imported as EasyEDA (Standard) format,
+        "Import document" only (no library extraction, footprints not re-associated).
+
+Pro projects (local, ~/Documents/EasyEDA-Pro/projects):
+  Industrial-HMI-RevP-ProCheck          - source imported as-is
+  Industrial-HMI-RevP-ProCheck-HoleFix  - scratch copy with all 11 HOLE~ size fields halved
+                                          (radius interpretation, see Finding 1). Source files unchanged.
+
+Import check (step 1)
+  212 PCB components, 212 schematic designators, 4 copper layers (Top/Inner1/Inner2/Bottom),
+  outline 99.2 x 96.0 mm, 664 vias, 174 nets, 0 pours, 577 fixed fills.
+
+Rule set applied (runbook values, step 2). Pro has one "Hole" row, so per-hole-type limits are not separable:
+  Track min 0.150; different-net copper 0.125; SMD pad-pad 0.150; hole-to-copper 0.200 (all hole types);
+  board outline 0.200; hole-to-hole 0.200; via min 0.50 / 0.25.
+  Component PTH 0.28 outer / 0.30 inner is NOT enforced by this rule set - manual check still required.
+
+Schematic/PCB comparison (step 3), Protel2 netlist diff, read-only (no Import Changes applied):
+  212/212 components, 766/766 pins, 0 pin-net differences, 0 footprint differences.
+  120 value/name differences are a Pro schematic-import artifact (Pro schematic shows e.g. C12 "4.7 k";
+  Standard source and curated BOM say 100 nF). Do not use a Pro schematic BOM.
+
+Copper pours (step 4): none in the design (all copper is fixed fills), so nothing to rebuild.
+Ratlines: DRC connection check reports no unrouted pin connections.
+
+DRC result, as-is import: 149 findings
+  138 involve the 9 NPTH, which Pro imports at Ø6.40 mm (mounting/J11) and Ø1.30 mm (J4 locators):
+      Slot Region to Track 93, Fill to Slot Region 20, Hole to Slot Region 7, Slot Region to TH Pad 4,
+      Slot Region to Via 4, SMD Pad to Slot Region 2, J4 lands to J4 locator (same footprint) 8 at 0 mm.
+  + the 11 findings below.
+
+DRC result, HoleFix copy: 11 findings
+  Clearance, SMD pad to SMD pad (rule 0.150 mm, Top):
+    C38.1 (EVE_1V2) - C35.2 (GND)      0.145 mm
+    C47.1 (232_C2P) - C46.2 (232_C1N)  0.140 mm
+    C23.2 (GND)     - C13.1 (XIN)      0.145 mm
+    C96.2 (GND)     - C12.1 (3V3)      0.140 mm
+  Connection, GND fill not connected to rest of GND (Standard absolute mm, approx.):
+    Bottom  ~(1022.32-1022.47, 813.49-813.73)  0.15 x 0.24 mm sliver at J4 locator 1
+    Bottom  ~(1021.60-1022.67, 810.94-812.95)  1.1 x 2.0 mm, next to J4 locator 1
+    Inner1  ~(1029.10-1030.48, 762.75-810.80)  1.4 x 48 mm strip
+    Bottom  ~(1029.57-1036.35, 801.58-803.32)  6.8 x 1.7 mm
+    Bottom  ~(1030.74-1031.58, 780.59-781.86)  0.8 x 1.3 mm
+    Bottom  ~(1032.04-1039.35, 779.19-793.19)  7.3 x 14.0 mm
+  Netlist: "PCB and schematic netlist does not match" - attributed to the value-import artifact above
+    (pin-level netlists are identical).
+  J4 locators: no finding at 0.200 mm (the 0.204 / 0.21 mm gaps pass).
+
+Disposition: NOT RELEASED. Fabrication hold remains.
+  Finding 1 (blocker): HOLE~ size field. EasyEDA Pro's Standard importer and KiCad's EasyEDA importer both read it
+    as a RADIUS; the Rev P generator and tools/verify_rev_p.py write/read it as a DIAMETER. Native EasyEDA output of
+    the current source drills Ø6.40 mm mounting/J11 holes and Ø1.30 mm J4 locators (see 08-hole-counts-Pro.txt).
+  Findings 2-4: the 4 pad gaps, 6 isolated GND fills and Pro netlist message need review in the source.

@@ -1,0 +1,19 @@
+bottom-copper: 'Gerber_BottomLayer.GBL' (1346095 bytes)
+bottom-mask: 'Gerber_BottomSolderMaskLayer.GBS' (3058 bytes)
+inner-1: 'Gerber_InnerLayer1.G1' (1540435 bytes)
+inner-2: 'Gerber_InnerLayer2.G2' (56175 bytes)
+npth: 'Drill_NPTH_Through.DRL' (361 bytes)
+pth: 'Drill_PTH_Through.DRL' (10272 bytes)
+top-copper: 'Gerber_TopLayer.GTL' (230427 bytes)
+top-mask: 'Gerber_TopSolderMaskLayer.GTS' (38124 bytes)
+top-paste: 'Gerber_TopPasteMaskLayer.GTP' (40146 bytes)
+via-pth: 'Drill_PTH_Through_Via.DRL' (8974 bytes)
+Unclassified, review if relevant: 'FlyingProbeTesting.json'
+Unclassified, review if relevant: 'Gerber_BoardOutlineLayer.GKO'
+Unclassified, review if relevant: 'Gerber_BottomSilkscreenLayer.GBO'
+Unclassified, review if relevant: 'Gerber_DocumentLayer.GDL'
+Unclassified, review if relevant: 'Gerber_DrillDrawingLayer.GDD'
+Unclassified, review if relevant: 'Gerber_TopSilkscreenLayer.GTO'
+Unclassified, review if relevant: 'How-to-order-PCB.txt'
+Inventory problem: Missing required role outline
+Inventory problem: Missing required role top-silk
