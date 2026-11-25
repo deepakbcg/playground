@@ -65,7 +65,7 @@ The verifier accepts positive area overlap or a continuous shared edge of at lea
 
 1. **J4, USB4105-GF-A.** The offline trial found the drawing's rear shell slot/annulus intersects Inner2 USB_VBUS and Bottom USB_CC2. The front locator crosses Top USB_CC1, and the opposite locator approaches Top VBUS. The live board retains the four round plated shell holes and no locators. It still has 16 contact designations on 12 physical SMT lands and 0.128 mm CC1-to-shell clearance. Apply the complete connector footprint and reroute the affected nets together, then check the mechanical datum, shell grounds, annuli and export. [GCT B3 sheet 1](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5492/USB4105.pdf)
 2. **U1 FB and BZ1.** The optional R69/R70 relocation is deferred. A ≤3 mm FB divider placement and a quiet route around the U1 switch and L3 copper were not verified offline. Review the existing 20.6 mm Bottom CAB_FB route over Inner1 GND, and test noise and transient response. Measure BZ1 lead pitch, diameter and polarity against the nominal 7.6 mm footprint and check enclosure fit. [U1 routing history](../industrial-hmi-rev-n/U1-REROUTE.md)
-3. **Native release.** Import the corrected libraries and the live schematic/PCB pair, compare schematic and PCB, inspect the copper and isolation boundaries, then run native DRC. Inspect the generated Gerbers and plated/nonplated drills in an independent CAM viewer. [Fabrication notes](FAB-NOTES.md)
+3. **Native release.** Import the corrected libraries and the live schematic/PCB pair, compare schematic and PCB, inspect the copper and isolation boundaries, then run native DRC. Inspect the generated Gerbers and plated/nonplated drills in an independent CAM viewer. [Editor runbook](EDITOR-RUNBOOK.md) · [Fabrication notes](FAB-NOTES.md)
 
 ### Bring-up after release checks
 
@@ -74,6 +74,8 @@ The verifier accepts positive area overlap or a continuous shared edge of at lea
 3. **Before fitting U2, U8 or U20**, power the board from a current-limited supply. Measure 3.3 V across C94 and at a far load such as C34. **Abort if either reading exceeds 3.45 V.** Verify startup, load regulation and temperature, including the 1.5 A rail test. Check the battery-backed RTC supply before fitting the cell.
 4. Fit and test RP2354B, BOOTSEL, RESET and SWD.
 5. Fit BT818, then the display and backlight, and then verify each field interface, serial port, storage and Ethernet.
+
+[Staged bring-up procedure](BRING-UP.md)
 
 ## Future candidates
 
